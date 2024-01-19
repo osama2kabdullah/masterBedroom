@@ -1,0 +1,43 @@
+.\#pagination {
+  margin-top: 2rem;
+  gap: 1.2rem;
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.\#pagination-item {
+  font-weight: var(--font-body-weight-bold);
+}
+.\#pagination-item > * {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.\#pagination-link {
+  color: inherit;
+  text-decoration: none;
+}
+.\#pagination-link .\#icon {
+  --size: 1.3rem;
+}
+.\#pagination-current {
+  background-color: var(--color-g-button-bg);
+  color: var(--color-g-button-text);
+  border-radius: 50%;
+}
+.\#pagination-mobile {
+  margin-top: 2rem;
+  gap: 1.2rem;
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.\#pagination-current-mobile {
+  font-weight: var(--font-body-weight-bold);
+  width: 3rem;
+  height: 3rem;
+}

@@ -1,0 +1,18 @@
+{%- liquid
+    assign NS = 'drop-down'
+    assign cn = '#' | append: NS    
+-%}
+
+{% render 'load-css', file: NS, lazy: true %}
+
+<{{ NS }} class="{{ cn }}" {% if update_value %}update-value{% endif %} {% if close_on_change %}close-on-change{% endif %}>
+    {%- unless select == false -%}
+        <select class="{{ cn }}-select load-hidden" data-select name="{{ input_name }}" {% if form_id %}form="{{ form_id }}"{% endif %}>
+            {{ options }}
+        </select>    
+    {%- endunless -%}
+    <div class="{{ cn }}-toggle" data-toggle>{{ toggle }}</div>
+    <div class="{{ cn }}-menu @position:{{ position | default: 'bottom-center' }}" data-menu hidden>{{ menu }}</div>
+</{{ NS }}>
+
+<script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>

@@ -1,0 +1,202 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes slideTopIn {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes slideTopOut {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+@keyframes slideBottomIn {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes slideBottomOut {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+@keyframes slideLeftIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slideLeftOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes slideRightIn {
+  from {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes slideRightOut {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+}
+.\#modal-popup {
+  --animate-in: fadeIn;
+  --animate-out: fadeOut;
+  --transition: 500ms;
+  --max-width: 100%;
+  --max-height: 100%;
+  --height: auto;
+  --width: auto;
+  --x: center;
+  --y: center;
+}
+.\#modal-popup[unlock-screen] ::backdrop {
+  display: none;
+}
+.\#modal-popup ::backdrop {
+  animation-duration: var(--transition, 500ms);
+}
+.\#modal-popup-loading {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+.\#modal-popup-loading .\#spinner {
+  --color: var(--color-g-fg);
+}
+.\#modal-popup-content {
+  overflow: auto;
+  max-width: var(--max-width);
+  max-height: var(--max-height);
+  height: var(--height);
+  width: var(--width);
+}
+.\#modal-popup-content.\@container {
+  width: var(--container-width);
+  padding-inline: var(--container-spacer);
+}
+.\#modal-popup-content.\@stash > div {
+  display: unset;
+}
+.\#modal-popup-back {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  z-index: 99;
+  cursor: pointer;
+  opacity: 0.8;
+}
+.\#modal-popup-back .\#icon {
+  --size: 1rem;
+}
+.\#modal-popup-back:hover {
+  opacity: 1;
+}
+.\#modal-popup-close {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  cursor: pointer;
+  color: var(--color-g-fg);
+}
+.\#modal-popup-dialog {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  max-width: none;
+  max-height: none;
+  background: none;
+  align-items: var(--y);
+  justify-content: var(--x);
+}
+.\#modal-popup-dialog .\#modal-popup-content {
+  animation-duration: var(--transition);
+  animation-fill-mode: both;
+}
+.\#modal-popup-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  animation-fill-mode: both;
+  cursor: pointer;
+}
+.\#modal-popup-dialog[open] {
+  display: flex;
+}
+.\#modal-popup-dialog[opening] .\#modal-popup-content {
+  animation-name: var(--animate-in);
+}
+.\#modal-popup-dialog[opening]::backdrop {
+  animation-name: fadeIn;
+}
+.\#modal-popup-dialog[closing] {
+  pointer-events: none;
+}
+.\#modal-popup-dialog[closing] .\#modal-popup-content {
+  animation-name: var(--animate-out);
+}
+.\#modal-popup-dialog[closing]::backdrop {
+  animation-name: fadeOut;
+  pointer-events: none;
+}
+.\#modal-popup-autofocus-fix {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  height: 0;
+  width: 0;
+  margin: 0;
+  pointer-events: none;
+}

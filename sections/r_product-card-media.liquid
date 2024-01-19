@@ -1,0 +1,19 @@
+{%- liquid
+    assign columns_amount = 8
+    assign products_gap = '3rem'
+    assign container_width = '90vw - 1rem'
+-%}
+
+{%- if product -%}      
+{%- capture product_image_srcsize_desktop -%}min(100vw, {{ settings.container_width }}px)/{{ columns_amount }} - {{ products_gap }}{%- endcapture -%}
+{%- capture product_image_srcsize_mobile -%}({{ container_width }})/2{%- endcapture -%}
+    <template data-navigation-product-card>
+        {%- render 'main-navigation-product-card'
+            product: product,
+            show_product_title: true,
+            show_product_price: true,
+            srcsize_desktop: product_image_srcsize_desktop,
+            srcsize_mobile: product_image_srcsize_mobile
+        -%}
+    </template>
+{%- endif -%}

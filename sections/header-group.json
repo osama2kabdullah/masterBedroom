@@ -1,0 +1,88 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "g_announcement-bar": {
+      "type": "g_announcement-bar",
+      "blocks": {
+        "9d33f837-78c3-4db6-bd7e-b9a9569ea880": {
+          "type": "announcement",
+          "settings": {
+            "text": "",
+            "link": "",
+            "icon": "star"
+          }
+        }
+      },
+      "block_order": [
+        "9d33f837-78c3-4db6-bd7e-b9a9569ea880"
+      ],
+      "settings": {
+        "home_page_only": false,
+        "close_btn": false,
+        "color_text": "#ffffff",
+        "color_bg": "#d0312d",
+        "navigation_buttons": true,
+        "autoplay": 3
+      }
+    },
+    "g_header": {
+      "type": "g_header",
+      "blocks": {
+        "c21b4acb-f6bb-453a-9099-18ed6c3c1f8a": {
+          "type": "menu",
+          "settings": {
+            "position": "secondary",
+            "menu": "main-menu"
+          }
+        },
+        "link_FKiqdT": {
+          "type": "link",
+          "settings": {
+            "position": "secondary",
+            "link_name": "Speak to Sleep Expert",
+            "url": "shopify:\/\/pages\/contact",
+            "icon": ""
+          }
+        },
+        "link_aLH8Ly": {
+          "type": "link",
+          "settings": {
+            "position": "secondary",
+            "link_name": "Find a Store",
+            "url": "",
+            "icon": ""
+          }
+        }
+      },
+      "block_order": [
+        "c21b4acb-f6bb-453a-9099-18ed6c3c1f8a",
+        "link_FKiqdT",
+        "link_aLH8Ly"
+      ],
+      "settings": {
+        "header_font_size": 160,
+        "enable_sticky_header": true,
+        "bottom_style": "none",
+        "lights_out": true,
+        "header_layout": "wide",
+        "show_dropdown_carets": true,
+        "logo": "shopify:\/\/shop_images\/MB_Logo_-_06_28636e2f-3621-4d8c-8472-697aa476f705.png",
+        "logo_desktop_width": 500,
+        "logo_mobile_width": 200,
+        "logo_desktop_padding": true,
+        "nav_font_size": 110,
+        "secondary_navigation_align": "flex-start",
+        "secondary_navigation_position": "bottom",
+        "show_country_selector": true,
+        "show_language_selector": true,
+        "show_cart_total": true,
+        "show_cart_counter": true
+      }
+    }
+  },
+  "order": [
+    "g_announcement-bar",
+    "g_header"
+  ]
+}

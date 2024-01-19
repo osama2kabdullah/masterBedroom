@@ -1,0 +1,161 @@
+{%- liquid
+    assign NS = 'cart'
+    assign root = 'x-' | append: NS
+    assign cn = '#' | append: NS
+    assign form_id = 'cartForm-' | append: section.id    
+-%}
+
+{% render 'load-css', file: NS %}
+
+{%- capture Content -%}
+<{{ root }}
+    class="{{ cn }}"
+    section-id="{{ section.id }}"
+>
+    <div data-cart-empty {% if cart != empty %} hidden {% endif %}>
+        {% render 'splash-msg',
+            icon: 'bag-shopping',
+            t_heading: 'sections.cart.empty.heading',
+            t_subheading: 'sections.cart.empty.subheading',
+            button_t_label: 'general.continue_shopping',
+            button_link: routes.all_products_collection_url
+        %}
+    </div>
+    <div data-cart-items-container {% if cart == empty %} hidden {% endif %}>
+        <div class="{{ cn }}-header">
+            {% render 'hero',
+                heading: section.settings.heading,
+                heading_tag: 'h1',
+            %}  
+        </div>
+        <div class="{{ cn }}-body">
+            <div class="#grid @type:template" style="--template: 1fr 30%; --template-mobile: none; --gap: 4rem;">
+                <div>
+                    <div class="{{ cn }}-items {% if section.settings.show_stock_alert %}@show-stock-alert{% endif %}">
+                        <form action="{{ routes.cart_url }}" method="post" id="{{ form_id }}">                            
+                            <div data-cart-items>
+                                {%- for item in cart.items -%}
+                                    {% render 'cart-item', item: item %}
+                                {%- endfor -%}
+                            </div>
+                        </form>
+                    </div>
+                    <div class="{{ cn }}-footer">
+                        <a class="{{ cn }}-footer-link reset-link" href="{{ routes.all_products_collection_url }}">
+                            {% render 'icon', name: 'arrow-left' %}    
+                            {{ 'general.continue_shopping' | t }}
+                        </a>
+                    </div>
+                </div>
+                <div class="{{ cn }}-sidebar-wrapper {% if section.settings.mobile_sticky_checkout %}@mobile-sticky{% endif %}">
+                    {% render 'cart-sidebar', form_id: form_id %}
+                </div>
+            </div>
+        </div>
+    </div>
+</{{ root }}>
+
+<script type="module" src="{{ 'cart-item-qty.js' | asset_url }}"></script>
+<script type="module" src="{{ 'cart.js' | asset_url }}"></script>
+
+{%- endcapture -%}
+
+
+{% render 'section-body',
+   content: Content,
+   container: 'default',
+   spaced: true
+%}
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    {
+        "type": "text",
+        "id": "heading",
+        "label": "t:g.common.label.heading",
+        "default": "Your cart"
+    },
+    {
+        "type": "checkbox",
+        "id": "show_stock_alert",
+        "label": "Show stock alert",
+        "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "subtotal",
+      "name": "Subtotal",
+      "limit": 1
+    },
+    {
+      "type": "checkout",
+      "name": "Checkout button",
+      "limit": 1,
+      "settings": [
+        {
+            "type": "checkbox",
+            "id": "show_payment_methods",
+            "label": "Show payment methods",
+            "default": true
+        }
+      ]
+    },
+    {
+        "type": "order_notes",
+        "name": "Order notes",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "select",
+                "id": "default_state",
+                "label": "Default state",
+                "options": [
+                    {
+                        "value": "closed",
+                        "label": "Closed"
+                    },
+                    {
+                        "value": "opened",
+                        "label": "Opened"
+                    }
+                ],
+                "default": "closed"
+            }
+        ]
+    },
+    {
+        "type": "tax_note",
+        "name": "Taxes and shipping note",
+        "limit": 1
+    },
+    {
+        "type": "accelerated_checkout",
+        "name": "Dynamic checkout buttons",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "paragraph",
+                "content": "t:sections.main-product.blocks.buy_buttons.settings.show_dynamic_checkout.info"
+            }
+        ]
+    },
+    {
+        "type": "free_shipping",
+        "name": "Free shipping status",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "paragraph",
+                "content": "Configure your free shipping minimum amount in theme settings"
+            }
+        ]
+    },
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

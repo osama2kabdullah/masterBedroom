@@ -1,0 +1,10 @@
+{%- liquid
+    assign NS = 'lights-out'
+    assign cn = '#' | append: NS    
+-%}
+
+{% render 'load-css', file: NS, lazy: true %}
+
+<{{ NS }} class="{{ cn }}"></{{ NS }}>
+
+<script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>

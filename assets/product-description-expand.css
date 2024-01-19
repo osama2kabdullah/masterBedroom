@@ -1,0 +1,40 @@
+.\#product-description-expand {
+  --height: var(--expand-height, auto);
+  position: relative;
+  display: block;
+}
+.\#product-description-expand.\!expanded .\#product-description-expand-content {
+  height: auto;
+  padding-bottom: 1.8rem;
+}
+.\#product-description-expand.\!expanded .\#product-description-expand-link {
+  background: none;
+  padding-top: 0;
+}
+.\#product-description-expand.\!expanded .\#product-description-expand-link .\#icon {
+  transform: rotate(180deg);
+}
+.\#product-description-expand-content {
+  height: var(--height);
+  overflow: hidden;
+  transition: var(--transition-base);
+}
+.\#product-description-expand-link {
+  background: linear-gradient(0deg, var(--color-g-bg) 35%, var(--color-g-bg-alpha-0) 100%);
+  position: absolute;
+  border: none;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  padding-top: 2rem;
+  font-size: 1.15rem;
+  font-weight: var(--font-body-weight-bold);
+  gap: 0.4rem;
+}
+.\#product-description-expand-link .\#icon {
+  --size: 1.15rem;
+  transition: var(--transition-base);
+}

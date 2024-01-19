@@ -1,0 +1,151 @@
+html.js .\#media-image-loading, .\#media-placeholder, .\#media-overlay, .\#media-link, .\#media-image-wrapper, .\#media-image-mobile-wrapper, .\#media-image, .\#media-image-mobile {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
+.\#media-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.\#media {
+  --ar-padding: 100%;
+  --image-position: center;
+  --image-fit: cover;
+  --height: 100vh;
+  position: relative;
+  overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+.\#media.\@rounded {
+  border-radius: 50%;
+}
+.\#media.\@border-radius\:base {
+  border-radius: 1.125rem;
+}
+.\#media.\@border-radius\:inner {
+  border-radius: 0.7rem;
+}
+.\#media.\@border-radius\:sm {
+  border-radius: 0.25rem;
+}
+@media (min-width: 992px) {
+  .\#media.\@icon-hover-opacity .\#media-icon {
+    opacity: 0.6;
+  }
+  .\#media.\@icon-hover-opacity .\#media-icon:hover {
+    opacity: 1;
+  }
+}
+.\#media.\@type\:ar {
+  height: auto;
+}
+.\#media.\@type\:ar:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-top: var(--ar-padding);
+}
+.\#media.\@type\:abs {
+  height: var(--height);
+}
+.\#media.\@type\:auto {
+  height: auto;
+}
+@media (max-width: 991px) {
+  .\#media.\@type-mobile\:ar {
+    height: auto;
+  }
+  .\#media.\@type-mobile\:ar:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: var(--ar-padding-mobile, var(--ar-padding));
+  }
+  .\#media.\@type-mobile\:abs {
+    height: var(--height-mobile, var(--height));
+  }
+  .\#media.\@type-mobile\:auto {
+    height: auto;
+  }
+  .\#media.\@type-mobile\:auto:before {
+    padding: 0;
+  }
+}
+@media (min-width: 992px) {
+  .\#media.\@mobile-image .\#media-image-mobile {
+    display: none;
+  }
+}
+@media (max-width: 991px) {
+  .\#media.\@mobile-image .\#media-image {
+    display: none;
+  }
+}
+.\#media-image, .\#media-image-mobile {
+  object-fit: var(--image-fit);
+  object-position: var(--image-position);
+  z-index: 2;
+}
+.\#media-image.\@cover, .\#media-image-mobile.\@cover {
+  min-height: 100%;
+}
+.\#media-link {
+  display: block;
+  z-index: 4;
+}
+.\#media-overlay {
+  --value: 0;
+  background-color: rgba(0, 0, 0, var(--value));
+  z-index: 3;
+}
+.\#media-placeholder {
+  background: #b3b3b3;
+}
+.\#media-placeholder > svg {
+  opacity: 0.3;
+  height: inherit;
+  width: 100%;
+}
+html.js .\#media-image.\@animate-loading, html.js .\#media-image-mobile.\@animate-loading {
+  opacity: 0;
+  transition: 0.3s;
+}
+html.js .\#media-image.\@animate-loading[loaded], html.js .\#media-image-mobile.\@animate-loading[loaded] {
+  opacity: 1;
+}
+html.js .\#media-image.\@animate-loading[loaded] ~ .\#media-image-loading, html.js .\#media-image-mobile.\@animate-loading[loaded] ~ .\#media-image-loading {
+  display: none;
+}
+html.js .\#media-image-loading {
+  z-index: 1;
+  background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(199, 199, 199) 50%, rgb(255, 255, 255) 100%);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: placeHolderShimmer 1.5s infinite linear forwards;
+}
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.\#media-icon {
+  --icon-color: var(--color-g-fg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: var(--icon-color);
+}

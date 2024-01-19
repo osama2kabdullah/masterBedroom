@@ -1,0 +1,55 @@
+{%- if product.description != blank -%}
+    {%- liquid
+        assign size_unit = section.settings.font_scale | times: 1.0
+        assign size_unit = size_unit | divided_by: 100 
+    -%}
+
+    {%- capture Content -%}
+        <div class="#rte" style="--font-size: {{ size_unit }}rem;">
+            {{ product.description }}
+        </div>
+    {%- endcapture -%}
+
+    {% render 'section-body',
+        content: Content,
+        heading: section.settings.heading,
+        subheading: section.settings.subheading,
+        spaced: true,
+        container: true
+    %}
+{%- endif -%}
+
+{% schema %}
+{
+    "name": "Product description",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "t:g.common.label.heading",
+            "default": "Description"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading"
+        },
+        {
+            "type": "range",
+            "id": "font_scale",
+            "label": "Font scale",
+            "min": 100,
+            "step": 5,
+            "max": 150,
+            "unit": "%",
+            "default": 100
+        }
+    ],
+    "presets": [
+        {
+            "name": "Product description"
+        }
+    ],
+    "templates": ["product"]
+}
+{% endschema %}

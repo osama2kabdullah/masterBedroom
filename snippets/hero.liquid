@@ -1,0 +1,297 @@
+{%- liquid
+    comment
+        Props:
+            - size 
+            - f_button_label
+            - f_button_link
+            - f_button_color_scheme
+            - f_button_style
+            - f_button_shadow
+            - buttons_size
+            - subheading_position
+            - heading_tag: default: h2
+    endcomment
+
+    assign NS = 'hero'
+    assign cn = '#' | append: NS
+    if width != blank
+        assign width = width | append: '%'
+    endif
+    assign heading_font = heading_font | default: true
+
+    assign size = size | default: 'md'
+
+    assign subheading_position = subheading_position | default: 'after'
+
+    case size
+        when 'xxs'
+            assign d_heading_size = 'h5'
+            assign d_text_size = 'h6'
+            assign d_buttons_size = 'h6'
+            assign d_subheading_size = 'h6'
+            assign d_gap_size = 'h6'
+        when 'xs'
+            assign d_heading_size = 'h4'
+            assign d_text_size = 'h6'
+            assign d_buttons_size = 'h6'
+            assign d_subheading_size = 'h6'
+            assign d_gap_size = 'h6'
+        when 'sm'
+            assign d_heading_size = 'h2'
+            assign d_text_size = 'h5'
+            assign d_buttons_size = 'body'
+            assign d_subheading_size = 'h6'
+            assign d_gap_size = 'body'
+            assign d_countdown_size = 'h3'
+        when 'md'
+            assign d_heading_size = 'd4'
+            assign d_text_size = 'h4'
+            assign d_buttons_size = 'h5'
+            assign d_subheading_size = 'h5'
+            assign d_gap_size = 'h4'
+            assign d_countdown_size = 'd3'
+            assign d_countdown_titles_size = 'h6'
+        when 'lg'
+            assign d_heading_size = 'd1'
+            assign d_text_size = 'h3'
+            assign d_buttons_size = 'h3'
+            assign d_subheading_size = 'h4'
+            assign d_gap_size = 'h3'
+            assign d_countdown_size = 'd2'
+            assign d_countdown_titles_size = 'body'
+        when 'xl'
+            assign d_heading_size = 'd00'
+            assign d_text_size = 'h2'
+            assign d_buttons_size = 'h2'
+            assign d_subheading_size = 'h3'
+            assign d_gap_size = 'h2'
+            assign d_countdown_size = 'd2'
+            assign d_countdown_titles_size = 'body'
+    endcase
+
+    
+    
+    assign heading_size = heading_size | default: d_heading_size
+    assign heading_tag = heading_tag | default: 'h2'
+    assign text_size = text_size | default: d_text_size
+    assign buttons_size = buttons_size | default: d_buttons_size
+    assign subheading_size = subheading_size | default: d_subheading_size
+    assign gap_size = gap_size | default: d_gap_size
+    assign box_size = box_size | default: d_heading_size
+
+    if auto_colors == true
+        if box == true
+            assign text_color = settings.color_text
+            assign bg_color = settings.color_foreground
+        else
+            assign text_color = settings.color_foreground
+            if mobile_box
+                assign mobile_text_color = settings.color_text
+                assign mobile_bg_color = settings.color_foreground
+            endif
+        endif
+    endif
+
+    if outer_gap != blank and outer_gap != false
+        assign outer_gap_class = '@outer-gap'
+        if outer_gap != true
+            assign outer_gap_class = outer_gap_class | append: ':' | append: outer_gap
+        endif
+    endif
+-%}
+
+<div
+    class="{{ cn }} gap-{{ gap_size }} {{ outer_gap_class }} {% if mobile_box == true and box != true %}@mobile-box:{{ box_size }} mobile-shadow-3{% endif %} {% if box == true %}@box:{{ box_size }} shadow-3{% endif %} @align:{{ align | default: 'left' }} @size:{{ size | default: 'md' }} {% if align_mobile_center == true %}@mobile-center{% endif %}"
+    style="
+        --width: {{ width | default: 'auto' }}; 
+        {% if text_color != blank %}--text-color: {{ text_color }};{% endif %} 
+        {% if bg_color != blank %}--bg-color: {{ bg_color | color_modify: 'alpha', 0.8 }};{% endif %}
+        {% if gap != blank %}--gap: {{ gap }};{% endif %}
+        {% if mobile_text_color %}--mobile-text-color: {{ mobile_text_color }};{% endif %}
+        {% if mobile_bg_color %}--mobile-bg-color: {{ mobile_bg_color }};{% endif %}
+    "
+>
+    {% if blocks %}
+        {% for block in blocks %}
+            <div class="{{ cn }}-item {% if block.type == 'buttons' and hide_mobile_buttons %}mobile-hidden{% endif %}" {{ block.shopify_attributes }}>
+                {% case block.type %}
+                    {% when 'icon' %}
+                        <div class="{{ cn }}-icon fs-{{ heading_size }}" {% if block.settings.icon_use_custom_color %}style="--color: {{ block.settings.icon_color }};"{% endif %}>
+                            {% render 'icon',
+                                name: block.settings.icon,
+                                load: true
+                            %}
+                        </div>
+                    {% when 'image' %}
+                        {%- capture image_srcsize_desktop -%}min(100vw, {{ settings.container_width }}px) * {{ width | default: 100 | divided_by: 100.0 }} * {{ block.settings.image_width | divided_by: 100.0 }}{%- endcapture -%}
+                        {%- capture image_srcsize_mobile -%}90vw * {{ block.settings.image_width | divided_by: 100.0 }}{%- endcapture -%}
+                        <div class="{{ cn }}-image" style="--width: {{ block.settings.image_width }}%">
+                            {% render 'media',
+                                image: block.settings.image,
+                                srcsize_desktop: image_srcsize_desktop,
+                                srcsize_mobile: image_srcsize_mobile
+                            %}
+                        </div>
+                    {% when 'newsletter_form' %}
+                        {% render 'hero-newsletter', size: size %}
+                    {% when 'video_popup' %}
+                        {%- assign video_popup_id = 'VideoPopup-' | append: block.id -%}
+                        {%- capture cover_image_srcsize_desktop -%}min(100vw, {{ settings.container_width }}px) * {{ width | default: 100 | divided_by: 100.0 }} * {{ block.settings.image_width | divided_by: 100.0 }}{%- endcapture -%}
+                        {%- assign video = block.settings.hosted_video | default: block.settings.embedded_video -%}
+                        {% render 'hero-video-popup',
+                            icon_color: block.settings.icon_color,
+                            cover_image: block.settings.cover_image,
+                            cover_image_srcsize_desktop: cover_image_srcsize_desktop,
+                            width: block.settings.image_width,
+                            id: video_popup_id,
+                            video: video
+                        %}
+                    {% when 'heading' %}
+                        <{{ heading_tag }} class="{{ cn }}-heading fs-{{ heading_size }} {% if heading_font %}heading-font{% endif %}">
+                            {% if block.settings.heading_accent_enable == true %}
+                                {%- if block.settings.heading_accent_use_cutom_color -%}
+                                    {%- assign accent_color = block.settings.heading_accent_color -%}
+                                {%- endif -%}
+                                {% render 'accent-text',
+                                    text: block.settings.heading,
+                                    color: accent_color
+                                %}
+                            {% else %}
+                                {{- block.settings.heading -}}
+                            {% endif %}
+                        </{{ heading_tag }}>
+                    {% when 'subheading' %}
+                        <h4 class="{{ cn }}-subheading fs-{{ subheading_size }}">{{ block.settings.subheading }}</h4>
+                    {% when 'text' %}
+                        <div class="{{ cn }}-text fs-{{ text_size }}">
+                            <div class="#rte-block">
+                                {{ block.settings.text }}
+                            </div>
+                        </div>
+                    {% when 'timer' %}
+                        {% render 'countdown-timer',
+                            date: block.settings.date,
+                            hide_on_complete: block.settings.hide_on_complete,
+                            complete_msg: block.settings.complete_msg,
+                            display_titles: block.settings.display_titles,
+                            timer_size: d_countdown_size,
+                            timer_titles_size: d_countdown_titles_size
+                        %}
+
+                    {% when 'buttons' %} 
+                        {%- if block.settings.f_button_label != blank or block.settings.s_button_label != blank -%}
+                            <div class="{{ cn }}-buttons gap-{{ gap_size }}">
+                                {%- if block.settings.f_button_label != blank -%}
+                                    {%- if block.settings.f_button_custom_colors -%}
+                                        {%- assign f_text_color = block.settings.f_button_text_color -%}
+                                        {%- assign f_bg_color = block.settings.f_button_bg_color -%}
+                                    {%- endif -%}
+                                    {% render 'button',
+                                        size: buttons_size,
+                                        text: block.settings.f_button_label,
+                                        link: block.settings.f_button_link,
+                                        display_style: block.settings.f_button_style,
+                                        text_color: f_text_color,
+                                        bg_color: f_bg_color,
+                                        tag: 'a',
+                                        new_tab: block.settings.f_button_new_tab
+                                    %}
+                                {%- endif -%}
+                                {%- if block.settings.s_button_label != blank -%}
+                                    {%- if block.settings.s_button_custom_colors -%}
+                                        {%- assign s_text_color = block.settings.s_button_text_color -%}
+                                        {%- assign s_bg_color = block.settings.s_button_bg_color -%}
+                                    {%- endif -%}
+                                    {% render 'button',
+                                        size: buttons_size,
+                                        text: block.settings.s_button_label,
+                                        link: block.settings.s_button_link,
+                                        display_style: block.settings.s_button_style,
+                                        text_color: s_text_color,
+                                        bg_color: s_bg_color,
+                                        tag: 'a',
+                                        new_tab: block.settings.s_button_new_tab
+                                    %}
+                                {%- endif -%}
+                            </div>
+                        {%- endif -%}                        
+                {% endcase %}
+            </div>
+        {% endfor %}
+    {% else %}
+        {%- capture Subheading_content -%}
+            {% if subheading != blank %}
+                <h4 class="{{ cn }}-subheading fs-{{ subheading_size }}">{{ subheading }}</h4>
+            {% endif %}
+        {%- endcapture -%}
+        {%- if icon != blank -%}
+            <div class="{{ cn }}-icon fs-{{ heading_size }}" {% if icon_use_custom_color %}style="--color: {{ icon_color }};"{% endif %}>
+                {% render 'icon',
+                    name: icon,
+                    load: true
+                %}
+            </div>
+        {%- endif -%}  
+        {%- if Subheading_content != blank and subheading_position == 'before' -%}
+            {{ Subheading_content }}
+        {%- endif -%}
+        {% if heading != blank %}
+            <{{ heading_tag }} class="{{ cn }}-heading fs-{{ heading_size }} {% if heading_font %}heading-font{% endif %}">
+                {% if accent == true %}
+                    {% render 'accent-text',
+                        text: heading,
+                    %}
+                {% else %}
+                    {{- heading -}}
+                {% endif %}
+            </{{ heading_tag }}>
+        {% endif %}
+        {%- if Subheading_content != blank and subheading_position == 'after' -%}
+            {{ Subheading_content }}
+        {%- endif -%}
+        {% if text != blank %}
+            <div class="{{ cn }}-text fs-{{ text_size }}">
+                <div class="#rte-block">
+                    {{ text }}
+                </div>
+            </div> 
+        {% endif %}
+
+        {%- if f_button_label != blank or s_button_label != blank -%}
+            <div class="{{ cn }}-buttons gap-{{ gap_size }} {% if hide_mobile_buttons %}mobile-hidden{% endif %}">
+                {%- if f_button_label != blank -%}
+                    {%- if f_button_custom_colors -%}
+                        {%- assign f_text_color = f_button_text_color -%}
+                        {%- assign f_bg_color = f_button_bg_color -%}
+                    {%- endif -%}
+                    {% render 'button',
+                        size: buttons_size,
+                        text: f_button_label,
+                        link: f_button_link,
+                        display_style: f_button_style,
+                        text_color: f_text_color,
+                        bg_color: f_bg_color,
+                        tag: 'a',
+                        new_tab: f_button_new_tab
+                    %}
+                {%- endif -%}
+                {%- if s_button_label != blank -%}
+                    {%- if s_button_custom_colors -%}
+                        {%- assign s_text_color = s_button_text_color -%}
+                        {%- assign s_bg_color = s_button_bg_color -%}
+                    {%- endif -%}
+                    {% render 'button',
+                        size: buttons_size,
+                        text: s_button_label,
+                        link: s_button_link,
+                        display_style: s_button_style,
+                        text_color: s_text_color,
+                        bg_color: s_bg_color,
+                        tag: 'a',
+                        new_tab: s_button_new_tab
+                    %}
+                {%- endif -%}
+            </div>
+        {%- endif -%}
+    {% endif %}
+</div>

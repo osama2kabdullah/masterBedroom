@@ -1,0 +1,86 @@
+{%- liquid
+    assign NS = 'product-stock-notifier'
+    assign cn = '#' | append: NS
+-%}
+{% render 'load-css', file: NS %}
+
+{%- capture Icon -%}
+    {% render 'icon', name: 'bell' %}
+{%- endcapture -%}
+
+{%- capture Header -%}
+    <div class="{{ cn }}-header">
+        {% if product.selected_or_first_available_variant.options[forloop.index0] != blank %}
+            <div class="{{ cn }}-header-media">
+                <div class="{{ cn }}-header-media-icon">{{ Icon }}</div>
+                {% render 'media',
+                    image: product.selected_or_first_available_varian.options[forloop.index0].image,
+                    border_radius: 'inner'
+                %}
+            </div>
+        {% else %}
+            <div class="{{ cn }}-header-icon">
+                {{ Icon }}
+            </div>    
+        {% endif %}
+        {%- unless product.has_only_default_variant -%}
+            <span class="{{ cn }}-header-variant">
+                {%- for option in product.options -%}
+                    {{ option }}: {{ product.selected_or_first_available_variant.options[forloop.index0] }}{% unless forloop.last %} / {% endunless %}
+                {%- endfor -%}
+            </span>    
+        {%- endunless -%}
+    </div>
+{%- endcapture -%}
+
+{%- capture Form -%}
+    <div class="{{ cn }}-form">
+        <div class="{{ cn }}-form-inner">
+            <input
+                type="hidden"
+                form="{{ contact_form_id }}"
+                name="contact[{{ 'products.product.stock_notification.form.label' | t }}]"
+                value="{{ 'products.product.stock_notification.form.product' | t | append: product.title}}" 
+            >
+            {% if product.selected_variant != blank %}
+                <input
+                    type="hidden"
+                    form="{{ contact_form_id }}"
+                    name="contact[{{ 'products.product.stock_notification.form.variant' | t }}]"
+                    value="{{ product.selected_variant.title }}"
+                >   
+            {% endif %}
+            <input
+                data-input
+                form="{{ contact_form_id }}"
+                autocomplete="email"
+                type="email"
+                class="{{ cn }}-form-input"
+                placeholder="{{ 'products.product.stock_notification.form.email_placeholder' | t }}"
+                name="contact[email]"
+                value="{% if form.email %}{{ form.email | escape }}{% elsif customer %}{{ customer.email | escape }}{% endif %}"
+                required
+            >
+            <button class="{{ cn }}-form-submit" form="{{ contact_form_id }}" type="submit">
+                {{ 'products.product.stock_notification.form.send' | t }} 
+            </button>
+        </div>
+    </div>
+{%- endcapture -%}
+
+<div class="{{ cn }}">
+    {{ Header }}
+    <div class="{{ cn }}-init">
+        <div class="{{ cn }}-message">
+            <h3 class="{{ cn }}-message-heading">{{ 'products.product.stock_notification.heading' | t }}</h3>
+            <h4 class="{{ cn }}-message-subheading">{{ 'products.product.stock_notification.subheading' | t }}</h4>
+        </div>
+        <contact-form-submiter 
+            success-message="{{ 'products.product.stock_notification.post_success.subheading' | t }}"
+            success-title="{{ 'products.product.stock_notification.post_success.heading' | t }}"
+        >
+            <input type="hidden" form="{{ contact_form_id }}" data-contact-form-targeter disabled>
+            {{ Form }}
+        </contact-form-submiter>
+    </div>
+</div>

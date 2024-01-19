@@ -1,0 +1,52 @@
+{%- assign heading = 'templates.search.search_for' | t: terms: search.terms -%}
+
+{% comment %}
+{%- if search.performed and search.results_count > 0 -%}
+    {% render 'page-header',
+        heading: heading,
+        bg_image: section.settings.bg_image,
+        text: section.settings.text
+    %}
+{%- endif -%}
+{% endcomment %}
+
+{%- if section.settings.only_results_show -%}
+    {%- if search.performed and search.results_count > 0 -%}
+        {% render 'page-header',
+            heading: heading,
+            bg_image: section.settings.bg_image,
+            text: section.settings.text
+        %}
+    {%- endif -%}
+{%- else -%}
+    {%- if search.performed and search.results_count > 0 -%}
+        {%- assign heading = 'templates.search.search_for' | t: terms: search.terms -%}
+    {%- else -%}
+        {%- assign heading = 'general.search.search' | t -%}
+    {%- endif -%}
+    {% render 'page-header',
+        heading: heading,
+        bg_image: section.settings.bg_image,
+        text: section.settings.text
+    %}
+{%- endif -%}
+
+
+{% schema %}
+{
+    "name": "Search header",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "bg_image",
+            "label": "Background image"
+        },
+        {
+            "type": "checkbox",
+            "id": "only_results_show",
+            "label": "Show only if there are search results",
+            "default": true
+        }
+    ]
+}
+{% endschema %}

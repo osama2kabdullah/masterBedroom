@@ -1,0 +1,175 @@
+{%- liquid
+    assign mobile_columns = 2
+    assign columns = section.settings.columns    
+-%}
+{%- capture image_srcsize_desktop -%}(min(100vw, {{ settings.container_width }}px) - min(3rem, 5vw))/{{ columns }}{%- endcapture -%}
+{%- capture image_srcsize_mobile -%}90vw/{{ mobile_columns }}{%- endcapture -%}
+
+{% render 'load-css', file: 'collection-card' %}
+
+
+{%- capture Content -%}
+    <div class="#grid @type:columns" style="--columns: {{ columns }}; --columns-mobile: {{ mobile_columns }};">
+        {% for block in section.blocks %}
+            {%- capture placeholder_index -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+            <div {{ block.shopify_attributes }}>
+                {% render 'collection-card',
+                    image: block.settings.image,
+                    custom_title: block.settings.custom_title,
+                    size: section.settings.image_size,
+                    collection: block.settings.collection,
+                    text_position: section.settings.text_position,
+                    text_bg: true,
+                    show_frame: section.settings.show_frame,
+                    text_size: 'h4',
+                    placeholder_index: placeholder_index,
+                    image_srcsize_desktop: image_srcsize_desktop,
+                    image_srcsize_mobile: image_srcsize_mobile
+                %}
+            </div>            
+        {% endfor %}
+    </div>
+{%- endcapture -%}
+
+{% render 'section-body',
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    content: Content,
+    spaced: true,
+    container: true,
+    button_label: section.settings.section_button_label,
+    button_link: routes.collections_url
+%}
+
+
+
+{% schema %}
+{
+    "name": "Collection list",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "t:g.common.label.heading",
+            "default": "Collection list"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading"
+        },
+        {
+            "type": "range",
+            "id": "columns",
+            "label": "Desktop columns",
+            "min": 3,
+            "step": 1,
+            "max": 6,
+            "default": 5              
+        },
+        {
+            "type": "select",
+            "id": "image_size",
+            "label": "t:g.media.image_size.label",
+            "options": [
+                {
+                    "value": "portrait",
+                    "label": "t:g.media.image_size.options.portrait"
+                },
+                {
+                    "value": "landscape",
+                    "label": "t:g.media.image_size.options.landscape"
+                },
+                {
+                    "value": "circle",
+                    "label": "t:g.media.image_size.options.circle"
+                },
+                {
+                    "value": "square",
+                    "label": "t:g.media.image_size.options.square"
+                }
+            ],
+            "default": "square" 
+        },
+        {
+            "type": "select",
+            "id": "text_position",
+            "label": "t:g.collection_card.text_position.label",
+            "options": [
+                {
+                    "value": "center",
+                    "label": "Outside"
+                },
+                {
+                    "value": "inner-bottom-center",
+                    "label": "Bottom"
+                },
+                {
+                    "value": "inner-center",
+                    "label": "Center"
+                }
+            ],
+            "default": "inner-bottom-center"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_frame",
+            "label": "t:g.media.show_frame"
+        },
+        {
+            "type": "header",
+            "content": "t:g.section.button.header"
+        },
+        {
+            "type": "text",
+            "id": "section_button_label",
+            "label": "t:g.section.button.label"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "collection",
+            "name": "Collection",
+            "settings": [
+                {
+                    "type": "collection",
+                    "id": "collection",
+                    "label": "Collection"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Custom image"
+                },
+                {
+                    "type": "text",
+                    "id": "custom_title",
+                    "label": "Custom title"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Collection list",
+            "blocks": [
+                {
+                  "type": "collection"
+                },
+                {
+                  "type": "collection"
+                },
+                {
+                  "type": "collection"
+                },
+                {
+                  "type": "collection"
+                },
+                {
+                  "type": "collection"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

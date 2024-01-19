@@ -1,0 +1,22 @@
+{%- liquid
+    comment
+        PROPS:
+            - variant
+            - trigger (data-to-cart attr required)
+            - form_child
+    endcomment
+    
+    assign NS = 'product-to-cart'
+-%}
+
+<{{ NS }} 
+    variant-id="{{ variant.id }}" 
+    section-id="{{ section.id }}"
+    {% if form_child %}
+        form-child
+    {% endif %}
+>
+    {{ trigger }}
+</{{ NS }}>
+
+<script type="module" src="{{ 'product-to-cart.js' | asset_url }}"></script>

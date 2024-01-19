@@ -1,0 +1,42 @@
+{% liquid
+  assign pick_up_availabilities = variant.store_availabilities | where: 'pick_up_enabled', true
+  assign closest_location = pick_up_availabilities.first
+  assign modal_url = routes.root_url | append: 'variants/' | append: variant.id | append: '?section_id=r_pickup-availability'
+  assign modal_target = '#pickupAviabilitySection'
+  assign cn = '#product-pickup-availability'
+%}
+
+
+{%- if pick_up_availabilities.size > 0 and variant.available -%}
+  <div class="{{ cn }}">
+    <div class="{{ cn }}-icon">
+      {% render 'icon', name: 'store' %}
+    </div>
+    <div class="{{ cn }}-body">
+      {%- if closest_location.available -%}
+        <h3 class="{{ cn }}-status">{{ 'products.product.pickup_availability.pick_up_available_at_html' | t: location_name: closest_location.location.name }}</h3>
+        <p class="{{ cn }}-time">{{ closest_location.pick_up_time }}</p>
+        <modal-trigger 
+          class="{{ cn }}-popup-link" 
+          url="{{ modal_url }}" 
+          target="{{ modal_target }}"
+          animation="slideRight"
+          position="center-right"
+          height="100%"
+          width="min(35rem, 95vw)"
+        >
+          {%- if pick_up_availabilities.size == 1 -%}
+            {{ 'products.product.pickup_availability.view_store_info' | t }}
+          {%- else -%}
+            {{ 'products.product.pickup_availability.check_other_stores' | t }}
+          {%- endif -%}
+        </modal-trigger>
+      {%- else -%}
+        <h3 class="{{ cn }}-status">{{ 'products.product.pickup_availability.pick_up_unavailable_at_html' | t: location_name: closest_location.location.name }}</h3>
+        <modal-trigger class="{{ cn }}-popup-link" url="{{ modal_url }}" target="{{ modal_target }}">
+          {{ 'products.product.pickup_availability.check_other_stores' | t }}
+        </modal-trigger>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}

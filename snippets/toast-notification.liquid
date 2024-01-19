@@ -1,0 +1,33 @@
+{%- liquid
+    assign NS = 'toast-notification'
+    assign cn = '#' | append: NS    
+-%}
+
+{% render 'load-css', file: NS, lazy: true %}
+
+<{{ NS }}>
+    <template data-template>
+        <div class="{{ cn }} shadow-2" data-root>
+            <div class="{{ cn }}-icon-wrapper">            
+                <div class="{{ cn }}-icon" data-icon="warning" hidden>
+                    {% render 'icon', name: 'exclamation' %}
+                </div>
+                <div class="{{ cn }}-icon" data-icon="error" hidden>
+                    {% render 'icon', name: 'x' %}
+                </div>
+                <div class="{{ cn }}-icon" data-icon="success" hidden>
+                    {% render 'icon', name: 'check' %}
+                </div>
+            </div>
+            <div class="{{ cn }}-body">
+                <h5 class="{{ cn }}-title" data-title></h5>
+                <p class="{{ cn }}-msg" data-msg></p>
+            </div>
+            <modal-close class="{{ cn }}-close">
+                {% render 'icon', name: 'x' %}
+            </modal-close>
+        </div>
+    </template>
+</{{ NS }}>
+
+<script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>

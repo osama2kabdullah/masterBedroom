@@ -1,0 +1,9 @@
+{% render 'load-css', file: 'page-spinner' %}
+
+{%- assign cn = '#page-spinner' -%}
+
+<page-spinner class="{{ cn }}" hidden>
+    {% render 'spinner' %}
+</page-spinner>
+
+<script type="module" src="{{ 'page-spinner.js' | asset_url }}"></script>

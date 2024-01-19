@@ -1,0 +1,20 @@
+{% assign cn = '#modal-popup' %}
+
+{% render 'load-css', file: 'modal' %}
+
+<modal-popup class="{{ cn }}">
+    
+    <div class="{{ cn }}-loading" hidden data-loading>
+        {% render 'spinner' %}
+    </div>
+    <dialog class="{{ cn }}-dialog" data-dialog>
+        <input class="{{ cn }}-autofocus-fix" tabindex="0" type="checkbox">
+        <modal-close class="{{ cn }}-close" data-close hidden>
+            {% render 'icon', name: 'x' %}
+        </modal-close>
+        <div class="{{ cn }}-content" hidden data-content></div>
+        <div class="{{ cn }}-content @stash" hidden data-stash></div>
+    </dialog>
+</modal-popup>
+
+<script type="module" src="{{ 'modal.js' | asset_url }}"></script>

@@ -1,0 +1,41 @@
+{%- liquid
+    assign NS = 'slideshow-inline'
+    assign cn = '#' | append: NS
+    assign slides_per_view = slides_per_view | default: 4
+    if slides_count == blank
+        assign enable_loop = loop
+    endif
+    if slides_count > slides_per_view and loop == true
+        assign enable_loop = true
+    endif
+-%}
+
+{% render 'load-css', file: 'swiper' %}
+{% render 'load-css', file: NS %}
+
+<{{ NS }} 
+    class="{{ cn }} @layout:{{ section.settings.section_layout }} {% if pagination %}@with-pagination{% endif %}"
+    slides-per-view="{{ slides_per_view }}"
+    slides-count="{{ slides_count }}"
+    gap="{{ gap }}"
+    {% if offset %}offset{% endif %}
+    {% if enable_loop %}loop{% endif %}
+    {%- if section.settings.section_layout == 'container' -%}container{%- endif -%}
+>
+    <div class="swiper" data-swiper>
+        <div class="swiper-wrapper" data-swiper-wrapper>
+            {{ slides }}
+        </div>
+        <div class="swiper-button-prev" data-button-prev>
+            {% render 'icon', name: 'arrow-left' %}
+        </div>
+        <div class="swiper-button-next" data-button-next>
+            {% render 'icon', name: 'arrow-right' %}
+        </div>
+        {%- if pagination -%}
+            <div class="{{ cn }}-pagination @align:{{ settings.section_text_align }} swiper-pagination" data-pagination></div>
+        {%- endif -%}
+    </div>
+</{{ NS }}>
+
+<script type="module" src="{{  NS | append: '.js' | asset_url }}"></script>

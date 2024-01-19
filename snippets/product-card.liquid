@@ -1,0 +1,278 @@
+{%- liquid
+    assign NS = 'product-card'
+    assign cn = '#' | append: NS
+    assign quick_view = true
+    assign no_params_product_url = product.url | split: '?' | first
+
+    unless settings.product_card_image_crop
+        assign image_fit = 'contain'
+    endunless
+    
+    if settings.product_card_display_alt_image and product
+        if product.images[1] != blank
+            assign alt_image = product.images[1]
+        else
+            assign alt_image = blank
+        endif
+    endif
+
+    if settings.product_card_image_padding
+        assign media_border_radius = 'inner'
+    else
+        assign media_border_radius = 'base'
+    endif
+
+    if settings.animation_card_lift_up
+        assign cn_shadow = 'shadow-hover-2-3'
+    else
+        assign cn_shadow = 'shadow-2'
+    endif
+
+    if settings.product_card_dim_unavailable and product.available == false
+        assign dim_product = true
+    endif
+
+    assign rating_value = product.metafields.reviews.rating.value
+    assign rating_value = rating_value | strip | plus: 0
+    assign rating_floor = rating_value | floor
+    assign rating_remainder = rating_value | minus: rating_floor
+    assign onboarding_title = 'onboarding.product_title' | t
+    assign swatches_limit = 5
+-%}
+
+{%- capture Reviews -%}
+    {%- if rating_value > 0 and settings.product_card_show_reviews -%}
+        <div class="{{ cn }}-rating @position:{{ settings.product_card_rating_position }}">
+            <div class="{{ cn }}-rating-stars">
+                {%- for i in (1..5) -%}
+                    {%- if rating_value >= 0.6 -%}
+                        {%- assign icon_name = 'star' -%}
+                    {%- elsif rating_value <= 0.2 -%}
+                        {%- assign icon_name = 'star-empty' -%}
+                    {%- else -%}
+                        {%- assign icon_name = 'star-half' -%}
+                    {%- endif -%}
+                    {% render 'icon', name: icon_name %}
+                    {%- assign rating_value = rating_value | minus: 1 -%}                
+                {%- endfor -%}
+            </div>
+            {% if settings.product_card_review_counter %}
+                <div class="{{ cn }}-rating-counter">
+                    {{ product.metafields.reviews.rating_count }}
+                </div>
+            {% endif %} 
+        </div>
+    {%- endif -%}
+{%- endcapture -%}
+       
+{%- capture Badges -%}
+    {%- if settings.product_card_badge_sold_out and product.available == false -%}
+        <div class="{{ cn }}-badge @type:sold-out">{{ 'products.product.sold_out' | t }}</div>
+    {%- endif -%}
+    {%- if settings.product_card_badge_sale and product.compare_at_price and product.available and product.compare_at_price > product.price -%}
+        <div class="{{ cn }}-badge @type:sale">
+            {%- if settings.product_card_badge_sale_style == 'sign' or product.price_varies -%}
+                {{ 'products.product.on_sale' | t }}
+            {%- else -%}
+                {%- if settings.product_card_badge_sale_style == 'percentage' -%}
+                    {%- assign pct = product.price | times: 100 | divided_by: product.compare_at_price  -%}
+                    {%- assign saved_value = 100 | minus: pct | append: '%' -%}
+                    {{ 'products.product.saved_amount' | t: value: saved_value }}
+                {%- endif -%}
+                {%- if settings.product_card_badge_sale_style == 'absolute' -%}
+                    {%- assign saved_value = product.compare_at_price | minus: product.price | money_without_trailing_zeros -%}
+                    {{ 'products.product.saved_amount' | t: value: saved_value }}
+                {%- endif -%}
+            {%- endif -%}
+        </div>
+    {%- endif -%}
+{%- endcapture -%}
+
+{%- if settings.product_card_show_color_swatches and product -%}
+    {%- capture Color_swatches -%}
+        {%- assign settings_color_option_names = settings.color_swatches_options | split: ',' | handleize -%}
+            {%- for product_option in product.options_with_values -%}
+                {%- assign option_name_handle = product_option.name | handleize -%}
+                {%- if settings_color_option_names contains option_name_handle  -%}
+
+                    {%- assign option_position = "option" | append: product_option.position -%}
+                    <div class="{{ cn }}-swatches @align:{{ settings.product_card_align }}" data-element="swatches">
+                        {%- for color_value in product_option.values limit: swatches_limit -%}
+                            {%- assign option_variant = product.variants | where: option_position, color_value | first -%}
+                            {%- if option_variant.image != blank -%}
+                                {%- capture Swatch_variant_images -%}
+                                    {{ Swatch_variant_images }}
+                                    <div class="{{ cn }}-swatch-media" data-swatch-number="{{ forloop.index }}">
+                                        {% render 'media', 
+                                            image: option_variant.image, 
+                                            srcsize_desktop: image_srcsize_desktop,
+                                            srcsize_mobile: image_srcsize_mobile,
+                                            border_radius: media_border_radius,
+                                            size: settings.product_card_image_size,
+                                            image_fit: image_fit,
+                                            animate_lazy_loading: false
+                                        %} 
+                                    </div>
+                                {%- endcapture -%}
+                            {%- endif -%}
+                            <a 
+                                class="{{ cn }}-swatch" 
+                                href="{{ option_variant.url }}" 
+                                style="{%- render 'swatch-color-style', value: color_value -%}"
+                                data-swatch-number="{{ forloop.index }}"
+                            ></a>
+                        {%- endfor -%}
+                        {%- if product_option.values.size > swatches_limit -%}
+                            {%- assign colors_remainder = product_option.values.size | minus: swatches_limit -%}
+                            <div class="{{ cn }}-swatches-remainder">
+                                {%- render 'icon', name: 'plus' -%}
+                                <span>{{ colors_remainder }}</span>
+                            </div>
+                        {%- endif -%}
+                    </div>
+
+                    {%- break -%}
+                {%- endif -%}
+            {%- endfor -%}
+    {%- endcapture -%}
+{%- endif -%}
+
+{%- capture Express_button -%}
+    {%- if settings.product_card_show_express_button and product.available -%}
+        {%- assign available_variants = product.variants | where: 'available' -%}
+        {%- if product.has_only_default_variant or available_variants.size == 1 -%}
+            {%- capture Button_text -%}
+                <span class="{{ cn }}-express-button-text">
+                    {%- render 'icon', name: 'plus' -%}
+                    <span>{{ 'products.product.express_add_to_cart' | t }}</span>
+                </span>
+            {%- endcapture -%}
+            {%- assign atts = 'data-to-cart' -%}
+            {%- assign loading = true -%}
+        {%- else -%}
+            {%- capture atts -%}url="{{ no_params_product_url }}?section_id=r_express-option-list" target="#expressOptionListModal"{%- endcapture -%}
+            {%- capture Button_text -%}{{'products.product.express_show_options' | t }}{%- endcapture -%}
+            {%- assign button_tag = 'modal-trigger' -%}
+        {%- endif -%}
+        <div class="{{ cn }}-express-button">
+            {%- capture Button -%}
+                {% render 'button',
+                    text: Button_text,
+                    size: 'body',
+                    loading: loading,
+                    spinner_size: 'xs',
+                    tag: button_tag,
+                    atts: atts
+                %}
+            {%- endcapture -%}
+            {%- if product.has_only_default_variant or available_variants.size == 1 -%}
+                {% render 'product-to-cart', 
+                    trigger: Button, 
+                    variant: product.first_available_variant
+                %}
+            {%- else -%}
+                {{ Button }}
+            {%- endif -%}
+        </div>
+    {%- endif -%}
+{%- endcapture -%}
+
+{%- if Swatch_variant_images != blank -%}
+    {%- assign wrapper = NS -%}
+    <script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>
+{%- else -%}
+    {%- assign wrapper = 'div' -%}
+{%- endif -%}
+
+
+<{{ wrapper }} class="{{ cn }} {% if dim_product %}@dim{% endif %} @align:{{ settings.product_card_align }} {% if horizontal == true %}@horizontal{% endif %} {% if settings.product_card_image_padding %}@image-padding{% endif %} {{ cn_shadow }}" style="--max-lines: {{ settings.product_card_title_max_lines }};">
+    {%- if product.url != blank -%}
+        <a href="{{ product.url }}" class="stretched-link">{{ product.title }}</a>
+    {%- endif -%}
+
+    {%- if Badges != blank -%}
+        <div class="{{ cn }}-badges @position:{{ settings.product_card_badges_position }}">
+            {{ Badges }}
+        </div>
+    {%- endif -%}
+
+    {%- capture Price -%}
+        <div class="{{ cn }}-price">
+            {% render 'price', product: product %}
+        </div>
+    {%- endcapture -%}
+
+    <div class="{{ cn }}-media">
+        {%- if settings.product_card_darken_image -%}
+            <div class="{{ cn }}-media-overlay"></div>
+        {%- endif -%}
+        {{ Express_button }}
+        {% render 'media', 
+            image: product.featured_image, 
+            srcsize_desktop: image_srcsize_desktop,
+            srcsize_mobile: image_srcsize_mobile,
+            border_radius: media_border_radius,
+            size: settings.product_card_image_size,
+            image_fit: image_fit,
+            placeholder: 'product',
+            placeholder_index: placeholder_index,
+        %}
+        {%- if Swatch_variant_images != blank -%}
+            {{ Swatch_variant_images }}     
+        {%- endif -%}
+
+        {%- if alt_image and alt_image != blank and dim_product != true -%}
+            <div class="{{ cn }}-media-alt load-hidden">
+                {% render 'media', 
+                    image: alt_image, 
+                    srcsize_desktop: image_srcsize_desktop,
+                    srcsize_mobile: image_srcsize_mobile,
+                    border_radius: media_border_radius,
+                    size: settings.product_card_image_size,
+                    image_fit: image_fit 
+                %}
+            </div>
+        {%- endif -%}
+        
+        {%- if settings.product_card_enable_quick_view and product.title != blank -%}
+            {%-liquid
+                if settings.product_card_show_express_button
+                    assign quick_view_position = 'center'
+                    assign quick_view_button_color = 'text-inverse'
+                else
+                    assign quick_view_position = 'bottom'
+                    assign quick_view_button_color = 'primary'
+                endif
+            -%}
+            <div class="{{ cn }}-quick-view @position:{{ quick_view_position }}">
+                {%- capture atts -%}url="{{ no_params_product_url }}?view=quick-view" target="#ProductQuickView-{{ product.id }}" container close-button{%- endcapture -%}
+                {% render 'button',
+                    t_text: 'products.product.quick_view',
+                    tag: 'modal-trigger',
+                    atts: atts,
+                    size: 'body',
+                    color_scheme: quick_view_button_color,
+                %}
+            </div>
+        {%- endif -%}
+    </div>
+    <div class="{{ cn }}-caption {% if settings.product_card_show_express_button %}@offset-top{% endif %}">
+        {%- if settings.product_card_rating_position == 'top' -%}
+            {{ Reviews }}
+        {%- endif -%}
+        {% if settings.product_card_show_vendor != blank %}
+            <p class="{{ cn }}-vendor">{{ product.vendor }}</p>
+        {% endif %}
+        {%- if settings.product_card_price_position == 'before' -%}
+            {{ Price }}
+        {%- endif -%}
+        <h3 class="{{ cn }}-title">{{ product.title | default: onboarding_title }}</h3>
+        {%- if settings.product_card_price_position == 'after' -%}
+            {{ Price }}
+        {%- endif -%}
+        {%- if settings.product_card_rating_position == 'bottom' -%}
+            {{ Reviews }}
+        {%- endif -%}
+        {{ Color_swatches }}
+    </div>
+</{{ wrapper }}>

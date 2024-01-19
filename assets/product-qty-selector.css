@@ -1,0 +1,57 @@
+.\#product-qty-selector-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+.\#product-qty-selector-inner {
+  position: relative;
+  display: block;
+  width: fit-content;
+}
+.\#product-qty-selector-inner select {
+  appearance: none;
+}
+.\#product-qty-selector-inner .\#icon {
+  right: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  user-select: none;
+}
+.\#product-qty-selector-inner .\#icon {
+  pointer-events: none;
+  --size: 1rem;
+  right: 1rem;
+}
+.\#product-qty-selector-input {
+  font-size: 1.15rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-weight: var(--font-body-weight-bold);
+  width: 6rem;
+  text-align: center;
+  border: 2px solid var(--color-g-fg-d20);
+}
+.\#product-qty-selector-input:focus {
+  border-color: var(--color-g-accent);
+  outline: none;
+}
+.\#product-qty-selector-select {
+  font-size: 1.15rem;
+  background: var(--color-g-fg);
+  padding: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: var(--font-body-weight-bold);
+  padding-right: 3rem;
+  text-align: center;
+  border: 2px solid var(--color-g-fg-d20);
+}
+.\#product-qty-selector-select:focus {
+  border-color: var(--color-g-accent);
+  outline: none;
+}
+.\#product-qty-selector-label {
+  font-weight: var(--font-body-weight-bold);
+  display: block;
+  margin-bottom: 0.5rem;
+}

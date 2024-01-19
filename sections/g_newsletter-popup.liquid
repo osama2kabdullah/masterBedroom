@@ -1,0 +1,339 @@
+{%- liquid
+    assign NS = 'newsletter-popup'
+    assign cn = '#' | append: NS
+    
+    if section.settings.is_enabled and section.blocks.size > 0
+        assign show_popup = true
+        if section.settings.new_customers_only and customer
+            assign show_popup = false
+        endif
+    endif
+    
+-%}
+
+{% if show_popup %}
+    {%- if request.design_mode -%}
+        {%- for block in section.blocks -%}
+            <div {{ block.shopify_attributes }} hidden></div>
+        {%- endfor -%}
+    {%- endif -%}
+    {% render 'load-css', file: NS %}
+    {% render 'load-css', file: 'hero-newsletter' %}
+        
+    <{{ NS }}
+        section-id="{{ section.id }}"
+        days-to-re-appear="{{ section.settings.days_to_re_appear }}"
+        display-delay="{{ section.settings.display_delay }}"
+        popup-position="{{ section.settings.popup_position }}"
+        {% unless section.settings.enable_screen_lock %}
+            unlock-screen
+        {% endunless %}
+    >
+        <template id="newsletterPopup" section-id="{{ section.id }}">
+        <div class="{{ cn }}-modal {% if section.settings.image != blank %}@with-image{% endif %}">
+            <modal-close class="{{ cn }}-modal-close">
+            {% render 'icon', name: 'x' %}
+            </modal-close>
+            {%- if section.settings.image != blank -%}
+            <div class="{{ cn }}-image mobile-hidden">
+                {% render 'media',
+                image: section.settings.image,
+                image_res: 320
+                %}
+            </div>
+            {%- endif -%}
+            <div class="{{ cn }}-text">
+            {% render 'hero',
+                blocks: section.blocks,
+                align: 'center',
+                size: section.settings.size,
+                width: 100
+            %}
+            </div>
+        </div>
+        </template>
+    </{{ NS }}>
+    <script type="module" src="{{ 'newsletter-popup.js' | asset_url }}"></script>
+{% endif %}
+
+{%- if request.design_mode -%}
+    <script type="text/json" data-{{section.id}}-settings>
+        {{ section.settings | json }}
+    </script>
+    <script type="text/json" data-{{section.id}}-blocks-size-settings>
+        {{ section.blocks.size | json }}
+    </script>
+    <script type="module">
+        import { debounce } from "{{ 'utils.js' | asset_url }}";
+        class EditorNewsletterPopup extends window.Editor {
+            events = {
+                section: {
+                    select: this._onNewsletterPopupSelect,
+                    deselect: this._onNewsletterPopupDeselect
+                },
+                block: {
+                    select: this._onNewsletterPopupBlockSelect
+                }
+            }
+            
+            init() {
+                this._listenResize();
+            }
+
+            _onNewsletterPopupSelect(e) {
+                if (!this.sectionSettings.is_enabled || !this.blocksCount) {
+                    this.closeModal();
+                    return;
+                }
+                this.selected = true;
+                this._open();
+            }
+
+            _onNewsletterPopupDeselect() {
+                if (this.sectionSettings.is_enabled) {
+                    this.selected = false;
+                    this.closeModal();
+                    return;
+                } else {
+                    activeState?.dropdown?.classList.remove('editor-show')
+                    this.toggleLightsOut(false)
+                }
+            }
+
+            _onNewsletterPopupBlockSelect() {
+                if (this.sectionSettings.is_enabled) this._open();
+            }
+
+            _open() {
+                if (this.selected) {
+                    this.openModal({
+                        target: '#newsletterPopup',
+                        backdrop: true,
+                        close: false,
+                        animation: 'fade',
+                        transition: 400,
+                        unlockScreen: !this.sectionSettings.enable_screen_lock,
+                        position: this.popupPosition
+                    });
+                }
+            }
+
+            _listenResize() {
+                window.addEventListener('resize', debounce(this._open.bind(this), 100))
+            }
+
+            get popupPosition() {
+                return window.innerWidth <= 992 ? 'center' : this.sectionSettings.popup_position;
+            }
+        }
+        const newsletterEditorUX = new EditorNewsletterPopup('{{ section.id }}');
+        newsletterEditorUX.settingsSelector = '[data-{{section.id}}-settings]';
+        newsletterEditorUX.blocksCountSelector = '[data-{{section.id}}-blocks-size-settings]';
+        newsletterEditorUX.render();
+    </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Entry popup",
+  "tag": "section",
+  "class": "spaced-section spaced-section--full-width",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "is_enabled",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_screen_lock",
+      "label": "Enable screen lock",
+      "default": true,
+      "info": "Scrolling will be turned off and popup will have the backdrop"
+    },
+    {
+      "type": "checkbox",
+      "id": "new_customers_only",
+      "label": "For unauthorized customers only",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "display_delay",
+      "label": "Delay untill popup appears",
+      "unit": "s",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "days_to_re_appear",
+      "label": "Time before the popup reappears for customer",
+      "unit": "day",
+      "min": 1,
+      "max": 90,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "popup_position",
+      "label": "Popup desktop position",
+      "options": [
+        {
+          "value": "center-center",
+          "label": "t:g.hero.caption.position.options.x1y1"
+        },
+        {
+          "value": "bottom-left",
+          "label": "t:g.hero.caption.position.options.x2y0"
+        },
+        {
+          "value": "bottom-center",
+          "label": "t:g.hero.caption.position.options.x2y1"
+        },
+        {
+          "value": "bottom-right",
+          "label": "t:g.hero.caption.position.options.x2y2"
+        }
+      ],
+      "default": "center-center"
+    },
+    {
+        "type": "select",
+        "id": "size",
+        "label": "t:g.hero.caption.text_size",
+        "options": [
+            {
+                "value": "sm",
+                "label": "t:g.common.sizes.sm"
+            },
+            {
+                "value": "md",
+                "label": "t:g.common.sizes.md"
+            },
+            {
+                "value": "lg",
+                "label": "t:g.common.sizes.lg"
+            }
+        ],
+        "default": "md"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "t:sections.newsletter.blocks.heading.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Subscribe to our emails",
+          "label": "t:sections.newsletter.blocks.heading.settings.heading.label"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "t:sections.image-banner.blocks.text.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "default": "Be the first to know about new collections and exclusive offers.",
+          "label": "t:sections.newsletter.blocks.paragraph.settings.paragraph.label"
+        }
+      ]
+    },
+    {
+      "type": "newsletter_form",
+      "name": "Newsletter form",
+      "limit": 1,
+      "settings": [
+        {
+            "type": "paragraph",
+            "content": "t:sections.newsletter.settings.paragraph.content"
+        }
+      ]
+    },
+    {
+        "type": "icon",
+        "name": "t:g.hero.icon.name",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "text",
+                "id": "icon",
+                "label": "t:g.common.icon.label",
+                "info": "t:g.dynamic_icon.info",
+                "default": "star"
+            },
+            {
+                "type": "checkbox",
+                "id": "icon_use_custom_color",
+                "label": "t:g.hero.icon.use_custom_color"
+            },
+            {
+                "type": "color",
+                "id": "icon_color",
+                "label": "t:g.common.icon.color",
+                "default": "#ffffff"
+            }
+        ]
+    },
+    {
+        "type": "timer",
+        "name": "Countdown",
+        "limit": 1,
+        "settings": [
+            {
+                "type": "text",
+                "id": "date",
+                "label": "End date",
+                "info": "Format: mm-dd-yyyy",
+                "default": "04-03-2024"
+            },
+            {
+                "type": "checkbox",
+                "id": "hide_on_complete",
+                "label": "Hide timer on complete"
+            },
+            {
+                "type": "checkbox",
+                "id": "display_titles",
+                "label": "Display titles",
+                "default": true,
+                "info": "Titles will be displayed unless the section text size is 'small'"
+            }
+        ]
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "heading"
+      },
+      {
+        "type": "text"
+      },
+      {
+        "type": "newsletter_form"
+      }
+    ]
+  }
+  
+}
+{% endschema %}

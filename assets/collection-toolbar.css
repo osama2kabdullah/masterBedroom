@@ -1,0 +1,33 @@
+.\#collection-toolbar {
+  box-shadow: rgba(50, 50, 93, 0.1) 0 50px 100px -20px, rgba(0, 0, 0, 0.15) 0 30px 60px -30px;
+  margin-bottom: 2.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  background: white;
+  font-size: 1.1rem;
+}
+.\#collection-toolbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.\#collection-toolbar-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.\#collection-toolbar-filters-button {
+  font-size: 1.15rem;
+  background: none;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.5em 1.15em;
+  border: 2px solid var(--color-g-text);
+  border-radius: 3em;
+  cursor: pointer;
+  font-weight: var(--font-body-weight-bold);
+}
+.\#collection-toolbar-filters-button .\#icon {
+  --size: 1.2em;
+}

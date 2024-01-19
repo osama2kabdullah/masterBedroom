@@ -1,0 +1,13 @@
+.\#icon {
+  --size: 1.7rem;
+  display: flex;
+  color: inherit;
+  fill: currentColor;
+  width: var(--size);
+  height: var(--size);
+  vertical-align: top;
+}
+
+load-icon {
+  display: contents;
+}

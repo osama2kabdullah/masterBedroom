@@ -1,0 +1,22 @@
+.\#main-navigation-product-card {
+  position: relative;
+  text-align: center;
+}
+.\#main-navigation-product-card-media {
+  margin-bottom: 1rem;
+}
+.\#main-navigation-product-card:hover .\#main-navigation-product-card-title {
+  opacity: 1;
+}
+.\#main-navigation-product-card-title {
+  font-size: 1rem;
+  font-weight: 400;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  opacity: 0.64;
+}
+.\#main-navigation-product-card-price {
+  font-weight: var(--font-body-weight-bold);
+}

@@ -1,0 +1,55 @@
+.\#customer-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-g-fg);
+  border-radius: var(--border-radius-base);
+  box-shadow: rgba(50, 50, 93, 0.1) 0 50px 100px -20px, rgba(0, 0, 0, 0.15) 0 30px 60px -30px;
+}
+.\#customer-table th {
+  text-align: left;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  opacity: 0.64;
+}
+.\#customer-table a {
+  color: inherit;
+}
+.\#customer-table thead {
+  border-bottom: 2px solid #e6e6e6;
+}
+.\#customer-table th, .\#customer-table td {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.\#customer-table th:not(:first-child):not(:last-child), .\#customer-table td:not(:first-child):not(:last-child) {
+  text-align: center;
+}
+.\#customer-table th:last-child, .\#customer-table td:last-child {
+  text-align: right;
+}
+.\#customer-table tbody td {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  font-size: 1.15rem;
+}
+.\#customer-table tbody tr:not(:last-child) {
+  border-bottom: 1px solid #e6e6e6;
+}
+.\#customer-table tfoot {
+  border-top: 2px solid #e6e6e6;
+}
+.\#customer-table tfoot tr:first-child td {
+  padding-top: 2rem;
+}
+.\#customer-table tfoot tr:last-child td {
+  padding-bottom: 2rem;
+}
+.\#customer-table tfoot td {
+  text-align: right !important;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.3225rem;
+}
+.\#customer-table tfoot td:last-child {
+  font-weight: var(--font-body-weight-bold);
+}

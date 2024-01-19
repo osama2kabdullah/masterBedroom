@@ -1,0 +1,29 @@
+.\#product-stock-alert {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.\#product-stock-alert-text {
+  font-size: 1.25rem;
+  font-weight: var(--font-body-weight-bold);
+}
+.\#product-stock-alert-icon {
+  position: relative;
+}
+.\#product-stock-alert-icon-base .\#icon {
+  --size: 2.7rem;
+}
+.\#product-stock-alert-icon-status {
+  border: 2px solid #ededed;
+  bottom: -0.4rem;
+  right: -0.4rem;
+  position: absolute;
+  padding: 3px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.\#product-stock-alert-icon-status .\#icon {
+  color: white;
+  --size: 0.8rem;
+  display: block;
+}

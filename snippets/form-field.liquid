@@ -1,0 +1,19 @@
+{%- liquid
+    assign NS = 'form-field'
+    assign cn = '#' | append: NS
+    if t_label != blank
+        assign label = t_label | t
+    endif
+-%}
+
+<div class="{{ cn }}">
+    {%- if label != blank -%}
+        <label class="{{ cn }}-label" for="{{ id }}">{{ label }}</label>
+    {%- endif -%}
+    {%- if as == 'input' -%}
+        <input class="{{ cn }}-input" id="{{ id }}" {{ input_atts }}>
+    {%- endif -%}
+    {%- if as == 'textarea' -%}
+        <textarea class="{{ cn }}-input" id="{{ id }}" {{ input_atts }}></textarea>
+    {%- endif -%}
+</div>

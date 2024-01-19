@@ -1,0 +1,26 @@
+{%- liquid
+    assign NS = 'video-popup'
+    assign cn = '#' | append: NS    
+-%}
+
+{% render 'load-css', file: NS, lazy: true %}
+
+<div class="{{ cn }}">
+    <template id="{{ id }}">
+        {% render 'load-css', file: NS, lazy: true %}
+        <div class="{{ cn }}-modal">
+            {{ popup_content }}
+            <div class="{{ cn }}-modal-inner">
+                {% render 'video-player', video: video %}
+            </div>
+        </div>
+    </template>
+    <modal-trigger 
+        class="{{ cn }}-trigger" 
+        target="#{{ id }}"
+        container
+        close-button
+    >
+        {{ content }}
+    </modal-trigger>
+</div>

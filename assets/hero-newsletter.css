@@ -1,0 +1,49 @@
+.\#hero-newsletter {
+  display: flex;
+  align-items: center;
+  border-radius: 2em;
+  position: relative;
+  overflow: hidden;
+}
+.\#hero-newsletter:focus-within {
+  box-shadow: 0 0 0 2px var(--color-g-button-bg);
+}
+.\#hero-newsletter-input {
+  background-color: var(--color-g-text-alpha-10);
+  color: inherit;
+  font-size: inherit;
+  flex-shrink: 0;
+  flex-grow: 1;
+  border: none;
+  flex-shrink: 0;
+  flex-grow: 1;
+  display: block;
+  line-height: 1;
+  padding: 1em 1.5em;
+  outline: none !important;
+  font-weight: var(--font-body-weight-bold);
+}
+.\#hero-newsletter-submit {
+  position: absolute;
+  right: 0;
+  width: 2.3em;
+  height: 2.3em;
+  font-size: inherit;
+  margin-right: 0.5em;
+  font-size: inherit;
+  background: none;
+  padding: 0;
+  border: none;
+  outline: none !important;
+  color: inherit;
+  color: var(--color-g-button-text);
+  background-color: var(--color-g-button-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.\#hero-newsletter-submit .\#icon {
+  --size: 1.1em;
+}

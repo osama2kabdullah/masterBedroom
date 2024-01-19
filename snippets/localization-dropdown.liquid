@@ -1,0 +1,75 @@
+{%- liquid
+    assign NS = 'localization-dropdown'
+    assign cn = '#' | append: NS
+    if src == 'country'
+        assign items = localization.available_countries
+        assign id_prefix = '-countrySelector-'
+        assign current_item = localization.country
+        assign field_name = 'country_code'
+    endif
+    if src == 'language'
+        assign items = localization.available_languages
+        assign id_prefix = '-languageSelector-'
+        assign current_item = localization.language
+        assign field_name = 'language_code'
+    endif
+    if prefix != blank
+        assign id_prefix = prefix | append: id_prefix
+    endif
+    assign items = current_item | concat: items | uniq
+    assign form_id = section.id | append: '-localization-form-' | append: src 
+-%}
+
+{% render 'load-css', file: NS, lazy: true %}
+
+{%- capture Options -%}
+    {%- for item in items -%}
+        <option value="{{ item.iso_code }}" {% if item.iso_code == current_item.iso_code %}selected{% endif %}>{{ item.name }} ({{ item.currency.iso_code }}{% if item.currency.symbol != blank %} {{ item.currency.symbol }}{% endif %})</option>
+    {%- endfor -%}
+{%- endcapture -%}
+
+{%- capture Menu -%}
+    <div class="{{ cn }}-menu">
+        <div class="{{ cn }}-menu-inner">
+            <div class="{{ cn }}-menu-spinner" hidden data-spinner>
+                {% render 'spinner', size: 'sm' %}
+            </div>
+            
+                {%- for item in items -%}
+                    <div class="{{ cn }}-menu-item {% if item.iso_code == current_item.iso_code %}!selected{% endif %}" data-option-value="{{ item.iso_code }}">
+                        <div class="{{ cn }}-menu-item-inner">
+                            {%- if src == 'country' -%}
+                                <span class="{{ cn }}-menu-item-title">
+                                    {{ item.name }} ({{ item.currency.iso_code }}{% if item.currency.symbol != blank %} {{ item.currency.symbol }}{% endif %})
+                                </span>
+                                <img class="{{ cn }}-menu-item-flag" src="https://hatscripts.github.io/circle-flags/flags/{{ item.iso_code | downcase }}.svg" alt="{{ item.name }}">
+                            {%- endif -%}
+                            {%- if src == 'language' -%}
+                                <span class="{{ cn }}-menu-item-title">
+                                    {{ item.endonym_name | capitalize }}
+                                </span>
+                                <span>
+                                    {{ item.iso_code | upcase }}
+                                </span>
+                            {%- endif -%}
+                        </div>
+                    </div>
+                {%- endfor -%}
+            
+        </div>
+    </div>
+{%- endcapture -%}
+
+<{{ NS }} class="{{ cn }} @placement:{{ placement }}" {% if lights_out %}lights-out{% endif %}>
+{%- form 'localization', id: form_id -%}   
+    {% render 'drop-down',
+        toggle: toggle,
+        menu: Menu,
+        position: position,
+        input_name: field_name,
+        options: Options
+    %}
+    {%- endform -%}
+</{{ NS }}>
+
+<script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>

@@ -1,0 +1,187 @@
+.\#predictive-search-results-item-title, .\#predictive-search-results-item-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.\#predictive-search-results-item-excerpt, .\#predictive-search-results-item-date {
+  opacity: 0.64;
+}
+
+.\#predictive-search {
+  display: block;
+  position: relative;
+  height: 2.9rem;
+}
+.\#predictive-search-input .\#header-searchbar-form {
+  z-index: 10;
+}
+.\#predictive-search-input-spinner {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  z-index: 21;
+  opacity: 0;
+  transition: var(--transition-base);
+  pointer-events: none;
+}
+.\#predictive-search.\!loading .\#predictive-search-input-spinner {
+  opacity: 1;
+  left: 0.7rem;
+}
+.\#predictive-search.\!loading .\#header-searchbar-input {
+  padding-left: 2.3rem;
+}
+.\#predictive-search-results-wrapper {
+  border-top: 2.9rem solid var(--search-bg-color);
+  z-index: 9;
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  background-color: var(--search-bg-color);
+  color: var(--search-text-color);
+  border-radius: 1.5rem;
+  transition: var(--transition-base);
+  box-shadow: rgba(50, 50, 93, 0.1) 0 50px 100px -20px, rgba(0, 0, 0, 0.15) 0 30px 60px -30px;
+  max-height: 0;
+  overflow: hidden;
+  transition: var(--transition-base);
+}
+.\#predictive-search-results-wrapper:not(.\!loading) .\#predictive-search-input-spinner {
+  display: none;
+}
+.\#predictive-search-results-wrapper.\!active {
+  max-height: 64vh;
+  overflow-y: auto;
+}
+.\#predictive-search-results-wrapper::-webkit-scrollbar {
+  width: 0.7rem;
+}
+.\#predictive-search-results-wrapper::-webkit-scrollbar-track {
+  margin-top: 0.7rem;
+  margin-bottom: 1rem;
+}
+.\#predictive-search-results-wrapper::-webkit-scrollbar-thumb {
+  background-color: var(--color-g-bg-d15);
+  border-radius: 999rem;
+}
+.\#predictive-search-results {
+  padding: 1.5rem;
+}
+.\#predictive-search-results-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.\#predictive-search-results-suggestion {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85em 1.3em;
+  border: none;
+  background: var(--color-g-bg-d5);
+  border-radius: 999px;
+  transition: var(--transition-base);
+}
+.\#predictive-search-results-suggestion .\#icon {
+  --size: 1rem;
+}
+.\#predictive-search-results-suggestion-text {
+  flex-shrink: 0;
+}
+.\#predictive-search-results-suggestion .\#icon {
+  flex-shrink: 0;
+}
+.\#predictive-search-results-suggestion:hover {
+  background: var(--color-g-bg-d15);
+}
+.\#predictive-search-results-types {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+.\#predictive-search-results-type-title {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+.\#predictive-search-results-item {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #ededed;
+  padding-top: 1rem;
+  margin-top: 1rem;
+  gap: 1.5rem;
+  position: relative;
+}
+.\#predictive-search-results-item-thumb {
+  width: 70px;
+  height: 70px;
+  background: #ededed;
+  border-radius: var(--border-radius-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.\#predictive-search-results-item-thumb .\#icon {
+  opacity: 0.8;
+  --size: 1.5rem;
+}
+.\#predictive-search-results-item-date {
+  margin-top: 0.5rem;
+}
+.\#predictive-search-results-item-excerpt {
+  margin-top: 0.5rem;
+}
+.\#predictive-search-results-item-title {
+  font-size: 1.15rem;
+  font-weight: 400;
+  margin: 0;
+}
+.\#predictive-search-results-item-price {
+  font-weight: var(--font-body-weight-bold);
+  font-size: 1.15rem;
+  margin-top: 0.8rem;
+}
+.\#predictive-search-results-item-price .\#price {
+  display: flex;
+  gap: 0.5rem;
+}
+.\#predictive-search-results-item-body {
+  flex-grow: 1;
+}
+.\#predictive-search-results-item-media {
+  width: 70px;
+  flex-shrink: 0;
+}
+.\#predictive-search-results-item-arrow {
+  margin-left: 1rem;
+  transform: rotate(45deg);
+  opacity: 0.4;
+}
+.\#predictive-search-results-item-arrow .\#icon {
+  --size: 1.5rem;
+}
+.\#predictive-search-results-no-results {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.\#predictive-search-results-no-results-icon {
+  color: var(--color-g-fg);
+  background-color: var(--color-g-text);
+  padding: 1rem;
+  border-radius: 50%;
+}
+.\#predictive-search-results-no-results-heading {
+  font-size: 1.3225rem;
+}
+.\#predictive-search-results-no-results-subheading {
+  margin-bottom: 0;
+  opacity: 0.8;
+}

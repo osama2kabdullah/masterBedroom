@@ -1,0 +1,342 @@
+{%- liquid
+    assign inner_spaced = false
+    assign spaced = true
+
+    if section.settings.use_custom_color 
+        assign text_color = section.settings.text_color
+        assign bg_color = section.settings.bg_color
+        assign inner_spaced = true
+        assign spaced = false
+    endif
+-%}
+
+{%- capture Content -%}
+    {% render 'hero',
+        blocks: section.blocks,
+        align: section.settings.text_align,
+        size: section.settings.size
+    %}
+{%- endcapture -%}
+
+{% render 'section-body',
+    content: Content,
+    container: section.settings.section_layout,
+    inner_spaced: inner_spaced,
+    spaced: spaced,
+    text_color: text_color,
+    bg_color: bg_color
+%}
+
+{% schema %}
+{
+    "name": "Rich text",
+    "settings": [
+        {
+            "type": "select",
+            "id": "section_layout",
+            "label": "t:g.section.layout.label",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "t:g.section.layout.options.default"
+                },
+                {
+                    "value": "narrow",
+                    "label": "t:g.section.layout.options.narrow"
+                },
+                {
+                    "value": "x-narrow",
+                    "label": "t:g.section.layout.options.x-narrow"
+                }
+            ],
+            "default": "default"
+        },
+        {
+            "type": "select",
+            "id": "text_align",
+            "label": "t:g.common.text_align.label",
+            "options": [
+                   {
+                       "value": "left",
+                       "label": "t:g.common.text_align.left"
+                   },
+                   {
+                       "value": "center",
+                       "label": "t:g.common.text_align.center"
+                   },
+                   {
+                       "value": "right",
+                       "label": "t:g.common.text_align.right"
+                   }
+               ],
+               "default": "center"
+           },
+           {
+            "type": "select",
+            "id": "size",
+            "label": "t:g.hero.caption.text_size",
+            "options": [
+                {
+                    "value": "sm",
+                    "label": "t:g.common.sizes.sm"
+                },
+                {
+                    "value": "md",
+                    "label": "t:g.common.sizes.md"
+                },
+                {
+                    "value": "lg",
+                    "label": "t:g.common.sizes.lg"
+                },
+                {
+                    "value": "xl",
+                    "label": "t:g.common.sizes.xl"
+                }
+            ],
+            "default": "md"
+        },
+        {
+            "type": "checkbox",
+            "id": "use_custom_color",
+            "label": "Use custom colors",
+            "default": false
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "t:g.common.color.text",
+            "default": "#FFFFFF"
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "t:g.common.color.bg",
+            "default": "#383838"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "heading",
+            "name": "t:g.hero.heading.name",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "t:g.hero.heading.label",
+                    "default": "Heading"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "heading_accent_enable",
+                    "label": "t:g.hero.heading.accent.enable",
+                    "default": true
+                },
+                {
+                    "type": "checkbox",
+                    "id": "heading_accent_use_cutom_color",
+                    "label": "t:g.hero.heading.accent.use_custom_color"
+                },
+                {
+                    "type": "color",
+                    "id": "heading_accent_color",
+                    "label": "t:g.hero.heading.accent.color",
+                    "default": "#e22d00"
+                }
+            ]
+        },
+        {
+            "type": "subheading",
+            "name": "t:g.hero.subheading.name",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "subheading",
+                    "label": "t:g.hero.subheading.label",
+                    "default": "Subheading"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "name": "t:g.hero.text.name",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "t:g.hero.text.label",
+                    "default": "<p>Text</p>"
+                }
+            ]
+        },
+        {
+            "type": "timer",
+            "name": "Countdown",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "date",
+                    "label": "End date",
+                    "info": "Format: mm-dd-yyyy",
+                    "default": "04-03-2024"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "hide_on_complete",
+                    "label": "Hide timer on complete"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "display_titles",
+                    "label": "Display titles",
+                    "default": true,
+                    "info": "Titles will be displayed unless the section text size is 'small'"
+                }
+            ]
+        },
+        {
+            "type": "buttons",
+            "name": "t:g.hero.buttons.name",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "paragraph",
+                    "content": "t:g.hero.buttons.area_link_note"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "mobile_hidden",
+                    "label": "t:g.hero.buttons.mobile_hidden.label",
+                    "info": "t:g.hero.buttons.mobile_hidden.info"
+                },
+                {
+                    "type": "header",
+                    "content": "t:g.hero.buttons.first.header" 
+                },
+                {
+                    "type": "text",
+                    "id": "f_button_label",
+                    "label": "t:g.hero.buttons.first.label",
+                    "default": "Shop now"
+                },
+                {
+                    "type": "url",
+                    "id": "f_button_link",
+                    "label": "t:g.hero.buttons.first.link"
+                },
+                {
+                    "type": "select",
+                    "id": "f_button_style",
+                    "label": "t:g.hero.buttons.first.style",
+                    "options": [
+                        {
+                            "value": "normal",
+                            "label": "t:g.common.button_styles.normal"
+                        },
+                        {
+                            "value": "outline",
+                            "label": "t:g.common.button_styles.outline"
+                        },
+                        {
+                            "value": "link",
+                            "label": "t:g.common.button_styles.link"
+                        }
+                    ],
+                    "default": "normal"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "f_button_custom_colors",
+                    "label": "t:g.hero.buttons.first.custom_colors"
+                },
+                {
+                    "type": "color",
+                    "id": "f_button_bg_color",
+                    "label": "t:g.common.custom_colors.bg"
+                },
+                {
+                    "type": "color",
+                    "id": "f_button_text_color",
+                    "label": "t:g.common.custom_colors.text",
+                    "default": "#ffffff"
+                },
+                {
+                    "type": "header",
+                    "content": "t:g.hero.buttons.second.header" 
+                },
+                {
+                    "type": "text",
+                    "id": "s_button_label",
+                    "label": "t:g.hero.buttons.second.label"
+                },
+                {
+                    "type": "url",
+                    "id": "s_button_link",
+                    "label": "t:g.hero.buttons.second.link"
+                },
+                {
+                    "type": "select",
+                    "id": "s_button_style",
+                    "label": "t:g.hero.buttons.second.style",
+                    "options": [
+                        {
+                            "value": "normal",
+                            "label": "t:g.common.button_styles.normal"
+                        },
+                        {
+                            "value": "outline",
+                            "label": "t:g.common.button_styles.outline"
+                        },
+                        {
+                            "value": "link",
+                            "label": "t:g.common.button_styles.link"
+                        }
+                    ],
+                    "default": "normal"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "s_button_custom_colors",
+                    "label": "t:g.hero.buttons.second.custom_colors"
+                },
+                {
+                    "type": "color",
+                    "id": "s_button_bg_color",
+                    "label": "t:g.common.custom_colors.bg"
+                },
+                {
+                    "type": "color",
+                    "id": "s_button_text_color",
+                    "label": "t:g.common.custom_colors.text",
+                    "default": "#ffffff"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Rich text",
+            "blocks": [
+                {
+                    "type": "heading",
+                    "settings": {
+                        "heading": "Rich text"
+                    }
+                },
+                {
+                    "type": "text",
+                    "settings": {
+                        "text": "<p>Use this text to share information about your brand with your customers.<br>Describe a product, share announcements or welcome customers to your store.</p>"
+                    }
+                },
+                {
+                    "type": "buttons"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

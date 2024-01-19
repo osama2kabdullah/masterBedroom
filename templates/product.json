@@ -1,0 +1,267 @@
+{
+  "sections": {
+    "1649081791eb3a0c3d": {
+      "type": "d_promo-banner",
+      "blocks": {
+        "10fdd41f-2315-41d6-9635-dd0c3a78ad9c": {
+          "type": "heading",
+          "settings": {
+            "heading": "Get an Extra $10 off"
+          }
+        },
+        "1801d392-ba0e-494e-8b63-0ccbceb07137": {
+          "type": "text",
+          "settings": {
+            "text": "<p>When you spend $100 or more on clearance items<\/p>"
+          }
+        },
+        "29095ef3-e037-48ac-a925-11a52cbedbd1": {
+          "type": "button",
+          "settings": {
+            "mobile_hidden": false,
+            "label": "Use Code: GET10",
+            "style": "normal",
+            "custom_colors": false,
+            "bg_color": "#000000",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "10fdd41f-2315-41d6-9635-dd0c3a78ad9c",
+        "1801d392-ba0e-494e-8b63-0ccbceb07137",
+        "29095ef3-e037-48ac-a925-11a52cbedbd1"
+      ],
+      "settings": {
+        "bg_type": "image",
+        "link": "",
+        "text_color": "#ffffff",
+        "bg_color": "#163340",
+        "section_layout": "full",
+        "desktop_text_align": "space-between"
+      }
+    },
+    "main": {
+      "type": "s_product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "size": "md",
+            "max_lines": 3,
+            "prev_attach": false
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_savings": true,
+            "show_taxes": true,
+            "prev_attach": false
+          }
+        },
+        "7e37f69f-d0e7-4b32-801c-81c63db85c51": {
+          "type": "variant_selector",
+          "settings": {
+            "picker_type": "dropdown",
+            "color_swatches": false,
+            "align_option_values": true,
+            "show_stock_alert": false,
+            "prev_attach": false
+          }
+        },
+        "stock_alert": {
+          "type": "stock_alert",
+          "settings": {
+            "show_stock_alert": false,
+            "prev_attach": false
+          }
+        },
+        "description_QUr4g8": {
+          "type": "description",
+          "settings": {
+            "meta_heading": "Product Information",
+            "use_expand": true,
+            "prev_attach": false
+          }
+        },
+        "dabcb986-093f-4262-ab8a-50e5c7833b64": {
+          "type": "buy_with",
+          "settings": {
+            "meta_heading": "Frequently Bought Together",
+            "use_counter": true,
+            "show_total": true,
+            "prev_attach": false
+          }
+        },
+        "buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "enable_stock_notifier": true,
+            "show_gift_card_recipient": false,
+            "prev_attach": false
+          }
+        },
+        "f1fc54bb-bcf3-4359-98c1-c6983bf4615d": {
+          "type": "payment_methods",
+          "settings": {
+            "meta_heading": "We Accept",
+            "center": false,
+            "prev_attach": false
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "7e37f69f-d0e7-4b32-801c-81c63db85c51",
+        "stock_alert",
+        "description_QUr4g8",
+        "dabcb986-093f-4262-ab8a-50e5c7833b64",
+        "buttons",
+        "f1fc54bb-bcf3-4359-98c1-c6983bf4615d"
+      ],
+      "settings": {
+        "gallery_width": 64,
+        "slideshow_zoom": true,
+        "thumbnails_layout": "slideshow"
+      }
+    },
+    "1655475777b1187173": {
+      "type": "d_image-with-text",
+      "blocks": {
+        "16554757779f91ab44-0": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "Subheading"
+          }
+        },
+        "16554757779f91ab44-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image with text heading"
+          }
+        },
+        "16554757779f91ab44-2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Give customers details about the hero image or content on the template.<\/p>"
+          }
+        },
+        "16554757779f91ab44-3": {
+          "type": "buttons",
+          "settings": {
+            "f_button_label": "Shop now",
+            "f_button_link": "",
+            "f_button_style": "normal",
+            "f_button_custom_colors": false,
+            "f_button_text_color": "#ffffff",
+            "f_button_bg_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "16554757779f91ab44-0",
+        "16554757779f91ab44-1",
+        "16554757779f91ab44-2",
+        "16554757779f91ab44-3"
+      ],
+      "disabled": true,
+      "settings": {
+        "section_layout": "container",
+        "image_size": "lg",
+        "image": "shopify:\/\/shop_images\/Craftsmasship-01.png",
+        "image_width": 50,
+        "image_position": "left",
+        "text_size": "lg",
+        "text_color": "#ffffff",
+        "bg_color": "#163340"
+      }
+    },
+    "16554757745dec0af9": {
+      "type": "d_product-recommendations",
+      "disabled": true,
+      "settings": {
+        "heading": "Recommended for You",
+        "subheading": "",
+        "section_layout": "container",
+        "products_limit": 7,
+        "items_per_view": 4,
+        "enable_loop": true,
+        "enable_pagination": false
+      }
+    },
+    "165547578589bc64a7": {
+      "type": "d_gallery",
+      "blocks": {
+        "16554757855da6121d-0": {
+          "type": "gallery_item",
+          "settings": {
+            "span": "4",
+            "image": "shopify:\/\/shop_images\/Bedding-04-03_ce3dfc04-a18e-41b7-9474-ae856b26fc8e.jpg",
+            "image_size": "md",
+            "mobile_image_size": "9x16",
+            "link": "",
+            "image_overlay": 0,
+            "heading": "Gallery heading",
+            "subheading": "",
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "size": "md",
+            "text_position": "center-center"
+          }
+        },
+        "16554757855da6121d-1": {
+          "type": "gallery_item",
+          "settings": {
+            "span": "4",
+            "image_size": "md",
+            "mobile_image_size": "9x16",
+            "link": "",
+            "image_overlay": 0,
+            "heading": "Gallery heading",
+            "subheading": "",
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "size": "md",
+            "text_position": "center-center"
+          }
+        },
+        "9467c20c-42a0-4696-85d4-7a8913fe71fd": {
+          "type": "gallery_item",
+          "settings": {
+            "span": "4",
+            "image_size": "md",
+            "mobile_image_size": "9x16",
+            "link": "",
+            "image_overlay": 0,
+            "heading": "Gallery heading",
+            "subheading": "",
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "size": "md",
+            "text_position": "center-center"
+          }
+        }
+      },
+      "block_order": [
+        "16554757855da6121d-0",
+        "16554757855da6121d-1",
+        "9467c20c-42a0-4696-85d4-7a8913fe71fd"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "Gallery",
+        "subheading": "",
+        "show_frame": false,
+        "subheading_position": "before",
+        "use_box": false
+      }
+    }
+  },
+  "order": [
+    "1649081791eb3a0c3d",
+    "main",
+    "1655475777b1187173",
+    "16554757745dec0af9",
+    "165547578589bc64a7"
+  ]
+}

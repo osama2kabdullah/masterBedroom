@@ -1,0 +1,33 @@
+{% assign cn = '#product-specs' %}
+
+{%- capture Specs -%}
+    {% for spec in product.metafields.specs %}
+        {% assign name = spec | first | split: '_' | join: ' ' | capitalize %}
+        {% assign value = spec | last %}
+        {% if value.value %}
+            {% assign value = value.value | append: value.unit %}
+        {% endif %}
+        <div class="{{ cn }}-item">
+            <span class="{{ cn }}-item-name">{{ name }}</span>
+            <span class="{{ cn }}-item-value">{{ value }}</span>
+        </div>
+    {% endfor %}
+    {% for spec in product.selected_or_first_available_variant.metafields.specs %}
+        {% assign name = spec | first | split: '_' | join: ' ' | capitalize %}
+        {% assign value = spec | last %}
+        {% if value.value %}
+            {% assign value = value.value | append: value.unit %}
+        {% endif %}
+        <div class="{{ cn }}-item">
+            <span class="{{ cn }}-item-name">{{ name }}</span>
+            <span class="{{ cn }}-item-value">{{ value }}</span>
+        </div>
+    {% endfor %}
+{%- endcapture -%}
+
+{%- if Specs != blank -%}
+    {% render 'load-css', file: 'product-specs', lazy: true %}
+    <div class="{{ cn }}">
+        {{ Specs }}
+    </div>
+{%- endif -%}

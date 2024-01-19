@@ -1,0 +1,45 @@
+{% render 'load-css', file: 'review-app', lazy: true %}
+
+{%- capture Content -%}
+    {%- for block in section.blocks -%}
+        {% render block %}
+    {%- endfor -%}
+{%- endcapture -%}
+
+{% render 'section-body',
+    content: Content,
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    spaced: true,
+    container: 'default' 
+%}
+
+  {% schema %}
+  {
+    "name": "t:sections.apps.name",
+    "tag": "section",
+    "class": "section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "t:g.common.label.heading"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading"
+        }
+    ],
+    "blocks": [
+      {
+        "type": "@app"
+      }
+    ],
+    "presets": [
+      {
+        "name": "t:sections.apps.presets.name"
+      }
+    ]
+  }
+  {% endschema %}

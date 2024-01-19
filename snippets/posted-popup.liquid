@@ -1,0 +1,12 @@
+{%- liquid
+    assign NS = 'posted-popup'
+-%}
+
+<{{ NS }} 
+    section-id="{{ section.id }}" 
+    hidden 
+    newsletter-msg="{{ 'newsletter.success' | t }}"
+    contact-msg="{{ 'templates.contact.form.post_success' | t }}"
+></{{ NS }}>
+
+<script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>

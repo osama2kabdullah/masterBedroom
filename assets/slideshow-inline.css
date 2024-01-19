@@ -1,0 +1,90 @@
+.\#slideshow-inline.\@with-pagination .swiper {
+  margin: -90px 0 -61px 0;
+}
+.\#slideshow-inline .swiper {
+  --button-position: 1rem;
+  padding: 90px 0;
+  margin: -90px 0;
+  overflow-x: hidden;
+}
+@media (max-width: 991px) {
+  .\#slideshow-inline .swiper {
+    width: 100vw;
+  }
+}
+.\#slideshow-inline .swiper-initialized .swiper-slide:not(.swiper-slide-visible) {
+  transition: opacity 0.3s;
+}
+.\#slideshow-inline .swiper-slide:not(.swiper-slide-visible) {
+  opacity: 0;
+  pointer-events: none;
+}
+.\#slideshow-inline .swiper-slide {
+  height: auto;
+}
+.\#slideshow-inline .swiper-slide .\#product-card {
+  height: 100%;
+}
+.\#slideshow-inline .swiper-slide .\#article-card {
+  height: 100%;
+}
+.\#slideshow-inline .swiper-button-next {
+  right: var(--button-position);
+}
+.\#slideshow-inline .swiper-button-prev {
+  left: var(--button-position);
+}
+.\#slideshow-inline .swiper-button-next,
+.\#slideshow-inline .swiper-button-prev {
+  transition: var(--transition-base);
+}
+.\#slideshow-inline .swiper-button-next:not(.swiper-button-disabled),
+.\#slideshow-inline .swiper-button-prev:not(.swiper-button-disabled) {
+  box-shadow: var(--color-g-text-alpha-60) 0 2rem 5rem 0.5rem, var(--color-g-text-alpha-80) 0 1.875rem 3.75rem -1.875rem;
+}
+.\#slideshow-inline .swiper-button-next.swiper-button-disabled,
+.\#slideshow-inline .swiper-button-prev.swiper-button-disabled {
+  opacity: 0;
+}
+@media (max-width: 991px) {
+  .\#slideshow-inline .swiper-button-next,
+.\#slideshow-inline .swiper-button-prev {
+    display: none;
+  }
+}
+.\#slideshow-inline.\@layout\:container .swiper-button-next {
+  right: var(--button-position);
+}
+.\#slideshow-inline.\@layout\:container .swiper-button-prev {
+  left: var(--button-position);
+}
+.\#slideshow-inline .swiper-button-next, .\#slideshow-inline .swiper-button-prev {
+  width: auto;
+  height: auto;
+  background: white;
+  padding: 1rem;
+  color: var(--color-g-text);
+  border-radius: 50%;
+  transition: var(--transition-base);
+}
+.\#slideshow-inline .swiper-button-next .\#icon, .\#slideshow-inline .swiper-button-prev .\#icon {
+  display: flex;
+}
+.\#slideshow-inline-pagination.swiper-pagination {
+  --offset: 0;
+  bottom: 49px !important;
+}
+.\#slideshow-inline-pagination.swiper-pagination.\@align\:left {
+  width: auto;
+  margin-left: var(--offset);
+}
+.\#slideshow-inline-pagination.swiper-pagination .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-g-text) !important;
+  border-radius: 8px;
+  transition: var(--transition-base);
+}
+.\#slideshow-inline-pagination.swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  width: 24px;
+}

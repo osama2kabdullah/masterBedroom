@@ -1,0 +1,172 @@
+.\#customer-address {
+  background: var(--color-g-fg);
+  border-radius: var(--border-radius-base);
+  box-shadow: rgba(50, 50, 93, 0.1) 0 50px 100px -20px, rgba(0, 0, 0, 0.15) 0 30px 60px -30px;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.\#customer-address-new {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 1rem;
+}
+.\#customer-address-new-icon {
+  padding: 0.5rem;
+  background: var(--color-g-accent);
+  border-radius: 50%;
+  color: var(--color-g-fg);
+}
+.\#customer-address-new-icon .\#icon {
+  display: flex;
+}
+.\#customer-address-new-title {
+  font-weight: var(--font-body-weight-bold);
+}
+.\#customer-address-default-badge {
+  display: flex;
+  align-items: center;
+  font-weight: var(--font-body-weight-bold);
+  border-radius: var(--border-radius-inner);
+  width: fit-content;
+  padding: 0.25em 0.85em 0.25em 0.7em;
+  background: var(--color-g-primary);
+  color: var(--color-g-fg);
+  gap: 0.64rem;
+  font-size: 1.15rem;
+  margin-bottom: -0.5rem;
+}
+.\#customer-address-default-badge .\#icon {
+  display: flex;
+  --size: 1.1rem;
+}
+.\#customer-address-body {
+  font-size: 1.15rem;
+}
+.\#customer-address-body > p {
+  margin-bottom: 0;
+}
+.\#customer-address-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+.\#customer-address-actions-item {
+  cursor: pointer;
+  flex-basis: 0px;
+  flex-grow: 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-body-weight-bold);
+  gap: 0.5rem;
+  border: 2px solid #d9d9d9;
+  border-radius: var(--border-radius-inner);
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+}
+.\#customer-address-actions-item .\#icon {
+  display: flex;
+  --size: 0.9rem;
+}
+.\#customer-address-modal {
+  padding: 2.5rem;
+  border-radius: var(--border-radius-base);
+  background-color: var(--color-g-fg);
+  width: min(600px, 95vw);
+}
+.\#customer-address-modal.\@type\:edit {
+  margin-top: 3rem;
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+}
+.\#customer-address-modal-title {
+  margin-bottom: 2rem;
+}
+.\#customer-address-modal-field {
+  display: block;
+}
+.\#customer-address-modal-field label {
+  opacity: 0.64;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.\#customer-address-modal-field input, .\#customer-address-modal-field select {
+  display: block;
+  width: 100%;
+  font-weight: var(--font-body-weight-bold);
+  border-radius: var(--border-radius-inner);
+  font-size: 1.15rem;
+  padding: 0.7rem;
+  border: 2px solid #d9d9d9;
+}
+.\#customer-address-modal-select {
+  position: relative;
+  display: block;
+}
+.\#customer-address-modal-select select {
+  appearance: none;
+}
+.\#customer-address-modal-select .\#icon {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0.7rem;
+  user-select: none;
+  --size: 1rem;
+  opacity: 0.8;
+}
+.\#customer-address-modal-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.\#customer-address-modal-checkbox input {
+  width: auto;
+}
+.\#customer-address-modal-checkbox label {
+  margin-bottom: 0;
+  opacity: 1;
+}
+.\#customer-address-modal-submit {
+  background-color: var(--color-g-text);
+  color: var(--color-g-fg);
+  padding: 1em;
+  border-radius: 3rem;
+  cursor: pointer;
+  border: none;
+  font-weight: var(--font-body-weight-bold);
+}
+.\#customer-address-modal-delete-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+.\#customer-address-modal-delete-buttons-ok {
+  cursor: pointer;
+  display: block;
+  border: none;
+  padding: 0.8em 1.5em;
+  font-size: 1.15rem;
+  font-weight: var(--font-body-weight-bold);
+  color: white;
+  background: var(--color-g-danger);
+  border-radius: 3rem;
+}
+.\#customer-address-modal-delete-buttons-cancel {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-weight: var(--font-body-weight-bold);
+  font-size: 1.15rem;
+}

@@ -1,0 +1,84 @@
+.\#mini-nav {
+  display: block;
+  width: 350px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.\#mini-nav .\#mini-nav-nav-link, .\#mini-nav .\#mini-nav-nav-header {
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+}
+.\#mini-nav-stage {
+  position: absolute;
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 300%;
+  height: 100%;
+  transition: var(--transition-base);
+}
+.\#mini-nav-stage[data-lvl="0"] {
+  transform: translateX(0);
+}
+.\#mini-nav-stage[data-lvl="1"] {
+  transform: translateX(-350px);
+}
+.\#mini-nav-stage[data-lvl="2"] {
+  transform: translateX(-700px);
+}
+.\#mini-nav-lvl {
+  width: 350px;
+  padding: 0.85rem 1.7rem;
+  overflow-y: auto;
+}
+.\#mini-nav-nav:not(.\@base) {
+  display: none;
+}
+.\#mini-nav-nav-check {
+  display: none;
+}
+.\#mini-nav-nav-check:checked + .\#mini-nav-nav {
+  display: block;
+}
+.\#mini-nav-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 0.425rem;
+  border-bottom: 1px solid #ededed;
+}
+.\#mini-nav-nav-title {
+  margin-bottom: 0;
+  font-size: 1.520875rem;
+}
+.\#mini-nav-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+.\#mini-nav-nav-item .\#media {
+  width: 2.3rem;
+  height: 2.3rem;
+}
+.\#mini-nav-nav-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.15rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.\#mini-nav-nav-link .\#icon {
+  --size: 0.9em;
+}
+.\#mini-nav-nav-link.\@dir\:forward {
+  justify-content: space-between;
+}
+.\#mini-nav-nav-link.\@dir\:backward {
+  gap: 1rem;
+  font-size: 1rem;
+}

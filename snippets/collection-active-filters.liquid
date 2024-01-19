@@ -1,0 +1,91 @@
+{% comment %}
+    Props: 
+        - show_label
+        - src (filters source object)
+{% endcomment %}
+
+{%- liquid
+    assign NS = 'collection-active-filter'
+    assign cn = '#' | append: NS
+    assign filter_counter = 0    
+-%}
+
+{%- capture Filters -%}
+    {% for filter in src.filters %}
+        {% for value in filter.active_values %}
+            {%- assign filter_counter = filter_counter | plus: 1 -%}
+            <{{ NS }}
+                section-id="{{ section.id }}" 
+                remove-url="{{ value.url_to_remove }}"
+                class="{{ cn }} @value"
+            >
+                {% if show_label %}
+                    <span class="{{ cn }}-label">{{ filter.label }}</span>
+                {% endif %}
+                <span class="{{ cn }}-value">{{ value.label }}</span>
+                {% render 'icon', name: 'x' %}
+            </{{ NS }}>
+        {% endfor %}
+        {% if filter.type == 'price_range' %}
+            {%- liquid
+                if filter.min_value.value and filter.min_value.value != 0
+                    assign use_min = true
+                    assign min = filter.min_value.value
+                else
+                    assign min = 0
+                endif
+                
+                if filter.max_value.value and filter.max_value.value != filter.range_max
+                    assign use_max = true
+                    assign max = filter.max_value.value
+                else
+                    assign max = filter.range_max
+                endif
+            -%}
+            {% if use_min or use_max %}
+                {%- assign filter_counter = filter_counter | plus: 1 -%}
+                <{{ NS }}
+                    section-id="{{ section.id }}"
+                    remove-url="{{ filter.url_to_remove }}"
+                    class="{{ cn }} @value"
+                >
+                    {% if show_label %}
+                        <span class="{{ cn }}-label">{{ filter.label }}</span>
+                    {% endif %}
+                        <span class="{{ cn }}-value">{{ min | money }}&nbsp; &#8212; &nbsp;{{ max | money }} </span>
+                    {% render 'icon', name: 'x' %}
+                </{{ NS }}>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    {% if filter_counter > 1 %}
+        {%- liquid
+            if src == collection
+                assign clear_url = collection.url
+                if collection.sort_by != blank
+                    assign clear_url = clear_url | append: '?sort_by=' | append: collection.sort_by
+                endif
+            endif
+
+            if src == search
+                assign clear_url = routes.search | append: '?type=product' | append: '&q=' | append: search.terms
+                if search.sort_by != blank
+                    assign clear_url = clear_url | append: '&sort_by=' | append: search.sort_by
+                endif
+            endif
+        -%}
+
+        <{{ NS }}
+            section-id="{{ section.id }}"
+            remove-url="{{ clear_url }}"
+            class="{{ cn }} @clear styled-link"
+        >
+            Clear all
+        </{{ NS }}>
+    {% endif %}
+{%- endcapture -%}
+
+{%- if Filters != blank -%}
+    {% render 'load-css', file: NS %}
+    {{ Filters }}
+{%- endif -%}

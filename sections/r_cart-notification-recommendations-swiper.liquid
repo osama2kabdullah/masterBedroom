@@ -1,0 +1,48 @@
+{%- if recommendations.performed and recommendations.products_count > 0 -%}
+    {%- liquid
+        assign counter = 0
+        assign max_products = 5   
+    -%}
+    <template data-template>
+        {%- capture Products -%}
+            {%- if recommendations.products.size > 0 -%}
+                {%- for product in recommendations.products -%}
+                    {%- if product.available -%}
+                        {%- assign existing_product = cart.items | where: 'product_id', product.id | first -%}
+                        {%- unless existing_product -%}
+                            {%- assign counter = counter | plus: 1 -%}
+                            <div class="swiper-slide">
+                                {%- capture Button -%}
+                                    <button class="#cart-notification-recommendations-add-to-cart-button" data-to-cart>
+                                        {% render 'icon', name: 'plus' %}
+                                        {% render 'spinner', size: 'xs' %}
+                                    </button>
+                                {%- endcapture -%}
+                                {%- capture Add_to_cart -%}
+                                    {% render 'product-to-cart',
+                                        trigger: Button,
+                                        variant: product.first_available_variant
+                                    %}
+                                {%- endcapture -%}
+                                {% render 'product-card-min',
+                                    product: product,
+                                    actions: Add_to_cart
+                                %}
+                            </div>
+                            {%- if counter == max_products -%}
+                                {%- break -%}
+                            {%- endif -%}    
+                        {%- endunless -%}
+                    {%- endif -%}
+                {%- endfor -%}
+            {%- endif -%}
+        {%- endcapture -%}
+        {%- if Products != blank -%}
+            <div class="swiper" data-swiper>
+                <div class="swiper-wrapper">
+                    {{ Products }}
+                </div>
+            </div>
+        {%- endif -%}
+    </template>
+{%- endif -%}

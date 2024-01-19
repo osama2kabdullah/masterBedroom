@@ -1,0 +1,21 @@
+.\#form-field-label {
+  display: block;
+  font-size: 0.9em;
+  opacity: 0.85;
+  margin-bottom: 0.3em;
+}
+.\#form-field-input {
+  width: 100%;
+  font-size: inherit;
+  resize: none;
+  font-family: inherit;
+  display: block;
+  padding: 0.75em;
+  border: 2px solid #b3b3b3;
+  background-color: var(--color-g-fg);
+  border-radius: 0.4rem;
+}
+.\#form-field-input:focus {
+  border-color: var(--color-g-accent);
+  outline: none;
+}

@@ -1,0 +1,47 @@
+{%- liquid
+    assign NS = 'cart-sidebar'
+    assign cn = '#' | append: NS     
+-%}
+
+<div class="{{ cn }}">
+    <div class="{{ cn }}-block">            
+            <div data-cart-subtotal-block>
+                {% render 'cart-subtotal' %}
+            </div>
+            <div class="{{ cn }}-tax-note">
+                {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+                    {{ 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                {%- elsif cart.taxes_included -%}
+                    {{ 'sections.cart.taxes_included_but_shipping_at_checkout' | t }}
+                {%- elsif shop.shipping_policy.body != blank -%}
+                    {{ 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+                {%- else -%}
+                    {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
+                {%- endif -%}
+            </div>
+            <div class="{{ cn }}-checkout">
+                {% render 'button',
+                    t_text: 'sections.cart.checkout',
+                    size: 'h3',
+                    shadow: true,
+                    block: true,
+                    name: 'checkout',
+                    type: 'submit',
+                    form: form_id,
+                    display_style: 'gradient'
+                %}
+                    <div class="{{ cn }}-checkout-payment-methods">
+                        {%- for type in shop.enabled_payment_types -%}
+                            {{ type | payment_type_svg_tag }}
+                        {%- endfor -%}
+                    </div>
+            </div>
+            <a href="{{ routes.cart_url }}">{{ 'general.cart.open' | t }}</a>
+            {%- comment -%}
+            <cart-dynamic-checkout>
+                {{ content_for_additional_checkout_buttons }}
+            </cart-dynamic-checkout>
+            <script type="module" src="{{ 'cart-dynamic-checkout.js' | asset_url }}"></script>
+            {%- endcomment -%}
+    </div>    
+</div>

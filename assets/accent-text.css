@@ -1,0 +1,9 @@
+.\#accent-text {
+  padding: 0 0.25em;
+  margin: 0 -0.25em;
+  background: var(--accent);
+  background-position: 0 0.6em;
+  background-size: 100% 30%;
+  background-repeat: repeat-x;
+  display: inline;
+}

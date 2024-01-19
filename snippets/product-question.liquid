@@ -1,0 +1,94 @@
+{%- liquid
+    assign NS = 'product-question'
+    assign cn = '#' | append: NS
+    assign email_input_id = NS | append: section.id | append: '-email'
+    assign question_input_id = NS | append: section.id | append: '-question'
+-%}
+
+{% render 'load-css', file: NS %}
+
+{% capture Form %}
+    {%- form 'contact', data-contact-form: '' -%}
+        <input
+            type="hidden"
+            name="contact[Product question]"
+            value="{{ product.title }}"
+        >
+        <label class="{{ cn }}-label" for="{{ email_input_id }}">{{ 'newsletter.label' | t }}</label>
+        <input
+            data-input
+            class="{{ cn }}-input"
+            id="{{ email_input_id }}"
+            autocomplete="email"
+            type="email"
+            placeholder="{{ 'newsletter.long_label' | t }}"
+            name="contact[email]"
+            value="{% if form.email %}{{ form.email | escape }}{% elsif customer %}{{ customer.email | escape }}{% endif %}"
+        >
+        <label class="{{ cn }}-label" for="{{ question_input_id }}">{{ 'products.product.question.label' | t }}</label>
+        <textarea
+            data-input
+            class="{{ cn }}-input"
+            id="{{ question_input_id }}" 
+            placeholder="{{ 'products.product.question.placeholder' | t }}"
+            name="contact[Message]"
+            rows="3"
+        ></textarea>
+        {% render 'button',
+            t_text: 'customer.login_page.submit',
+            block: true
+        %}
+    {%- endform -%}
+{% endcapture %}
+
+<div class="{{ cn }}">
+    <contact-form-submiter success-message="{{ 'templates.contact.form.post_success' | t }}">
+        {{ Form }}
+    </contact-form-submiter>
+</div>
+
+<script type="module" src="{{ 'contact-form-submiter.js' | asset_url }}"></script>
+
+<!-- <stock-notifier>
+    <div data-loading hidden>
+        {% render 'spinner' size: 'sm' %}
+    </div>
+    <div>
+        <div data-init-header>
+            <h3>Product Question</h3> {%- comment -%}HARDCODE{%- endcomment -%}
+            <h4>Ask the seller about the product</h4> {%- comment -%}HARDCODE{%- endcomment -%}
+        </div>
+        <div data-success-header hidden>
+            <h3>Sended!</h3>
+            <h4>We will email you as soon as possible</h4>
+        </div>
+        <div>
+            
+            <div data-notify-container hidden></div>
+            {% form 'contact', data-contact-form: '' %}
+                <input
+                    type="hidden"
+                    name="contact[Question about]" {%- comment -%}HARDCODE{%- endcomment -%}
+                    value="{{"Product: " | append: product.title}}" {%- comment -%}HARDCODE{%- endcomment -%}
+                >
+                <input
+                    autocomplete="email"
+                    type="email"
+                    placeholder="Your Email" {%- comment -%}HARDCODE{%- endcomment -%}
+                    name="contact[email]" {%- comment -%}HARDCODE{%- endcomment -%}
+                    value="{% if form.email %}{{ form.email | escape }}{% elsif customer %}{{ customer.email | escape }}{% endif %}"
+                >
+                <textarea 
+                    placeholder="Your Question" {%- comment -%}HARDCODE{%- endcomment -%}
+                    name="contact[Message]" {%- comment -%}HARDCODE{%- endcomment -%}
+                    rows="3"
+                ></textarea>
+
+                <button type="submit" data-notify-button>
+                    Send question {%- comment -%}HARDCODE{%- endcomment -%}
+                </button>
+            {% endform %}
+        </div>
+    </div>
+</stock-notifier>
+<script type="module" src="{{ 'product-stock-notifier.js' | asset_url }}"></script>     -->

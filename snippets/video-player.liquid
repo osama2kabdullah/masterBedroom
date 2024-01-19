@@ -1,0 +1,19 @@
+{% render 'load-css', file: 'plyr' %}
+<video-player style="display: block;">
+    {%- if video.media_type == 'video' -%}
+        {% assign poster_size = settings.container_width | append: 'x' %}
+        {{ video | video_tag: image_size: poster_size }}
+    {%- else -%}
+        {% liquid
+            if video.media_type == 'external_video'
+                assign video_id = video.external_id
+                assign video_type = video.host
+            elsif video.media_type == blank
+                assign video_id = video.id
+                assign video_type = video.type
+            endif
+        %}
+        <div data-player data-plyr-provider="{{ video_type }}" data-plyr-embed-id="{{ video_id }}"></div>
+    {%- endif -%}
+</video-player>
+<script type="module" src="{{ 'video-player.js' | asset_url }}"></script>

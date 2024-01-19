@@ -1,0 +1,102 @@
+{%- liquid
+    assign NS = 'product-buy-with'
+    assign cn = '#' | append: NS
+    assign complementary_products = product.metafields.shopify--discovery--product_recommendation.complementary_products.value
+    assign current_variant = product.selected_or_first_available_variant
+    assign ccy_money_ex = 10000000 | money
+    assign no_ccy_money_ex = 10000000 | money_without_currency
+    assign money_template = ccy_money_ex | replace: no_ccy_money_ex, "{amount}"
+-%}
+
+
+{% capture Complementaries %}
+    {%- assign c_products_count = 0 -%}
+    {% for c_product in complementary_products %}        
+        <div class="{{ cn }}-item" data-complementary-item>
+            {%- liquid
+                assign c_product_variant = c_product.first_available_variant
+                assign image = c_product_variant.image | default: c_product.featured_image        
+                assign input_id = 'buy_with' | append: section.id | append: c_product.id
+                assign c_products_count = c_products_count | plus: 1
+            -%}
+            {% if c_product.available %}
+                {%- if variant.available and cart_limit_reached != true -%}
+                    <div class="{{ cn }}-item-check">
+                        <label class="{{ cn }}-item-check-label" for="{{ input_id }}">
+                            <input
+                                value="{{ c_product_variant.id }}"
+                                class="{{ cn }}-item-check-input"
+                                type="checkbox"
+                                id="{{ input_id }}"
+                                form="{{ product_form_id }}"
+                                name="buy_with_{{forloop.index}}"
+                                data-element="complementary-item"
+                                data-price-value="{{ c_product_variant.price | money_without_currency | replace: ',', '' }}"
+                                hidden
+                            >
+                            <div class="{{ cn }}-item-check-figure">
+                                {% render 'icon', name: 'check' %}
+                            </div>
+                        </label>
+                    </div>
+                {%- endif -%}
+                <div class="{{ cn }}-item-media">
+                    {% render 'media',
+                        image: image,
+                        aspect_ratio: '1x1',
+                        image_res: 70,
+                        border_radius: 'inner',
+                        link: c_product.url
+                    %}
+                </div>
+                <div class="{{ cn }}-item-body">
+                    <h4 class="{{ cn }}-item-product-title">
+                        <a href="{{ c_product.url }}" class="reset-link">{{ c_product.title }}</a>
+                    </h4>
+                    {% unless c_product.has_only_default_variant %}
+                        <h5 class="{{ cn }}-item-product-variant">{{ c_product_variant.title }}</h5>
+                    {% endunless %}
+                    <div class="{{ cn }}-item-price">
+                        {%- if variant.available and cart_limit_reached != true -%}
+                            {% render 'icon', name: 'plus' %}
+                        {%- endif -%}
+                        {% render 'price',
+                            variant: c_product_variant,
+                            display_units: false,
+                            display_compare: false
+                        %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endcapture %}
+
+{% if Complementaries != blank %}
+    <{{ NS }}
+        class="{{ cn }}" 
+        money-template="{{ money_template }}"
+        main-variant-price="{{ current_variant.price | money_without_currency | replace: ',', '' }}"
+        {% if show_total %} show-total {% endif %} 
+        section-id={{ section.id }}
+    >
+        <div class="{{ cn }}-wrapper">
+            {{ Complementaries }}
+            {%- if show_total -%}
+                <div class="{{ cn }}-item @subtotal" data-element="subtotal" hidden>
+                    <div class="{{ cn }}-item-body">
+                        <div class="{{ cn }}-item-price">
+                            <span>{{ 'products.total_price' | t }}</span>
+                            <span data-element="subtotal-price">
+                                {% render 'price',
+                                    variant: c_product_variant
+                                %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            {%- endif -%}
+        </div>
+    </{{ NS }}>
+    <script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>
+{% endif %}

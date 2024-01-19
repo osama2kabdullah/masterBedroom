@@ -1,0 +1,15 @@
+.\#lights-out {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: black;
+  opacity: 0.8;
+  display: block;
+  z-index: 22;
+  display: none;
+}
+.\#lights-out[on] {
+  display: block;
+}

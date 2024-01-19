@@ -1,0 +1,142 @@
+{%- capture Content -%}
+    {% form 'contact', id: 'ContactForm' %}
+        {%- if form.posted_successfully? -%}
+            {% render 'alert', type: 'success', t_heading: 'templates.contact.form.post_success' %}
+        {%- elsif form.errors -%}
+            {%- capture Error_text -%}
+                <ul role="list">
+                    <li>
+                        <a href="#ContactForm-email" class="link">
+                            {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+                        </a>
+                    </li>
+                </ul>
+            {%- endcapture -%}
+            {% render 'alert',
+                type: 'danger',
+                t_heading: 'templates.contact.form.error_heading',
+                text: Error_text
+            %}
+        {%- endif -%}
+        <div class="#grid @type:span" style="--gap: 1rem;">
+            <div style="--span: 6; --span-mobile: 12;">
+                {%- capture Name_atts -%}
+                    autocomplete="name" 
+                    type="text" 
+                    name="contact[{{ 'templates.contact.form.name' | t }}]" 
+                    value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" 
+                    placeholder="{{ 'templates.contact.form.name' | t }}"
+                {%- endcapture -%}
+                {% render 'form-field',
+                    id: 'ContactForm-name',
+                    as: 'input',
+                    input_atts: Name_atts,
+                    t_label: 'templates.contact.form.name'
+                %}
+            </div>
+            <div style="--span: 6; --span-mobile: 12;">
+                {%- capture Email_atts -%}
+                    autocomplete="email"
+                    type="email"
+                    name="contact[email]"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                    aria-required="true"
+                    {% if form.errors contains 'email' %}
+                    aria-invalid="true"
+                    aria-describedby="ContactForm-email-error"
+                    {% endif %}
+                    placeholder="{{ 'templates.contact.form.email' | t }}"                
+                {%- endcapture -%}
+                {% render 'form-field',
+                    id: 'ContactForm-email',
+                    as: 'input',
+                    input_atts: Email_atts,
+                    t_label: 'templates.contact.form.email'
+                %}
+            </div>
+            <div style="--span: 12;">
+                {%- capture Phone_atts -%}
+                    type="tel" 
+                    autocomplete="tel" 
+                    name="contact[{{ 'templates.contact.form.phone' | t }}]" 
+                    pattern="[0-9\-]*" 
+                    value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" 
+                    placeholder="{{ 'templates.contact.form.phone' | t }}"
+                {%- endcapture -%}
+                {% render 'form-field',
+                    id: 'ContactForm-phone',
+                    as: 'input',
+                    input_atts: Phone_atts,
+                    t_label: 'templates.contact.form.phone'
+                %}
+            </div>
+            <div style="--span: 12;">
+                {%- capture Body_atts -%}
+                    rows="10"
+                    name="contact[{{ 'templates.contact.form.comment' | t }}]"
+                    placeholder="{{ 'templates.contact.form.comment' | t }}"
+                {%- endcapture -%}
+                {% render 'form-field',
+                    id: 'ContactForm-body',
+                    as: 'textarea',
+                    input_atts: Body_atts,
+                    t_label: 'templates.contact.form.comment'
+                %}
+            </div>
+            <div style="--span: 12;">
+                {% render 'button',
+                    type: 'submit',
+                    t_text: 'templates.contact.form.send'
+                %}
+            </div> 
+        </div>
+    {% endform %}
+{%- endcapture -%}
+
+{% render 'section-body',
+    content: Content,
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    container: section.settings.section_layout,
+    spaced: true
+%}
+
+{% schema %}
+{
+    "name": "Contact form",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "t:g.common.label.heading"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading"
+        },
+        {
+            "type": "select",
+            "id": "section_layout",
+            "label": "t:g.section.layout.label",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "t:g.section.layout.options.wide"
+                },
+                {
+                    "value": "narrow",
+                    "label": "t:g.section.layout.options.medium"
+                },
+                {
+                    "value": "x-narrow",
+                    "label": "t:g.section.layout.options.narrow"
+                }
+            ],
+            "default": "default"
+        }
+    ]
+}
+{% endschema %}

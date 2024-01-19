@@ -1,0 +1,32 @@
+{%- liquid
+    assign NS = 'announcement-bar-slideshow'
+    assign cn = '#' | append: NS
+-%}
+
+{% render 'load-css', file: 'swiper' %}
+{% render 'load-css', file: NS %}
+
+<{{ NS }} 
+    class="{{ cn }} {% if with_close_button %}@with-close-button{% endif %}"
+    loop 
+    autoplay="{{ section.settings.autoplay | times: 1000 }}"
+    {% if navigation_buttons %}
+        arrows
+    {% endif %}
+>
+    <div class="swiper" data-swiper>
+        <div class="swiper-wrapper" data-swiper-wrapper>
+            {{ slides }}
+        </div>
+        {%- if navigation_buttons -%}
+            <div class="swiper-button-prev" data-prev>
+                {% render 'icon', name: 'arrow-left' %}
+            </div>
+            <div class="swiper-button-next" data-next>
+                {% render 'icon', name: 'arrow-right' %}
+            </div>
+        {%- endif -%}
+    </div>
+</{{ NS }}>
+
+<script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>

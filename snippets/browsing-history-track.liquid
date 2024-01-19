@@ -1,0 +1,14 @@
+{% if request.page_type == 'product' and settings.enable_browsing_history %}
+    <script type="module">
+        const productHandle = {{ product.handle | json }};
+        const historyLimit = {{ settings.browsing_history_limit }};
+        const history = JSON.parse(localStorage.getItem('browsingHistory'));
+        if (history) {
+            const updatedHistory = [productHandle, ...history.filter(url => url !== productHandle)];
+            if (updatedHistory.length > historyLimit) updatedHistory.length = historyLimit;
+            localStorage.setItem('browsingHistory', JSON.stringify(updatedHistory));
+        } else{
+            localStorage.setItem('browsingHistory', JSON.stringify([productHandle]));
+        }
+    </script>
+{% endif %}

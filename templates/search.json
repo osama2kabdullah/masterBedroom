@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "header": {
+      "type": "s_search-header",
+      "settings": {}
+    },
+    "main": {
+      "type": "s_search",
+      "settings": {}
+    }
+  },
+  "order": [
+    "header",
+    "main"
+  ]
+}

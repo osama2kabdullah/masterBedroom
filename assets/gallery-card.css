@@ -1,0 +1,49 @@
+.\#gallery-card {
+  position: relative;
+}
+.\#gallery-card.\@frame {
+  border-radius: var(--border-radius-base);
+  overflow: hidden;
+}
+.\#gallery-card.\@frame .\#gallery-card-media {
+  border-radius: var(--border-radius-inner);
+}
+.\#gallery-card:not(.\@frame) {
+  border-radius: var(--border-radius-base);
+}
+.\#gallery-card:not(.\@frame) .\#gallery-card-media {
+  border-radius: var(--border-radius-base);
+}
+.\#gallery-card.\@full-height {
+  height: 100%;
+}
+.\#gallery-card.\@full-height .\#gallery-card-media {
+  height: 100%;
+}
+.\#gallery-card-media {
+  overflow: hidden;
+}
+.\#gallery-card.\@caption\:outer.\@frame .\#gallery-card-caption {
+  margin-top: 0.7rem;
+}
+.\#gallery-card.\@caption\:outer:not(.\@frame) .\#gallery-card-caption .\#hero {
+  margin-top: calc(var(--gap) * 1.5);
+}
+.\#gallery-card.\@caption\:inner .\#gallery-card-caption {
+  padding: 2rem;
+}
+.\#gallery-card.\@caption\:inner.\@frame .\#gallery-card-caption {
+  border: 0.7rem solid transparent;
+}
+.\#gallery-card.\@frame {
+  padding: 0.7rem;
+  background: var(--color-g-fg);
+}
+.\#gallery-card .\#button {
+  position: relative;
+  z-index: 23;
+}
+
+.\#gallery-card.\@caption\:outer.\@shadow.\@frame, .\#gallery-card.\@caption\:outer.\@shadow:not(.\@frame) .\#gallery-card-media, .\#gallery-card.\@caption\:inner.\@shadow {
+  box-shadow: var(--color-g-text-alpha-10) 0 3.125rem 6.25rem -1.25rem, var(--color-g-text-alpha-30) 0 1.875rem 3.75rem -1.875rem;
+}

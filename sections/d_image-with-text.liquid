@@ -1,0 +1,383 @@
+{%- liquid
+    assign image_width = section.settings.image_width
+
+    if section.settings.section_layout == 'offset'
+        if section.settings.image_position == 'right'
+            assign section_layout = 'offset-left'
+        else
+            assign section_layout = 'offset-right'
+        endif
+    else
+        assign section_layout = section.settings.section_layout
+    endif
+-%}
+
+{%- capture hero_image_srcsize_desktop -%}(100vw - (100vw - {{ settings.container_width }}px)/2) * {{ image_width | divided_by: 100.0 }}{%- endcapture -%}
+{%- capture hero_image_srcsize_mobile -%}90vw{%- endcapture -%}
+
+{%- capture Media -%}
+    {% render 'media',
+        image: section.settings.image,
+        size: section.settings.image_size,
+        size_mobile: 'origin',
+        srcsize_desktop: hero_image_srcsize_desktop,
+        srcsize_mobile: hero_image_srcsize_mobile
+    %}  
+{%- endcapture -%}
+
+{%- capture Text -%}
+    {%- capture Hero -%}
+        {% render 'hero',
+            blocks: section.blocks,
+            align: 'center',
+            size: section.settings.text_size,
+            width: 70,
+            outer_gap: true
+        %}
+    {%- endcapture -%}
+    {% render 'floating-content',
+        x: 'center',
+        y: 'center',
+        content: Hero,
+        padded: true
+    %}
+{%- endcapture -%}
+
+{%- capture Content -%}
+    {% render 'media-with-text',
+        media: Media,
+        text: Text,
+        media_width: image_width,
+        media_position: section.settings.image_position
+    %}
+{%- endcapture -%}
+
+{% render 'section-body',
+    content: Content,
+    container: section_layout,
+    spaced: true,
+    curved: true,
+    content_bg_color: section.settings.bg_color,
+    text_color: section.settings.text_color
+%}
+
+{% schema %}
+{
+   "name": "Image with text",
+   "settings": [
+    {
+        "type": "select",
+        "id": "section_layout",
+        "label": "t:g.section.layout.label",
+        "options": [
+            {
+                "value": "offset",
+                "label": "t:g.section.layout.options.offset"
+            },
+            {
+                "value": "container",
+                "label": "t:g.section.layout.options.container"
+            },
+            {
+                "value": "full",
+                "label": "t:g.section.layout.options.full"
+            }
+        ],
+        "default": "container"
+    },
+    {
+        "type": "select",
+        "id": "image_size",
+        "label": "t:g.media.desktop_image_size",
+        "options": [
+            {
+                "value": "xl",
+                "label": "t:g.media.image_size.options.xl"
+            },
+            {
+                "value": "lg",
+                "label": "t:g.media.image_size.options.lg"
+            },
+            {
+                "value": "md",
+                "label": "t:g.media.image_size.options.md"
+            },
+            {
+                "value": "sm",
+                "label": "t:g.media.image_size.options.sm"
+            },
+            {
+                "value": "origin",
+                "label": "t:g.media.image_size.options.origin"
+            },
+            {
+                "value": "auto",
+                "label": "t:g.media.image_size.options.auto"
+            }
+        ],
+        "default": "lg"
+    },
+    {
+        "type": "image_picker",
+        "id": "image",
+        "label": "t:g.media.image"
+    },
+    {
+        "type": "range",
+        "id": "image_width",
+        "label": "t:g.media.desktop_image_width",
+        "min": 30,
+        "step": 1,
+        "max": 70,
+        "unit": "%",
+        "default": 50
+    },
+    {
+        "type": "select",
+        "id": "image_position",
+        "label": "t:g.media.image_position",
+        "options": [
+            {
+                "value": "left",
+                "label": "t:g.media.position.left"
+            },
+            {
+                "value": "right",
+                "label": "t:g.media.position.right"
+            }
+        ],
+        "default": "left"
+    },
+    {
+        "type": "select",
+        "id": "text_size",
+        "label": "t:g.hero.caption.text_size",
+        "options": [
+            {
+                "value": "sm",
+                "label": "t:g.common.sizes.sm"
+            },
+            {
+                "value": "md",
+                "label": "t:g.common.sizes.md"
+            },
+            {
+                "value": "lg",
+                "label": "t:g.common.sizes.lg"
+            },
+            {
+                "value": "xl",
+                "label": "t:g.common.sizes.xl"
+            }
+        ],
+        "default": "lg"
+    },
+    {
+        "type": "color",
+        "id": "text_color",
+        "label": "t:g.common.color.text"
+    },
+    {
+        "type": "color",
+        "id": "bg_color",
+        "label": "t:g.common.color.bg"
+    }  
+   ],
+   "blocks": [
+        {
+            "type": "icon",
+            "name": "t:g.hero.icon.name",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "icon",
+                    "label": "t:g.common.icon.label",
+                    "info": "t:g.dynamic_icon.info",
+                    "default": "star"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "icon_use_custom_color",
+                    "label": "t:g.hero.icon.use_custom_color"
+                },
+                {
+                    "type": "color",
+                    "id": "icon_color",
+                    "label": "t:g.common.icon.color",
+                    "default": "#ffffff"
+                }
+            ]
+        },
+        {
+            "type": "image",
+            "name": "t:g.hero.image.name",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "t:g.hero.image.label",
+                    "info": "t:g.hero.image.info"
+                },
+                {
+                    "type": "range",
+                    "id": "image_width",
+                    "label": "t:g.media.image_width",
+                    "min": 20,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 70
+                }
+            ]
+        },
+        {
+            "type": "heading",
+            "name": "t:g.hero.heading.name",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "t:g.hero.heading.label"
+                }
+            ]
+        },
+        {
+            "type": "subheading",
+            "name": "t:g.hero.subheading.name",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "subheading",
+                    "label": "t:g.hero.subheading.label"
+                }
+            ]
+        },
+        {
+            "type": "timer",
+            "name": "Countdown",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "date",
+                    "label": "End date",
+                    "info": "Format: mm-dd-yyyy",
+                    "default": "04-03-2024"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "hide_on_complete",
+                    "label": "Hide timer on complete"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "display_titles",
+                    "label": "Display titles",
+                    "default": true,
+                    "info": "Titles will be displayed unless the section text size is 'small'"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "name": "t:g.hero.text.name",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "t:g.hero.text.label"
+                }
+            ]
+        },
+        {
+            "type": "buttons",
+            "name": "t:g.hero.buttons.name",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "f_button_label",
+                    "label": "t:g.hero.buttons.first.label",
+                    "default": "Shop now"
+                },
+                {
+                    "type": "url",
+                    "id": "f_button_link",
+                    "label": "t:g.hero.buttons.first.link"
+                },
+                {
+                    "type": "select",
+                    "id": "f_button_style",
+                    "label": "t:g.hero.buttons.first.style",
+                    "options": [
+                        {
+                            "value": "normal",
+                            "label": "t:g.common.button_styles.normal"
+                        },
+                        {
+                            "value": "outline",
+                            "label": "t:g.common.button_styles.outline"
+                        },
+                        {
+                            "value": "link",
+                            "label": "t:g.common.button_styles.link"
+                        }
+                    ],
+                    "default": "normal"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "f_button_custom_colors",
+                    "label": "t:g.hero.buttons.first.custom_colors"
+                },
+                {
+                    "type": "color",
+                    "id": "f_button_text_color",
+                    "label": "t:g.common.custom_colors.text",
+                    "default": "#ffffff"
+                },
+                {
+                    "type": "color",
+                    "id": "f_button_bg_color",
+                    "label": "t:g.common.custom_colors.bg",
+                    "default": "#000000"
+                }
+            ]
+        }
+   ],
+    "presets": [
+        {
+            "category": "Image",
+            "name": "Image with text",
+            "blocks": [
+                {
+                    "type": "subheading",
+                    "settings": {
+                        "subheading": "Subheading"
+                    }
+                },
+                {
+                    "type": "heading",
+                    "settings": {
+                        "heading": "Image with text heading"
+                    }
+                },
+                {
+                    "type": "text",
+                    "settings": {
+                        "text": "<p>Give customers details about the hero image or content on the template.</p>"
+                    }
+                },
+                {
+                    "type": "buttons"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

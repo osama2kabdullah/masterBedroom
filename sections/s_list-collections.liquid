@@ -1,0 +1,211 @@
+{% render 'load-css', file: 'collection-card' %}
+
+{%- liquid
+    case section.settings.sort
+      when 'products_high' or 'products_low'
+        assign collections = collections | sort: 'all_products_count'
+      when 'date' or 'date_reversed'
+        assign collections = collections | sort: 'published_at'
+    endcase
+  
+    if section.settings.sort == 'products_high' or section.settings.sort == 'date_reversed' or section.settings.sort == 'alphabetical_reversed'
+      assign collections = collections | reverse
+    endif
+
+    assign paginate_items = section.settings.columns | times: 3
+-%}
+
+{%- capture Content -%}
+    
+        {%- if section.settings.collections_display == 'all' -%}
+            {%- liquid
+                case section.settings.sort
+                when 'products_high' or 'products_low'
+                    assign collections = collections | sort: 'all_products_count'
+                when 'date' or 'date_reversed'
+                    assign collections = collections | sort: 'published_at'
+                endcase
+            
+                if section.settings.sort == 'products_high' or section.settings.sort == 'date_reversed' or section.settings.sort == 'alphabetical_reversed'
+                assign collections = collections | reverse
+                endif
+            -%}
+            
+            {% paginate collections by paginate_items %}
+            <div class="#grid @type:columns" style="--columns: {{ section.settings.columns }}; --columns-mobile: 2; --gap: 2rem; --gap-mobile: 1rem;">
+                {% for collection in collections %}
+                    <div>
+                        {% render 'collection-card',
+                            size: section.settings.image_size,
+                            collection: collection,
+                            text_position: section.settings.text_position,
+                            text_bg: true,
+                            show_frame: section.settings.show_frame,
+                            text_size: 'h4'
+                        %}
+                    </div>            
+                {% endfor %}
+                </div>
+                {%- if paginate.pages > 1 -%}
+                    {% render 'pagination', paginate: paginate, anchor: '' %}
+                {%- endif -%} 
+            {% endpaginate %}
+        {%- else -%}
+        <div class="#grid @type:columns" style="--columns: {{ section.settings.columns }}; --columns-mobile: 2; --gap: 2rem; --gap-mobile: 1rem;">
+            {% for block in section.blocks %}
+                <div {{ block.shopify_attributes }}>
+                    {% render 'collection-card',
+                        image: block.settings.image,
+                        size: section.settings.image_size,
+                        collection: block.settings.collection,
+                        text_position: section.settings.text_position,
+                        text_bg: true,
+                        show_frame: section.settings.show_frame,
+                        text_size: 'h4'
+                    %}
+                </div>            
+            {% endfor %}
+        </div>
+        {%- endif -%}
+    
+{%- endcapture -%}
+
+{% render 'section-body',
+    content: Content,
+    spaced: true,
+    container: true
+%}
+
+
+
+{% schema %}
+{
+    "name": "Collection list",
+    "settings": [
+        {
+            "type": "radio",
+            "id": "collections_display",
+            "label": "Collections to show",
+            "options": [
+            {
+                "value": "all",
+                "label": "All"
+            },
+            {
+                "value": "selected",
+                "label": "Selected"
+            }
+            ]
+        },
+        {
+            "type": "range",
+            "id": "columns",
+            "label": "Desktop columns",
+            "min": 3,
+            "step": 1,
+            "max": 6,
+            "default": 5              
+        },
+        {
+            "type": "select",
+            "id": "image_size",
+            "label": "t:g.media.image_size.label",
+            "options": [
+                {
+                    "value": "portrait",
+                    "label": "t:g.media.image_size.options.portrait"
+                },
+                {
+                    "value": "landscape",
+                    "label": "t:g.media.image_size.options.landscape"
+                },
+                {
+                    "value": "circle",
+                    "label": "t:g.media.image_size.options.circle"
+                },
+                {
+                    "value": "square",
+                    "label": "t:g.media.image_size.options.square"
+                }
+            ],
+            "default": "square" 
+        },
+        {
+            "type": "select",
+            "id": "text_position",
+            "label": "t:g.collection_card.text_position.label",
+            "options": [
+                {
+                    "value": "center",
+                    "label": "Outside"
+                },
+                {
+                    "value": "inner-bottom-center",
+                    "label": "Bottom"
+                },
+                {
+                    "value": "inner-center",
+                    "label": "Center"
+                }
+            ],
+            "default": "inner-bottom-center"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_frame",
+            "label": "t:g.media.show_frame"
+        },
+        {
+          "type": "select",
+          "id": "sort",
+          "options": [
+            {
+              "value": "alphabetical",
+              "label": "t:sections.main-list-collections.settings.sort.options__1.label"
+            },
+            {
+              "value": "alphabetical_reversed",
+              "label": "t:sections.main-list-collections.settings.sort.options__2.label"
+            },
+            {
+              "value": "date_reversed",
+              "label": "t:sections.main-list-collections.settings.sort.options__3.label"
+            },
+            {
+              "value": "date",
+              "label": "t:sections.main-list-collections.settings.sort.options__4.label"
+            },
+            {
+              "value": "products_high",
+              "label": "t:sections.main-list-collections.settings.sort.options__5.label"
+            },
+            {
+              "value": "products_low",
+              "label": "t:sections.main-list-collections.settings.sort.options__6.label"
+            }
+          ],
+          "default": "alphabetical",
+          "label": "t:sections.main-list-collections.settings.sort.label",
+          "info": "Sorting only applies when 'All' is selected above."
+        }
+    ],
+    "blocks": [
+        {
+            "type": "collection",
+            "name": "Collection",
+            "settings": [
+                {
+                    "type": "collection",
+                    "id": "collection",
+                    "label": "Collection"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Custom image"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,158 @@
+{%- liquid
+    assign NS = 'cart-notification'
+    assign cn = '#' | append: NS    
+    
+    assign checkout_button_label = 'sections.cart.checkout' | t  
+    assign recommendations_enabled = settings.cart_notification_enable_recommendations
+    assign added_product_variant_ids = cart.attributes['notification_items_variant_ids'] | split: ',' 
+
+    assign added_products_count = added_product_variant_ids | size
+    assign matched = 0
+-%}
+
+{%- if settings.enable_free_shipping_progress_bar -%}
+    {%- capture Free_shipping_bar -%}
+        <div data-free-shipping data-dynamic="free-shipping">
+            {% render 'free-shipping-progress-bar' %}
+        </div>
+    {%- endcapture -%}
+{%- endif -%}
+
+
+{%- capture Msg -%}
+    <div class="{{ cn }}-msg">
+        <div class="{{ cn }}-msg-icon">
+            {% render 'icon', name: 'check' %}
+        </div>
+        <h5 class="{{ cn }}-msg-title">{{ 'general.cart.notification.title' | t }}</h5>
+    </div>
+{%- endcapture -%}
+
+{% if added_products_count == 1 %}
+    {%- capture Single_product -%}
+        {% liquid
+            for item in cart.items
+                assign variant_id = item.variant_id | append: ''
+                if variant_id == added_product_variant_ids[0]
+                    assign main_item = item
+                    break
+                endif
+            endfor
+        %}
+        <div class="{{ cn }}-product">
+            <div class="{{ cn }}-product-image">
+                {% render 'media',
+                    image: main_item.image,
+                    link: main_item.variant.url,
+                    image_res: 180
+                %}
+            </div>
+            <div class="{{ cn }}-product-info">
+                {{ Msg }}
+                <h5 class="{{ cn }}-product-info-title"><a class="unstyled-link" href="{{ main_item.variant.url }}">{{ main_item.product.title }}</a></h5>
+                {%- if main_item.product.has_only_default_variant == false or main_item.properties.size != 0 -%}
+                    <dl class="{{ cn }}-product-info-options">
+                        {%- unless main_item.product.has_only_default_variant -%}
+                            {%- for option in main_item.options_with_values -%}
+                                <div class="{{ cn }}-product-info-option">
+                                    <dt class="{{ cn }}-product-info-option-name">{{ option.name }}:</dt>
+                                    <dd class="{{ cn }}-product-info-option-value">{{ option.value }}</dd>
+                                </div>
+                            {%- endfor -%}
+                        {%- endunless -%}
+                        {%- for property in main_item.properties -%}
+                            {% assign property_first_char = property.first | slice: 0  %}
+                            {%- if property.last != blank and property_first_char != '_' -%}
+                                <div class="{{ cn }}-product-info-option">
+                                    <dt class="{{ cn }}-product-info-option-name">{{ property.first }}:</dt>
+                                    <dd class="{{ cn }}-product-info-option-value">
+                                        {%- if property.last contains '/uploads/'  -%}
+                                            <a class="unstyled-link" target="_blank" href="{{ property.last }}">
+                                                {{ property.last | split: '/' | last }}
+                                            </a>
+                                        {%- else  -%}
+                                            {{ property.last }}
+                                        {%- endif -%}
+                                    </dd>
+                                </div>
+                            {%- endif -%}
+                        {%- endfor -%}
+                    </dl>
+                {%- endif -%}
+                {{ Free_shipping_bar  }}
+            </div>
+        </div>
+    {%- endcapture -%}
+{%- endif -%}
+
+{%- if added_products_count > 1 -%}
+    {%- capture Multiple_products -%}
+        <div class="{{ cn }}-products-list-wrapper">
+            <div class="{{ cn }}-products-list {% if added_products_count > 3 %} @grid-list {% endif %}">
+                {%- for added_variant_id_str in added_product_variant_ids -%}
+                    {%- assign added_variant_id = added_variant_id_str | times: 1 -%}
+                    {%- assign added_item = cart.items | where: 'variant_id', added_variant_id | first -%}
+                    {%- if forloop.first -%}
+                        {%- assign main_item = added_item -%}
+                    {%- endif -%}
+                    <div class="{{ cn }}-products-list-item">
+                        <div class="{{ cn }}-products-list-item-image">
+                            {% render 'media',
+                                image: added_item.image,
+                                link: added_item.variant.url,
+                                image_res: 120
+                            %}
+                        </div>
+                    </div>
+                {%- endfor -%}
+            </div>
+            <div class="{{ cn }}-products-list-msg">
+                {{ Msg }}
+            </div>
+            {{ Free_shipping_bar  }}
+        </div>
+    {%- endcapture -%}
+{%- endif -%}
+
+{%- capture Summary -%}
+    <div class="{{ cn }}-summary">
+        <div class="{{ cn }}-summary-cart">
+            <div class="{{ cn }}-summary-info">
+                <span class="{{ cn }}-summary-items">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+                <span class="{{ cn }}-summary-total">{{ cart.total_price | money }}</span>
+            </div>
+        </div>
+        {% form 'cart', cart %}
+            {% render 'button',
+                text: checkout_button_label,
+                block: true,
+                display_style: 'gradient',
+                name: 'checkout',
+                type: 'submit'
+            %}
+        {% endform %}
+        <a class="{{ cn }}-summary-link" href="{{ routes.cart_url }}">
+            {% render 'icon', name: 'cart-shopping' %}
+            {{ 'general.cart.notification.go_to_cart' | t }}
+        </a>
+    </div>
+{%- endcapture -%}
+
+<template data-content>
+    {% render 'load-css', file: NS, lazy: true %}
+    <div class="{{ cn }}">
+        <modal-close class="{{ cn }}-close">
+            {% render 'icon', name: 'x' %}
+        </modal-close>
+        <div class="{{ cn }}-body shadow-1">
+            {{ Single_product }}
+            {{ Multiple_products }}
+            {{ Summary }}
+        </div>
+        {%- if recommendations_enabled -%}
+            {% render 'cart-notification-recommendations',
+                product_id: main_item.product.id
+            %}
+        {%- endif -%}
+    </div>
+</template>

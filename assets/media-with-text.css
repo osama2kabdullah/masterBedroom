@@ -1,0 +1,9 @@
+.\#media-with-text.\@no-background .\#media {
+  border-radius: var(--border-radius-base);
+}
+.\#media-with-text .\#video-popup {
+  height: 100%;
+}
+.\#media-with-text .\#video-popup-content {
+  height: 100%;
+}

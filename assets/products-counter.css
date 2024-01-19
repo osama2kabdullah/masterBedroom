@@ -1,0 +1,19 @@
+.\#products-counter {
+  top: -0.35rem;
+  right: 0;
+  font-weight: var(--font-body-weight-bold);
+  position: absolute;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--color-g-sale);
+  color: var(--color-g-fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  z-index: 3;
+}
+.\#products-counter-wrapper {
+  position: relative;
+}

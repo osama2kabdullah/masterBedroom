@@ -1,0 +1,24 @@
+.\#customer-nav {
+  display: flex;
+  align-items: center;
+  font-size: 1.15rem;
+  gap: 2.3rem;
+  margin-bottom: 2rem;
+}
+.\#customer-nav-item {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.\#customer-nav-item .\#icon {
+  display: flex;
+  --size: 1.4rem;
+}
+.\#customer-nav-item.\!active {
+  font-weight: var(--font-body-weight-bold);
+  padding: 0.5em 1em;
+  border-radius: 2em;
+  background: var(--color-g-fg);
+}

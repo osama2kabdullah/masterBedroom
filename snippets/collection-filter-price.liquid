@@ -1,0 +1,83 @@
+{%- liquid
+    assign NS = 'collection-filter-price'
+    assign cn = '#' | append: NS
+
+    if filter.min_value.value
+        assign min_abs_value = filter.min_value.value
+    else
+        assign min_abs_value = 0
+    endif
+    
+    if filter.max_value.value
+        assign max_abs_value = filter.max_value.value
+    else
+        assign max_abs_value = filter.range_max
+    endif
+    
+    assign test_money_format_price_arr = 100000 | money_without_currency | split: ''
+    # 100000 | money_without_currency => 1,000.00(USD), 1.000,00(EUR), 1 000(UZS)
+    assign int_separator_position = 1
+    assign fract_separator_position = 5
+
+    assign int_separator = test_money_format_price_arr[int_separator_position] 
+    assign fract_separator = test_money_format_price_arr[fract_separator_position]
+    
+    assign filter_range_max_float = filter.range_max | money_without_currency | remove: int_separator
+    assign min_price_float = min_abs_value | money_without_currency | remove: int_separator
+    assign max_price_float = max_abs_value | money_without_currency | remove: int_separator
+
+    if fract_separator
+        assign filter_range_max_float = filter_range_max_float | replace: fract_separator, '.'
+        assign min_price_float = min_price_float | replace: fract_separator, '.'
+        assign max_price_float = max_price_float | replace: fract_separator, '.'
+    endif
+
+    assign one_percent = filter_range_max_float | divided_by: 100.0
+    assign range_min = min_price_float  | divided_by: one_percent
+    assign range_max = max_price_float | divided_by: one_percent
+-%}
+
+{% render 'load-css', file: NS %}
+
+<{{ NS }}
+    class="{{ cn }}"
+    range-percent="{{ one_percent }}"
+    section-id="{{ section.id }}"
+    id="{{ NS }}-{{ section.id }}"
+    style="
+        --range-min: {{ range_min }}%;
+        --range-max: {{ range_max }}%;
+">
+    <div class="{{ cn }}-values">
+        <div class="{{ cn }}-values-min">
+            {{ min_abs_value | money_without_trailing_zeros }}
+        </div>
+        <div class="{{ cn }}-values-max">
+            {{ max_abs_value | money_without_trailing_zeros }}
+        </div>
+    </div>
+    <div class="{{ cn }}-slider">
+        <input
+            class="{{ cn }}-slider-range @value:min"
+            type="range"
+            min="0"
+            max="{{ filter_range_max_float }}"
+            step="0.01"
+            value="{{ min_price_float | escape }}"
+            name="{{ filter.min_value.param_name }}"
+            form="{{ form }}"
+            data-element="input-min"
+        >
+        <input
+            class="{{ cn }}-slider-range @value:max"
+            type="range"
+            min="0"
+            max="{{ filter_range_max_float }}"
+            step="0.01"
+            value="{{ max_price_float | escape }}"
+            name="{{ filter.max_value.param_name }}"
+            form="{{ form }}"
+            data-element="input-max"
+        >
+    </div>
+</{{ NS }}>

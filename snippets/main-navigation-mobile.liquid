@@ -1,0 +1,528 @@
+{%- liquid
+    assign NS = 'main-navigation-mobile'
+    assign cn = '#' | append: NS
+    assign prefix = 'MainNavigationMobile'
+    assign drawer_id = prefix | append: section.id
+    assign container_width = '90vw - 1rem' 
+-%}
+
+{% render 'load-css', file: NS %}
+
+{%- capture lvl0 -%}
+    <nav class="{{ cn }}-nav">
+        {%- for item in items -%}
+            {%- case item.type -%}
+                {%- when 'link' -%}
+                    <div class="{{ cn }}-nav-item">
+                        <a class="{{ cn }}-nav-link" href="{{ item.settings.url }}">{{ item.settings.link_name }}</a>
+                    </div>
+                {%- when 'mail_link' -%}
+                    {%- if item.settings.mail_address != blank -%}
+                        <div class="{{ cn }}-nav-item">
+                            <a class="{{ cn }}-nav-link" href="mailto:{{ item.settings.mail_address | default: '#' }}">{{ item.settings.mail_address }}</a>
+                        </div>
+                    {%- endif -%}
+                {%- when 'phone_link' -%}
+                    {%- if item.settings.phone_number != blank -%}
+                        <div class="{{ cn }}-nav-item">
+                            <a class="{{ cn }}-nav-link" href="tel:{{ item.settings.phone_number | default: '#' }}">{{ item.settings.phone_number }}</a>
+                        </div>
+                    {%- endif -%}
+                {%- when 'menu' -%}
+                    {%- for menu_item in item.settings.menu.links -%}
+                        <div class="{{ cn }}-nav-item">
+                            {%- if menu_item.levels == 0 -%}
+                                <a class="{{ cn }}-nav-link" href="{{ menu_item.url }}">{{ menu_item.title }}</a>
+                            {%- else -%}
+                                {%- assign lvl1_id = prefix | append: '-lvl1-' | append: item.id | append: forloop.index -%}
+                                <label class="{{ cn }}-nav-link" for="{{ lvl1_id }}" data-to-lvl="1">
+                                    {{ menu_item.title }}
+                                    {% render 'icon', name: 'angle-right' %}
+                                </label>
+                                {%- capture lvl1 -%}
+                                    {{ lvl1 }}
+                                    <input
+                                        id="{{ lvl1_id }}"
+                                        class="{{ cn }}-nav-check"
+                                        name="{{ prefix }}-lvl1" 
+                                        type="radio"
+                                        hidden
+                                    >
+                                    <div class="{{ cn }}-nav">
+                                        <div class="{{ cn }}-nav-title">
+                                            <a class="{{ cn }}-nav-title-link" href="{{ menu_item.url }}">{{ menu_item.title }}</a>
+                                        </div>
+                                        {%- for lvl1_item in menu_item.links -%}
+                                            {%- if lvl1_item.levels == 0 -%}
+                                                <div class="{{ cn }}-nav-item">
+                                                    <a class="{{ cn }}-nav-link" href="{{ lvl1_item.url }}">{{ lvl1_item.title }}</a>
+                                                </div>    
+                                            {%- else -%}
+                                                {%- assign lvl2_id = prefix | append: '-lvl2-' | append: item.id | append: forloop.index | append: forloop.parentloop.index -%}
+                                                <div class="{{ cn }}-nav-item">
+                                                    <label class="{{ cn }}-nav-link" for="{{ lvl2_id }}" data-to-lvl="2">
+                                                        {{ lvl1_item.title }}
+                                                        {% render 'icon', name: 'angle-right' %}
+                                                    </label>
+                                                </div>
+                                                {%- capture lvl2 -%}
+                                                    {{ lvl2 }}
+                                                    <input
+                                                        id="{{ lvl2_id }}"
+                                                        class="{{ cn }}-nav-check"
+                                                        name="{{ prefix }}-lvl2" 
+                                                        type="radio"
+                                                        hidden
+                                                    >
+                                                    <div class="{{ cn }}-nav">
+                                                        <div class="{{ cn }}-nav-back" data-to-lvl="1">
+                                                            {% render 'icon', name: 'arrow-left' %}
+                                                            {{ menu_item.title }}
+                                                        </div>
+                                                        <div class="{{ cn }}-nav-title">
+                                                            <a class="{{ cn }}-nav-title-link" href="{{ lvl1_item.url }}">{{ lvl1_item.title }}</a>
+                                                        </div>
+                                                        {%- for lvl2_item in lvl1_item.links -%}
+                                                            <div class="{{ cn }}-nav-item">
+                                                                <a class="{{ cn }}-nav-link" href="{{ lvl2_item.url }}">{{ lvl2_item.title }}</a>
+                                                            </div>
+                                                        {%- endfor -%}
+                                                    </div>
+                                                {%- endcapture -%}
+                                            {%- endif -%}
+                                        {%- endfor -%}
+                                    </div>
+                                {%- endcapture -%}                           
+                            {%- endif -%}
+                        </div>
+                    {%- endfor -%}
+                {%- else -%}
+                {%- when 'category' -%}
+                    <div class="{{ cn }}-nav-item">
+                        {%- assign lvl1_id = prefix | append: '-lvl1-' | append: item.id | append: forloop.index -%}
+                        <label class="{{ cn }}-nav-link" for="{{ lvl1_id }}" data-to-lvl="1">
+                            {{ item.settings.title }}
+                            {% render 'icon', name: 'angle-right' %}
+                        </label>
+                        {%- capture lvl1 -%}
+                            {{ lvl1 }}
+                            <input
+                                id="{{ lvl1_id }}"
+                                class="{{ cn }}-nav-check"
+                                name="{{ prefix }}-lvl1"
+                                type="radio"
+                                hidden
+                            >
+                            <div class="{{ cn }}-nav">
+                                <div class="{{ cn }}-nav-title">
+                                    <a class="{{ cn }}-nav-title-link" href="{{ item.settings.url }}">{{ item.settings.title }}</a>
+                                </div>
+                                {%- for menu_item in item.settings.menu.links -%}
+                                    {%- if menu_item.levels == 0 -%}
+                                        <div class="{{ cn }}-nav-item">
+                                            <a class="{{ cn }}-nav-link" href="{{ menu_item.url }}">{{ menu_item.title }}</a>
+                                        </div>
+                                    {%- else -%}
+                                        {%- assign lvl2_id = prefix | append: '-lvl2-' | append: item.id | append: forloop.index -%}
+                                        <div class="{{ cn }}-nav-item">
+                                            <label class="{{ cn }}-nav-link" for="{{ lvl2_id }}" data-to-lvl="2">
+                                                {{ menu_item.title }}
+                                                {% render 'icon', name: 'angle-right' %}
+                                            </lab0el>
+                                        </div>
+                                        {%- capture lvl2 -%}
+                                            {{ lvl2 }}
+                                            <input
+                                                id="{{ lvl2_id }}"
+                                                class="{{ cn }}-nav-check"
+                                                name="{{ prefix }}-lvl2"
+                                                type="radio"
+                                                hidden
+                                            >
+                                            <div class="{{ cn }}-nav">
+                                                <div class="{{ cn }}-nav-back" data-to-lvl="1">
+                                                    {% render 'icon', name: 'arrow-left' %}
+                                                    {{ item.settings.title }}
+                                                </div>
+                                                <div class="{{ cn }}-nav-title">
+                                                    <a class="{{ cn }}-nav-title-link" href="{{ menu_item.url }}">{{ menu_item.title }}</a>
+                                                </div>
+                                                {%- for menu_sub_item in menu_item.links -%}
+                                                    {%- if menu_sub_item.levels == 0 -%}
+                                                        <div class="{{ cn }}-nav-item">
+                                                            <a class="{{ cn }}-nav-link" href="{{ menu_sub_item.url }}">{{ menu_sub_item.title }}</a>
+                                                        </div>
+                                                    {%- else -%}
+                                                        {%- assign lvl3_id = prefix | append: '-lvl3-' | append: item.id | append: forloop.index -%}
+                                                        <div class="{{ cn }}-nav-item">
+                                                            <label class="{{ cn }}-nav-link" for="{{ lvl3_id }}" data-to-lvl="3">
+                                                                {{ menu_sub_item.title }}
+                                                                {% render 'icon', name: 'angle-right' %}
+                                                            </label>
+                                                        </div>
+                                                        {%- capture lvl3 -%}
+                                                            {{ lvl3 }}
+                                                            <input
+                                                                id="{{ lvl3_id }}"
+                                                                class="{{ cn }}-nav-check"
+                                                                name="{{ prefix }}-lvl3"
+                                                                type="radio"
+                                                                hidden
+                                                            >
+                                                            <div class="{{ cn }}-nav">
+                                                                <div class="{{ cn }}-nav-back" data-to-lvl="2">
+                                                                    {% render 'icon', name: 'arrow-left' %}
+                                                                    {{ menu_item.title }}
+                                                                </div>
+                                                                <div class="{{ cn }}-nav-title">
+                                                                    <a class="{{ cn }}-nav-title-link" href="{{ menu_sub_item.url }}">{{ menu_sub_item.title }}</a>
+                                                                </div>
+                                                                {%- for menu_sub2_item in menu_sub_item.links -%}
+                                                                    <div class="{{ cn }}-nav-item">
+                                                                        <a class="{{ cn }}-nav-link" href="{{ menu_sub2_item.url }}">{{ menu_sub2_item.title }}</a>
+                                                                    </div>
+                                                                {%- endfor -%}
+                                                            </div>
+                                                        {%- endcapture -%}        
+                                                    {%- endif -%}
+                                                {%- endfor -%}
+                                            </div>
+                                        {%- endcapture -%}
+                                    {%- endif -%}
+                                {%- endfor -%}
+                            </div>
+                        {%- endcapture -%}
+                    </div>
+                {%- when 'collection_list' -%}
+                    {%- capture collection_image_srcsize_mobile -%}({{ container_width }})*1.5{%- endcapture -%}
+                    <div class="{{ cn }}-nav-item">
+                        {%- assign lvl1_id = prefix | append: '-lvl1-' | append: item.id | append: forloop.index -%}
+                        <label class="{{ cn }}-nav-link" for="{{ lvl1_id }}" data-to-lvl="1">
+                            {{ item.settings.title }}
+                            {% render 'icon', name: 'angle-right' %}
+                        </label>
+                    </div>
+                    {%- capture lvl1 -%}
+                        {{ lvl1 }}
+                        <input
+                            id="{{ lvl1_id }}"
+                            class="{{ cn }}-nav-check"
+                            name="{{ prefix }}-lvl1"
+                            type="radio"
+                            hidden
+                        >
+                        <div class="{{ cn }}-nav">
+                            <div class="{{ cn }}-nav-title">
+                                <a class="{{ cn }}-nav-title-link" href="{{ item.settings.url }}">{{ item.settings.title }}</a>
+                            </div>
+                            <div class="{{ cn }}-nav-inner">
+                                {%- capture Collection_list_nav -%}
+                                    {%- if item.settings.main_navigation_collection_list != blank -%}
+                                        {% for collection in item.settings.main_navigation_collection_list %}
+                                            {%- capture placeholder_index -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+                                            {% render 'collection-card',
+                                                collection: collection,
+                                                size: item.settings.image_size,
+                                                text_position: 'center',
+                                                image_srcsize_mobile: collection_image_srcsize_mobile,
+                                                shadow: false,
+                                                text_size: collection_card_text_size,
+                                                placeholder_index: placeholder_index
+                                            %}
+                                        {% endfor %}
+                                    {%-else-%}
+                                        {% for collection in (1..6)%}
+                                            {%- capture placeholder_index -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+                                            {% render 'collection-card',
+                                                collection: collection,
+                                                size: item.settings.image_size,
+                                                text_position: 'center',
+                                                image_srcsize_mobile: collection_image_srcsize_mobile,
+                                                shadow: false,
+                                                text_size: collection_card_text_size,
+                                                placeholder_index: placeholder_index
+                                            %}
+                                        {% endfor %}
+                                    {%- endif -%}
+                                {%- endcapture -%}
+                                {% render 'load-css', file: 'collection-card' %}
+                                <div class="#grid @type:columns" style="--columns-mobile: 2;">
+                                    {{ Collection_list_nav }}
+                                </div>
+                            </div>
+                        </div>
+                    {%- endcapture -%}
+                {%- when 'browsing_history' -%}
+                    <div class="{{ cn }}-nav-item">
+                        {%- assign lvl1_id = prefix | append: '-lvl1-' | append: item.id | append: forloop.index -%}
+                        <label class="{{ cn }}-nav-link" for="{{ lvl1_id }}" data-to-lvl="1">
+                            {{ item.settings.title | default: item.settings.title }}
+                            {% render 'icon', name: 'angle-right' %}
+                        </label>
+                        {%- capture lvl1 -%}
+                            {{ lvl1 }}
+                            <input
+                                id="{{ lvl1_id }}"
+                                class="{{ cn }}-nav-check"
+                                name="{{ prefix }}-lvl1"
+                                type="radio"
+                                hidden
+                            >
+                            <div class="{{ cn }}-nav">
+                                <div class="{{ cn }}-nav-title">
+                                    <a class="{{ cn }}-nav-title-link" href="#">{{ item.settings.title }}</a>
+                                </div>
+                                <div class="{{ cn }}-nav-inner">
+                                    <browsing-history-navigation 
+                                        section-id="{{ section.id }}"
+                                        rq-section-id="r_product-card-media"
+                                    >
+                                        <template data-cards-template>
+                                            <div
+                                                data-cards-wrapper
+                                                class="#grid @type:columns {{ cn }}-browsing-history {% if item.settings.show_product_title == false %}@hide-product-title{% endif %} {% if item.settings.show_product_price == false %}@hide-product-price{% endif %}"
+                                                style="--columns-mobile: 2;">
+                                            </div>    
+                                        </template>
+                                        
+                                        <template data-fallback-template>
+                                            <p class="fs-h5 mb0 text-center">{{ 'general.browsing_history.fallback' | t }}</p>
+                                        </template>
+                                    </browsing-history-navigation>
+                                </div>
+                            </div>
+                        {%- endcapture -%}
+                    </div>
+                {%- when 'collection' -%}
+                    <div class="{{ cn }}-nav-item">
+                        {%- assign lvl1_id = prefix | append: '-lvl1-' | append: item.id | append: forloop.index -%}
+                        <label class="{{ cn }}-nav-link" for="{{ lvl1_id }}" data-to-lvl="1">
+                            {{ item.settings.title | default: item.settings.collection.title }}
+                            {% render 'icon', name: 'angle-right' %}
+                        </label>
+                    </div>
+                    {%- capture lvl1 -%}
+                        {{ lvl1 }}
+                        <input
+                            id="{{ lvl1_id }}"
+                            class="{{ cn }}-nav-check"
+                            name="{{ prefix }}-lvl1"
+                            type="radio"
+                            hidden
+                        >
+                        <div class="{{ cn }}-nav">
+                            <div class="{{ cn }}-nav-title">
+                                <a class="{{ cn }}-nav-title-link" href="{{ item.settings.collection.url }}">{{ item.settings.title | default: item.settings.collection.title }}</a>
+                            </div>
+                            <div class="{{ cn }}-nav-inner">
+                                {%- capture product_image_srcsize -%}({{ container_width }})/2{%- endcapture -%}
+                                {%- assign products_limit = 7 -%}
+                                <div class="#grid @type:columns" style="--columns-mobile: 2;">
+                                    {%- if item.settings.collection != blank -%}
+                                        {% for product in item.settings.collection.products limit: products_limit %}
+                                            {%- render 'main-navigation-product-card'
+                                                product: product,
+                                                srcsize_mobile: product_image_srcsize,
+                                                show_product_title: item.settings.show_product_title,
+                                                show_product_price: item.settings.show_product_price,
+                                            -%}
+                                        {% endfor %}
+                                    {%- else -%}
+                                        {% for product in (1..products_limit) %}
+                                            {%- capture placeholder_index -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+                                            {%- render 'main-navigation-product-card'
+                                                product: product,
+                                                show_product_title: item.settings.show_product_title,
+                                                show_product_price: item.settings.show_product_price,
+                                                placeholder_index: placeholder_index,
+                                            -%}
+                                        {% endfor %}
+                                    {%- endif -%}
+                                    <div class="#main-navigation-collection-view-all">
+                                        <a class="stretched-link" href="{{ item.settings.collection.url }}"></a>
+                                        <div class="#main-navigation-collection-view-all-icon">
+                                            {% render 'icon', name: 'arrow-right' %}
+                                        </div>
+                                        <div class="#main-navigation-collection-view-all-title">{{ 'sections.featured_collection.view_all' | t }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {%- endcapture -%}
+                {%- when 'columns_menu' -%}
+                <div class="{{ cn }}-nav-item">
+                    {%- assign lvl1_id = prefix | append: '-lvl1-' | append: item.id | append: forloop.index -%}
+                    <label class="{{ cn }}-nav-link" for="{{ lvl1_id }}" data-to-lvl="1">
+                        {{ item.settings.title }}
+                        {% render 'icon', name: 'angle-right' %}
+                    </label>
+                </div>
+                {%- capture lvl1 -%}
+                    {{ lvl1 }}
+                    <input
+                        id="{{ lvl1_id }}"
+                        class="{{ cn }}-nav-check"
+                        name="{{ prefix }}-lvl1"
+                        type="radio"
+                        hidden
+                    >
+                    <div class="{{ cn }}-nav">
+                        <div class="{{ cn }}-nav-title">
+                            <a class="{{ cn }}-nav-title-link" href="{{ item.settings.url }}">{{ item.settings.title }}</a>
+                        </div>
+                        {%- for nav_item in item.settings.menu.links -%}
+                            <div class="{{ cn }}-nav-item">
+                                {%- if nav_item.levels == 0 -%}
+                                    <a class="{{ cn }}-nav-link" href="{{ nav_item.url }}">{{ nav_item.title }}</a>
+                                {%- else -%}
+                                    <details class="{{ cn }}-nav-submenu">
+                                        <summary class="{{ cn }}-nav-link">
+                                            {{ nav_item.title }}
+                                            {% render 'icon', name: 'angle-down' %}
+                                        </summary>
+                                        <div class="{{ cn }}-nav-submenu-list">
+                                            {%- for nav_sub_item in nav_item.links -%}
+                                                <a class="{{ cn }}-nav-submenu-list-item" href="{{ nav_sub_item.url }}">{{ nav_sub_item.title }}</a>
+                                            {%- endfor -%}
+                                        </div>
+                                    </details>
+                                {%- endif -%}
+                            </div>
+                        {%- endfor -%}
+                    </div>
+                    {%- endcapture -%}  
+                {%- when 'mega' -%}
+                    <div class="{{ cn }}-nav-item">
+                        {%- assign lvl1_id = prefix | append: '-lvl1-' | append: item.id | append: forloop.index -%}
+                        <label class="{{ cn }}-nav-link" for="{{ lvl1_id }}" data-to-lvl="1">
+                            {{ item.settings.title }}
+                            {% render 'icon', name: 'angle-right' %}
+                        </label>
+                    </div>
+                    {%- capture lvl1 -%}
+                        {{ lvl1 }}
+                        <input
+                            id="{{ lvl1_id }}"
+                            class="{{ cn }}-nav-check"
+                            name="{{ prefix }}-lvl1"
+                            type="radio"
+                            hidden
+                        >
+                        <div class="{{ cn }}-nav">
+                            <div class="{{ cn }}-nav-title">
+                                <a class="{{ cn }}-nav-title-link" href="{{ item.settings.url }}">{{ item.settings.title }}</a>
+                            </div>
+                            {%- for nav_item in item.settings.menu.links -%}
+                                <div class="{{ cn }}-nav-item">
+                                    {%- if nav_item.levels == 0 -%}
+                                        <a class="{{ cn }}-nav-link" href="{{ nav_item.url }}">{{ nav_item.title }}</a>
+                                    {%- else -%}
+                                        <details class="{{ cn }}-nav-submenu">
+                                            <summary class="{{ cn }}-nav-link">
+                                                {{ nav_item.title }}
+                                                {% render 'icon', name: 'angle-down' %}
+                                            </summary>
+                                            <div class="{{ cn }}-nav-submenu-list">
+                                                {%- for nav_sub_item in nav_item.links -%}
+                                                    <a class="{{ cn }}-nav-submenu-list-item" href="{{ nav_sub_item.url }}">{{ nav_sub_item.title }}</a>
+                                                {%- endfor -%}
+                                            </div>
+                                        </details>
+                                    {%- endif -%}
+                                </div>
+                            {%- endfor -%}
+                            {%- if item.settings.first_image_enable or item.settings.second_image_enbale -%}
+                                {% render 'load-css', file: 'gallery-card', lazy: true %}
+                                <div class="{{ cn }}-nav-inner">
+                                    <div class="{{ cn }}-nav-mega-images">
+                                    {%- if item.settings.first_image_enable -%}
+                                        {% render 'gallery-card',
+                                            image: item.settings.first_image,
+                                            image_srcsize_mobile: container_width,
+                                            heading: item.settings.first_image_heading,
+                                            subheading: item.settings.first_image_subheading,
+                                            subheading_position: item.settings.images_subheading_position,
+                                            link: item.settings.first_image_link,
+                                            image_size: item.settings.images_size,
+                                            shadow: false,
+                                            caption_size: 'xxs',
+                                            caption_gap: 'small',
+                                            caption_x: 'center'
+                                        %}
+                                    {%- endif -%}
+                                    {%- if item.settings.second_image_enable -%}
+                                        {% render 'gallery-card',
+                                            image: item.settings.second_image,
+                                            image_srcsize_mobile: container_width,
+                                            heading: item.settings.second_image_heading,
+                                            subheading: item.settings.second_image_subheading,
+                                            subheading_position: item.settings.images_subheading_position,
+                                            link: item.settings.second_image_link,
+                                            image_size: item.settings.images_size,
+                                            shadow: false,
+                                            caption_size: 'xxs',
+                                            caption_gap: 'small',
+                                            caption_x: 'center'
+                                        %}
+                                    {%- endif -%}
+                                    </div>
+                                </div>
+                            {%- endif -%}
+                        </div>
+                    {%- endcapture -%}    
+                {%- when 'social_profiles' -%}
+                    <div class="{{ cn }}-nav-item">
+                        <div class="{{ cn }}-social-profiles">
+                            {% render 'social-profiles' %}
+                        </div>
+                    </div>
+            {%- endcase -%}
+        {%- endfor -%}
+    </nav>
+{%- endcapture -%}
+
+<div class="{{ cn }}">
+    <template id="{{ drawer_id }}">
+        <div class="{{ cn }}-drawer">
+            <div class="{{ cn }}-drawer-inner">
+                <{{ NS }}>
+                    <div class="{{ cn }}-stage" data-stage data-current="0">
+                        <div class="{{ cn }}-stage-inner">
+                            <div class="{{ cn }}-stage-lvl">
+                                {{ lvl0 }}
+                            </div>
+                            <div class="{{ cn }}-stage-lvl">
+                                <div class="{{ cn }}-nav-back" data-to-lvl="0">
+                                    {% render 'icon', name: 'arrow-left' %}
+                                    {{ 'sections.header.menu' | t }}
+                                </div>
+                                {{ lvl1 }}
+                            </div>
+                            <div class="{{ cn }}-stage-lvl">
+                                {{ lvl2 }}
+                            </div>
+                            <div class="{{ cn }}-stage-lvl">
+                                {{ lvl3 }}
+                            </div>
+                        </div>
+                    </div>
+                </{{ NS }}>
+                <script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>
+            </div>
+        </div>
+    </template>
+    <modal-trigger 
+        class="{{ cn }}-trigger" 
+        target="#{{ drawer_id }}"
+        animation="slideLeft"
+        position="center-left"
+        height="100%"
+        width="min(35rem, 100vw - 4rem)"
+        transition="300"
+        close-button
+    >
+        <div class="{{ cn }}-icon">
+            {% render 'icon', name: 'bars' %}
+        </div>
+    </modal-trigger>
+</div>

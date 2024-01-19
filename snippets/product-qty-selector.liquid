@@ -1,0 +1,68 @@
+{%- liquid
+    assign NS = 'product-qty-selector'
+    assign cn = '#' | append: NS
+    assign input_id = section.id | append: NS   
+-%}
+
+{% render 'load-css', file: NS %}
+
+{%- capture Content -%}
+    {%- if variant.available and cart_limit_reached != true -%}
+        {%- if variant.inventory_policy == 'continue' or variant.inventory_management == nil -%}
+            {%- assign limit = 10 -%}
+        {%- else -%}
+            {%- assign limit = variant.inventory_quantity | at_most: 10 -%}
+        {%- endif -%}
+        {%- capture QtyInput -%}
+            <div class="{{ cn }}-input-wrapper">
+                <input
+                    data-input
+                    class="{{ cn }}-input"
+                    type="number"
+                    name="quantity" 
+                    id="{{ input_id }}" 
+                    form="{{ product_form_id }}"
+                    value="1"
+                    min="1"
+                    {% if variant.inventory_management and variant.inventory_policy == 'deny' %}
+                        max="{{ variant.inventory_quantity }}" 
+                    {% endif %} 
+                    step="1"
+                    aria-label="{{ 'products.product.quantity.input_label' | t: product: product.title | escape }}"
+                    id="Quantity-{{ item.variant.id }}"
+                >
+            </div>
+        {%- endcapture -%}
+        <div class="{{ cn }}">
+            <label class="{{ cn }}-label" for="{{ input_id }}">{{ 'products.product.quantity.label' | t }}</label>
+            {%- if type == 'input' -%}
+                {{ QtyInput }}
+            {%- elsif type == 'dropdown' -%}
+            
+                <{{ NS }}>
+                    <template data-input-template>{{ QtyInput }}</template>
+                    <div class="{{ cn }}-inner" data-selector-wrapper>
+                        <select class="{{ cn }}-select" name="quantity" id="{{ input_id }}" form="{{ product_form_id }}">
+                            {%- for i in (1..limit) -%}
+                                {%- if variant.inventory_quantity > 10 and i == 10 -%}
+                                    {%- capture LimitIndicator -%}+{%- endcapture -%}
+                                {%- endif -%}
+                                <option value="{{ i }}">
+                                    {{ i }}{{ LimitIndicator }}
+                                </option>
+                            {%- endfor -%}
+                        </select>
+                        {% render 'icon', name: 'angle-down' %}
+                    </div>
+                </{{ NS }}>
+                {%- if variant.inventory_quantity > 10 -%}
+                    <script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>
+                {%- endif -%}
+            {%- endif -%}
+        </div>
+    {%- endif -%}
+{%- endcapture -%}
+
+<product-variant-listener section-id="{{ section.id }}" id="{{ NS }}-{{ id }}" emptyable>
+    {{ Content }}
+</product-variant-listener>

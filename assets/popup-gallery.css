@@ -1,0 +1,37 @@
+.\#popup-gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--color-g-fg);
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 99;
+}
+.\#popup-gallery-nav .\#icon {
+  display: flex;
+  --size: 1.15rem;
+}
+.\#popup-gallery-nav.\@direction\:next {
+  right: 1rem;
+}
+.\#popup-gallery-nav.\@direction\:prev {
+  left: 1rem;
+}
+.\#popup-gallery-item {
+  overflow: hidden;
+  background-color: var(--color-g-text);
+}
+.\#popup-gallery-item.\@curved {
+  border-radius: var(--border-radius-inner);
+}
+.\#popup-gallery-item-media {
+  transition: var(--transition-base);
+}
+.\#popup-gallery-item-link {
+  cursor: pointer;
+}
+.\#popup-gallery-item:hover .\#popup-gallery-item-media {
+  transform: scale(1.05);
+  opacity: 0.46;
+}

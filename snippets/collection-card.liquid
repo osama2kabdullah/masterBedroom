@@ -1,0 +1,67 @@
+{%- liquid
+    assign NS = 'collection-card'
+    assign cn = '#' | append: NS
+    assign first_product_image = collection.products[0].featured_image
+
+    if use_product_image 
+        assign image = first_product_image
+    else
+        assign image = image | default: collection.image | default: first_product_image
+    endif
+
+    if text_position contains 'inner'
+        assign inner_caption = true
+    endif
+
+    if shadow != false
+        if frame != true and inner_caption != true
+            if settings.animation_card_lift_up
+                assign cn_shadow = 'shadow-hover-parent'
+                assign cn_media_shadow = 'shadow-hover-child-2-3'
+            else
+                assign cn_media_shadow = 'shadow-2'
+            endif
+        else
+            if settings.animation_card_lift_up
+                assign cn_shadow = 'shadow-hover-2-3'
+            else
+                assign cn_shadow = 'shadow-2'
+            endif
+        endif
+    endif
+
+    assign size = size | default: 'square'
+
+    assign title = collection.title
+    if custom_title != blank
+        assign title = custom_title
+    endif
+    
+    assign onboard_title = 'sections.collection_template.title' | t
+    
+    assign is_inner = text_position | split: 'inner-'
+    if is_inner[1] and text_bg
+        assign use_text_bg = true
+    endif
+-%}
+
+<div class="{{ cn }} {{ cn_shadow }} {% if show_frame %}@frame{% endif %} {% if inner_caption %}@inner-caption{% endif %} {% if size == 'circle' %}@rounded{% endif %}">
+    {% if collection.url != blank %}
+        <a class="stretched-link" href="{{ collection.url }}">{{ collection.title }}</a>
+    {% endif %}
+    <div class="{{ cn }}-image {{ cn_media_shadow }}">
+        {% render 'media',
+            image: image,
+            size: size,
+            border_radius: 'inner',
+            placeholder: 'collection',
+            placeholder_index: placeholder_index,
+            srcsize_desktop: image_srcsize_desktop,
+            srcsize_mobile: image_srcsize_mobile,
+            image_res: image_res 
+        %}
+    </div>
+    <div class="{{ cn }}-caption @position:{{ text_position }}">
+        <h4 class="{{ cn }}-title heading-font {% if use_text_bg %}@text-bg{% endif %} {% unless text_size == 'h4' %}fs-{{ text_size }}{% endunless %}">{{ title | default: onboard_title  }}</h4>
+    </div>
+</div>

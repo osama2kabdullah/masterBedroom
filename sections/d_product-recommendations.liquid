@@ -1,0 +1,104 @@
+{%- liquid
+    if section.settings.section_layout == 'full'
+        assign use_offset = true
+    endif
+-%}
+
+{% render 'load-css', file: 'product-card' %}
+{% render 'load-css', file: 'swiper' %}
+{% render 'load-css', file: 'slideshow-inline' %}
+
+{%- capture Content -%}
+    <product-recommendations product-id="{{ product.id }}" limit="{{ section.settings.products_limit }}" section-id="{{ section.id }}">
+        <template data-template>
+            {% render 'slideshow-inline',
+                slides_per_view: section.settings.items_per_view,
+                gap: 20,
+                offset: use_offset,
+                loop: section.settings.enable_loop,
+                pagination: section.settings.enable_pagination
+            %}
+        </template>
+    </product-recommendations>
+
+{%- endcapture -%}
+
+{% render 'section-body',
+    content: Content,
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    force_layout: true,
+    spaced: true
+%}
+
+<script type="module" src="{{ 'product-recommendations.js' | asset_url }}"></script>
+
+{% schema %}
+{
+    "name": "Product recommendations",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "t:g.common.label.heading",
+            "default": "Recommended for You"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading"
+        },
+        {
+            "type": "select",
+            "id": "section_layout",
+            "label": "t:g.section.layout.label",
+            "options": [
+                {
+                    "value": "container",
+                    "label": "Container"
+                },
+                {
+                    "value": "full",
+                    "label": "Full width"
+                }
+            ],
+            "default": "container"
+        },
+        {
+            "type": "range",
+            "id": "products_limit",
+            "label": "Maximum products",
+            "min": 5,
+            "max": 20,
+            "step": 1,
+            "default": 7
+        },
+        {
+            "type": "range",
+            "id": "items_per_view",
+            "label": "Products per view",
+            "min": 3,
+            "max": 6,
+            "step": 1,
+            "default": 4
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_loop",
+            "label": "Loop carousel",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_pagination",
+            "label": "Show carousel pagination"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Product recommendations"
+        }
+    ],
+    "templates": ["product"]
+}
+{% endschema %}

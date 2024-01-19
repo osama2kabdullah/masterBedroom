@@ -1,0 +1,151 @@
+{%- liquid
+    assign NS = 'product-form'
+    assign cn = '#' | append: NS
+    assign show_stock_notifier = false
+    if use_stock_notifier
+        for variant in product.variants
+            unless variant.available
+                assign show_stock_notifier = true
+                break
+            endunless
+        endfor
+    endif
+
+    assign buy_with_block = section.blocks | where: "type", 'buy_with' | first
+    assign use_product_counter = buy_with_block.settings.use_counter
+
+    assign variant_picker_block = section.blocks | where: "type", "variant_selector" | first
+
+    assign gift_card_recipient_feature = false
+    if show_gift_card_recipient and product.gift_card?
+        assign gift_card_recipient_feature = true
+    endif
+-%}
+
+{% render 'load-css', file: NS %}
+
+{% if show_stock_alert %}
+    {% render 'load-css', file: 'product-stock-notifier', lazy: variant.available %}
+{% endif %}
+   
+{% unless quick_view %}
+    <noscript>
+        {%- if product.has_only_default_variant or variant_picker_block == blank -%}
+            <input type="hidden" name="id" form="{{ product_form_id }}" value="{{ variant.id }}" />        
+        {%- else -%}
+            <select style="
+                display: block;
+                background: var(--color-g-fg);
+                margin-bottom: 1rem;
+                width: 100%;
+                font-size: 1.15rem;
+                padding: 1rem;
+                border-radius: var(--border-radius-inner);
+            " name="id" form="{{ product_form_id }}">
+                {%- for variant in product.variants -%}
+                    <option value="{{ variant.id }}" {% if product.selected_or_first_available_variant.id == variant.id %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>{{ variant.title }} {{ variant.price | money }}</option>
+                {%- endfor -%}
+            </select>
+        {%- endif -%}
+    </noscript>
+{% endunless %}
+
+{%- assign contact_form_id = 'contactForm' | append: section.id -%}
+{%- form 'contact', id: contact_form_id -%}{%- endform -%}
+
+{%- form 'product', product, id: product_form_id, novalidate: 'novalidate' -%}
+    <product-variant-listener section-id="{{ section.id }}" id="b-{{ id }}" emptyable>
+        {%- unless cart_limit_reached -%}
+            <{{NS}}
+                class="{{ cn }}"
+                section-id="{{ section.id }}"
+            >
+                {% if variant.available %}
+                    <div class="form">
+                        <input type="hidden" data-product-form-targeter disabled>
+                        {%- if product.has_only_default_variant or variant_picker_block == blank -%}
+                            <input type="hidden" name="id" value="{{ variant.id }}">
+                        {%- endif -%}
+                    
+                        {% if product.selling_plan_groups.size > 0 %}
+                            <selling-plan section-id="{{ section.id }}"></selling-plan>
+                        {% endif %}
+
+                        {%- if gift_card_recipient_feature -%}
+                            {%- render 'gift-card-recipient-form-fields', product: product, form_id: product_form_id, form: form -%}
+                        {%- endif -%}
+
+                        {%- capture Button_text -%}
+                            <buy-with-counter section-id="{{ section.id }}">
+                                <span data-element="add-one">{{ 'products.product.add_to_cart' | t }}</span>
+                                <span data-element="add-many" hidden>{{ 'products.add_count_items_to_cart_html' | t: amount: 1 }}</span>
+                            </buy-with-counter>
+                        {%- endcapture -%}
+                        {%- capture Add_to_cart_button -%}
+                            {%- capture Button -%}
+                                {% render 'button',
+                                    type: 'submit',
+                                    shadow: true,
+                                    size: 'h2',
+                                    block: true,
+                                    text: Button_text,
+                                    loading: true,
+                                    display_style: 'gradient',
+                                    atts: 'data-to-cart'
+                                %}
+                            {%- endcapture -%}
+
+                            {% render 'product-to-cart', 
+                                trigger: Button, 
+                                variant: variant,
+                                form_child: true
+                            %}
+                        {%- endcapture -%}
+
+                        {%- if use_product_counter -%}
+                            {% render 'products-counter',
+                                content: Add_to_cart_button 
+                            %}
+                        {%- else -%}
+                            {{ Add_to_cart_button }}
+                        {%- endif -%}
+                        {% if show_dynamic_checkout and gift_card_recipient_feature == false %}
+                            <product-dynamic-checkout section-id="{{ section.id }}">
+                                {{ form | payment_button }}
+                            </product-dynamic-checkout>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    {% if show_stock_notifier %}
+                        {% render 'product-stock-notifier', 
+                            product: product,
+                            contact_form_id: contact_form_id
+                        %}
+                    {% else %}
+                        {% render 'button',
+                            type: 'submit',
+                            shadow: true,
+                            size: 'h2',
+                            block: true,
+                            t_text: 'products.product.sold_out',
+                            atts: 'disabled'
+                        %}
+                    {% endif %}
+                {% endif %}
+            </{{NS}}>   
+        {%- endunless -%}
+    </product-variant-listener>
+{%- endform -%}
+
+<script type="module" src="{{ 'product-to-cart.js' | asset_url }}"></script>
+<script type="module" src="{{ 'buy-with-counter.js' | asset_url }}"></script>
+{% if show_stock_notifier %}
+    <script type="module" src="{{ 'contact-form-submiter.js' | asset_url }}"></script>
+{% endif %}
+{% if product.selling_plan_groups.size > 0 %}
+    <script type="module" src="{{ 'product-selling-plan.js' | asset_url }}"></script>
+{% endif %}
+{% if show_dynamic_checkout %}
+    <script type="module" src="{{ 'product-dynamic-checkout.js' | asset_url }}"></script>
+{% endif %}
+

@@ -1,0 +1,17 @@
+.\#video-popup-trigger {
+  cursor: pointer;
+}
+.\#video-popup-modal {
+  max-width: 85%;
+  margin-inline: auto;
+}
+.\#video-popup-modal modal-trigger {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  color: var(--color-g-fg);
+}
+.\#video-popup-modal-inner {
+  border-radius: var(--border-radius-base);
+  overflow: hidden;
+}

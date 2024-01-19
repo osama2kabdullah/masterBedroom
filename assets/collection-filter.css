@@ -1,0 +1,101 @@
+.\#collection-filter {
+  padding-block: 1.5rem;
+  padding-right: 1rem;
+  border-bottom: 1px solid #cccccc;
+  display: block;
+}
+.\#collection-filter:first-of-type {
+  padding-top: 0;
+}
+.\#collection-filter-wrapper > summary {
+  cursor: pointer;
+  list-style: none;
+}
+.\#collection-filter-wrapper > summary::marker, .\#collection-filter-wrapper > summary::-webkit-details-marker {
+  display: none;
+}
+.\#collection-filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.\#collection-filter-header-heading {
+  font-weight: var(--font-body-weight-bold);
+  font-size: 1.2rem;
+}
+.\#collection-filter-header-icon .\#icon {
+  --size: 1.1rem;
+}
+.\#collection-filter-body {
+  padding-top: 1.5rem;
+}
+.\#collection-filter-items.\@layout\:list {
+  gap: 0.8rem;
+  display: flex;
+  flex-direction: column;
+}
+.\#collection-filter-items.\@layout\:swatches {
+  gap: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+.\#collection-filter-item-label {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.\#collection-filter-item-input:checked + .\#collection-filter-item-icon {
+  background: var(--color-g-accent);
+  border-color: var(--color-g-accent);
+}
+.\#collection-filter-item-input:checked + .\#collection-filter-item-icon .\#icon {
+  opacity: 1;
+}
+.\#collection-filter-item-input:checked + .\#collection-filter-item-icon + .\#collection-filter-item-value {
+  font-weight: var(--font-body-weight-bold);
+}
+.\#collection-filter-item-input:checked + .\#collection-filter-item-switch {
+  background: var(--color-g-accent);
+  border-color: var(--color-g-accent);
+}
+.\#collection-filter-item-input:checked + .\#collection-filter-item-switch::after {
+  margin-left: auto;
+  background: var(--color-g-fg);
+}
+.\#collection-filter-item-input:disabled ~ * {
+  opacity: 0.46;
+  cursor: not-allowed;
+}
+.\#collection-filter-item-icon {
+  display: flex;
+  padding: 0.18rem;
+  border-radius: 0.35rem;
+  border: 2px solid #4d4d4d;
+}
+.\#collection-filter-item-icon .\#icon {
+  --size: 0.85rem;
+  color: var(--color-g-fg);
+  opacity: 0;
+}
+.\#collection-filter-item-counter {
+  margin-left: auto;
+  margin-right: 5px;
+  opacity: 0.64;
+  font-size: 0.85rem;
+}
+.\#collection-filter-item-switch {
+  width: 2.34rem;
+  border-radius: 999rem;
+  border: 0.135rem solid var(--color-g-text);
+  display: flex;
+}
+.\#collection-filter-item-switch::after {
+  content: "";
+  height: 0.9rem;
+  width: 0.9rem;
+  border-radius: 50%;
+  background: var(--color-g-text);
+  margin: 0.135rem;
+  z-index: 1;
+}

@@ -1,0 +1,16 @@
+{% if settings.product_card_enable_quick_view %}
+    {% assign first_product = collections['all'].products | first %}
+    {% assign product_url = first_product.url | split: '?' | first %}
+    {% assign product_id = first_product.id %}
+    <div hidden id="quickViewFixContainer"></div>
+    <script defer>
+    const quickViewFixContainer = document.getElementById('quickViewFixContainer');
+    fetch('{{ product_url }}?view=quick-view')
+        .then(response => response.text())
+        .then(data => {
+            const doc = new DOMParser().parseFromString(data, 'text/html');
+            const quickContent = doc.querySelector('#ProductQuickView-{{ product_id }}')?.content.cloneNode(true);
+            Array.from(quickContent.querySelectorAll('[rel="stylesheet"]')).map(stylesheet => quickViewFixContainer.append(stylesheet));
+        });
+    </script>
+{% endif %}

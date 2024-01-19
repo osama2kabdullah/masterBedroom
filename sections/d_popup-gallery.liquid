@@ -1,0 +1,178 @@
+{% liquid
+    assign NS = 'popup-gallery'
+    assign cn = '#' | append: NS
+    assign item_prefix = NS | append: '-' | append: section.id | append: '-'
+    if section.settings.stacked_columns
+        assign gap = '0.01px'
+        assign curved_section = true
+    else
+        assign curved_section = false
+        assign curved_item = true
+        assign gap = 'var(--glob-gutter)'
+    endif
+
+    assign columns = section.settings.columns
+    assign mobile_columns = section.settings.mobile_columns
+%}
+
+{%- capture image_srcsize_desktop -%}(min(100vw, {{ settings.container_width }}px) - min(3rem, 5vw))/{{ columns }} - {{ gap }}rem{%- endcapture -%}
+{%- capture image_srcsize_mobile -%}90vw/{{ mobile_columns }} - {{ gap }}rem{%- endcapture -%}
+
+{% render 'load-css', file: NS, lazy: true %}
+{% render 'load-css', file: 'product-popup-gallery', lazy: true %}
+
+{% capture Content %}
+    <div class="#grid @type:columns" style="--columns: {{ columns }}; --columns-mobile: {{ mobile_columns }}; --gap: {{ gap }};">
+        {% for block in section.blocks %}
+            {%- capture placeholder_index -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+            <div class="{{ cn }}-item {% if curved_item %}@curved{% endif %}" {{ block.shopify_attributes }}>                
+                {% assign popup_id = item_prefix | append: forloop.index %}
+                <template id="{{ popup_id }}">
+                    {% render 'product-popup-gallery',
+                        hero: block.settings.image,
+                        product: block.settings.product,
+                        subtitle: block.settings.product_subtitle
+                    %}
+                    {%- unless forloop.first -%}
+                        <modal-trigger
+                            class="{{ cn }}-nav @direction:prev"
+                            target="#{{ item_prefix }}{{ forloop.index | minus: 1 }}"
+                            transition="0"
+                            container
+                        >
+                            {% render 'icon', name: 'arrow-left' %}
+                        </modal-trigger>    
+                    {%- endunless -%}
+                    {%- unless forloop.last -%}
+                        <modal-trigger
+                            class="{{ cn }}-nav @direction:next"
+                            target="#{{ item_prefix }}{{ forloop.index | plus: 1 }}"
+                            transition="0"
+                            container
+                        >
+                            {% render 'icon', name: 'arrow-right' %}
+                        </modal-trigger>    
+                    {%- endunless -%}
+                </template>
+                <modal-trigger 
+                    target="#{{ popup_id }}"
+                    transition="300"
+                    class="{{ cn }}-item-link"
+                    container
+                >
+                    <div class="{{ cn }}-item-media">
+                        {% render 'media',
+                            aspect_ratio: '1x1',
+                            image: block.settings.image,
+                            placeholder: 'product',
+                            placeholder_index: placeholder_index,
+                            srcsize_desktop: image_srcsize_desktop,
+                            srcsize_mobile: image_srcsize_mobile
+                        %}
+                    </div>
+                </modal-trigger>
+            </div>
+        {% endfor %}
+    </div>
+{% endcapture %}
+
+{% render 'section-body',
+    content: Content,
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    container: 'container',
+    curved: curved_section,
+    spaced: true
+%}
+
+{% schema %}
+{
+    "name": "Popup gallery",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "t:g.common.label.heading",
+            "default": "Popup gallery"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading"
+        },
+        {
+            "type": "checkbox",
+            "id": "stacked_columns",
+            "label": "Stack columns",
+            "default": true,
+            "info": "Removes padding around images"
+        },
+        {
+            "type": "range",
+            "id": "columns",
+            "label": "Desktop columns",
+            "step": 1,
+            "max": 10,
+            "min": 2,
+            "default": 6
+        },
+        {
+            "type": "range",
+            "id": "mobile_columns",
+            "label": "Mobile columns",
+            "min": 2,
+            "step": 1,
+            "max": 4,
+            "default": 3
+        }
+    ],
+    "blocks": [
+        {
+            "type": "image",
+            "name": "Image",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "t:g.media.image"
+                },
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product"
+                },
+                {
+                    "type": "text",
+                    "id": "product_subtitle",
+                    "label": "Product subtitle"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Popup gallery",
+            "blocks": [
+              {
+                  "type": "image"
+              },
+              {
+                  "type": "image"
+              },
+              {
+                  "type": "image"
+              },
+              {
+                  "type": "image"
+              },
+              {
+                  "type": "image"
+              },
+              {
+                  "type": "image"
+              }
+            ]
+        }
+    ]
+}
+{% endschema %}

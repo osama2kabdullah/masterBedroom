@@ -1,0 +1,131 @@
+{%- liquid
+    assign NS = 'product-variant-selector'
+    assign cn = '#' | append: NS
+    if product.options_with_values.size == 1
+        assign single_option = true
+    else
+        assign single_option = false
+    endif
+-%}
+
+{% render 'load-css', file: NS %}
+
+{% if color_swatches %}
+    {% render 'load-css', file: 'product-options-swatch' %}
+{% endif %}
+{% if picker_type == 'dropdown' %}
+    {% render 'load-css', file: 'product-options-dropdown' %}
+{% endif %}
+{% if picker_type == 'swatch' %}
+    {% render 'load-css', file: 'product-options-radio' %}
+{% endif %}
+
+{%- assign settings_color_option_names = settings.color_swatches_options | split: ',' | handleize -%}
+
+<{{NS}} 
+    product-url="{{ product.url }}" 
+    section-id="{{ section.id }}"
+    variant-id="{{ product.selected_or_first_available_variant.id }}"
+    {% if product.selling_plan_groups.size > 0 %}
+        selling-plan-id="{{ product.selected_selling_plan.id }}"
+    {% endif %}
+    class="{{ cn }} js-only"
+    picker-type="{{ picker_type }}"
+    {% if request.page_type == 'product' %}
+        product-page
+    {% endif %}
+>
+    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" form="{{ product_form_id }}" disabled>
+    {%- for product_option in product.options_with_values -%}
+        {%- comment -%} not currently in use
+        {%- capture Option_values -%}
+            {% render 'product-option-values', option: product_option, single_option: single_option %}
+        {%- endcapture -%}
+        {%- endcomment -%}
+        {%- liquid
+            assign option_name_handle = product_option.name | handleize
+            if settings_color_option_names contains option_name_handle
+                assign match_color = true
+            else
+                assign match_color = false
+            endif
+            if color_swatches and match_color
+                assign show_color_swatches = true
+            else
+                assign show_color_swatches = false
+            endif
+        -%}
+        
+        <div class="{{ cn }}-item">
+            <h5 class="{{ cn }}-item-heading">
+                {{ product_option.name }}:
+                {% if picker_type == 'swatch' or show_color_swatches %}
+                    <span class="{{ cn }}-item-heading-value" data-display-value data-option-index="{{ product_option.position | minus: 1 }}">{{ product_option.selected_value }}</span>
+                {% endif %} 
+            </h5>
+            <div class="{{ cn }}-item-body">
+                {%- if show_color_swatches -%}
+                    {% render 'product-options-swatch',
+                        option: product_option
+                    %}
+                {%- elsif picker_type == 'swatch' -%}
+                    {% render 'product-options-radio',
+                        option: product_option,
+                        single_option: single_option,
+                        align_options: align_options
+                    %}
+                {%- elsif picker_type == 'dropdown' -%}
+                    {% render 'product-options-dropdown', 
+                        option: product_option,
+                        single_option: single_option,
+                        show_stock_alert: show_stock_alert
+                    %}
+                {%- endif -%}    
+            </div>
+        </div>     
+    {%- endfor -%}
+
+    <script type="application/json" data-variants-json>
+        {{ product.variants | json }}
+    </script>
+    <script type="application/json" data-options-json>
+        {{ product.options_with_values | json }}
+    </script>
+   
+
+    <script type="application/json" data-inventory-json>
+        {
+            {%- assign variants = product.variants | sort: 'id' -%}
+            {%- assign cart_items = cart.items | where: 'product_id', product.id | sort: 'variant_id' -%}
+            {%- assign iterator = 0 -%}
+            {%- for variant in variants -%}
+                {%- assign inf = false -%}
+                {%- if variant.inventory_management == nil or variant.inventory_policy == 'continue' -%}
+                    {% assign inf = true %}
+                {%- endif -%}
+                {%- assign in_cart_qty = 0 -%}
+                {%- if variant.id == cart_items[iterator].variant_id -%}
+                    {%- for i in (iterator..cart_items.size) -%}
+                        {%- if variant.id != cart_items[i].variant_id -%}
+                            {%- break -%}
+                        {%- endif -%}
+                        {%- assign in_cart_qty = in_cart_qty | plus: cart_items[i].quantity -%}
+                        {%- assign iterator = iterator | plus: 1 -%}
+                    {%- endfor -%}
+                {%- endif -%}
+                {%- unless forloop.first -%},{%- endunless  -%}
+                "{{ variant.id }}": {
+                    "inventory_quantity": "{{ variant.inventory_quantity }}",
+                    "available_to_add": "{%- if inf == true -%}Infinity{%- else -%}{{ variant.inventory_quantity | minus: in_cart_qty }}{%- endif -%}"
+                }
+            {%- endfor -%}
+        }
+    </script>
+
+</{{NS}}>
+
+
+
+
+
+<script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>

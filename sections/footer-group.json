@@ -1,0 +1,56 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "g_footer": {
+      "type": "g_footer",
+      "blocks": {
+        "936fb0c9-0d6a-4fa1-b802-dfc2a9742869": {
+          "type": "menu",
+          "settings": {
+            "heading": "Our Company",
+            "menu": "footer"
+          }
+        },
+        "86d10ae0-6c53-49c9-a5b9-93ae7c54728d": {
+          "type": "menu",
+          "settings": {
+            "heading": "Customer Service",
+            "menu": "customer-service"
+          }
+        },
+        "65fb24f5-a741-41d7-9a24-c5ec4c4fcf7c": {
+          "type": "social_menu",
+          "settings": {
+            "heading": "Get Social"
+          }
+        },
+        "9865c268-3585-4d32-8294-0f06191ddf3f": {
+          "type": "newsletter",
+          "disabled": true,
+          "settings": {
+            "heading": "Every Sleep Has A Story",
+            "text": "<p>Sign up for specials, new product launches and exciting events!<\/p>",
+            "show_social_icons": false
+          }
+        }
+      },
+      "block_order": [
+        "936fb0c9-0d6a-4fa1-b802-dfc2a9742869",
+        "86d10ae0-6c53-49c9-a5b9-93ae7c54728d",
+        "65fb24f5-a741-41d7-9a24-c5ec4c4fcf7c",
+        "9865c268-3585-4d32-8294-0f06191ddf3f"
+      ],
+      "settings": {
+        "show_country_selector": true,
+        "show_language_selector": false,
+        "social_new_tab": true,
+        "payment_enable": true,
+        "enable_follow_on_shop": true
+      }
+    }
+  },
+  "order": [
+    "g_footer"
+  ]
+}

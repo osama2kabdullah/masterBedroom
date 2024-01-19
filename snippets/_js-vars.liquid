@@ -1,0 +1,86 @@
+<div class="#container" data-main-container>
+    <div data-main-container-inner></div>
+</div>
+
+<div class="gutter-spacer" data-gutter-spacer></div>
+
+<script>
+    window.importModule = (mod) => import(window.theme.modules[mod]);
+    const containerElInner = document.querySelector('[data-main-container-inner]');
+    const gutterSpacerEl = document.querySelector('[data-gutter-spacer]');
+    window.containerInnerWidth = containerElInner.offsetWidth;
+    window.gutterWidth = gutterSpacerEl.offsetWidth;
+    var globalLoadedStyles = {};
+    function loadStyle(style) {
+        if(globalLoadedStyles[style.getAttribute('href')]) {
+            return;
+        }
+        globalLoadedStyles[style.getAttribute('href')] = true;
+        if(style.media === 'print') {
+            style.media = 'all';
+        }
+    }
+    window.global = {
+        cartNotificationsEnabled: {{ settings.enable_cart_notification | json }}
+    }
+    window.shopUrl = '{{ shop.url }}';
+    window.routes = {
+        cart_add_url: '{{ routes.cart_add_url }}',
+        cart_change_url: '{{ routes.cart_change_url }}',
+        cart_update_url: '{{ routes.cart_update_url }}',
+        predictive_search_url: '{{ routes.predictive_search_url }}'
+    };
+    window.dynamicURLs = {
+        account: '{{ routes.account_url }}',
+        accountLogin: '{{ routes.account_login_url }}',
+        accountLogout: '{{ routes.account_logout_url }}',
+        accountRegister: '{{ routes.account_register_url }}',
+        accountAddresses: '{{ routes.account_addresses_url }}',
+        allProductsCollection: '{{ routes.all_products_collection_url }}',
+        cart: '{{ routes.cart_url }}',
+        cartAdd: '{{ routes.cart_add_url }}',
+        cartChange: '{{ routes.cart_change_url }}',
+        cartClear: '{{ routes.cart_clear_url }}',
+        cartUpdate: '{{ routes.cart_update_url }}',
+        contact: '{{ shop_locale.iso_code | append: '/contact#contact_form' }}',
+        localization: '{{ shop_locale.iso_code | append: '/localization' }}',
+        collections: '{{ routes.collections_url }}',
+        predictiveSearch: '{{ routes.predictive_search_url }}',
+        productRecommendations: '{{ routes.product_recommendations_url }}',
+        root: '{{ routes.root_url }}',
+        search: '{{ routes.search_url }}'
+    };
+    window.cartStrings = {
+        error: `{{ 'sections.cart.cart_error' | t }}`,
+        quantityError: `{{ 'sections.cart.cart_quantity_error_html' | t: quantity: '[quantity]' }}`
+    };
+    window.variantStrings = {
+        addToCart: `{{ 'products.product.add_to_cart' | t }}`,
+        soldOut: `{{ 'products.product.sold_out' | t }}`,
+        unavailable: `{{ 'products.product.unavailable' | t }}`,
+    };
+    window.accessibilityStrings = {
+        imageAvailable: `{{ 'products.product.media.image_available' | t: index: '[index]' }}`,
+        shareSuccess: `{{ 'general.share.success_message' | t }}`,
+        pauseSlideshow: `{{ 'sections.slideshow.pause_slideshow' | t }}`,
+        playSlideshow: `{{ 'sections.slideshow.play_slideshow' | t }}`,
+    };
+    window.theme = {
+        modules: {
+            Core: `{{ 'core.js' | asset_url }}`,
+            Utils: `{{ 'utils.js' | asset_url }}`,
+            Editor: `{{ 'editor.js' | asset_url }}`,
+            Swiper: `{{ 'swiper.js' | asset_url }}`,
+            NoUiSlider: `{{ 'no-ui-slider.js' | asset_url }}`,
+            Plyr: `{{ 'plyr.js' | asset_url }}`,
+            Routes: `{{ 'routes.js' | asset_url }}`,
+            GoogleMap: `{{ 'google-map.js' | asset_url }}`,
+            FloatingUI: `{{ 'floating-ui.js' | asset_url }}`,
+            DriftZoom: `{{ 'drift-zoom.js' | asset_url }}`,
+            BrowsingHistoryPromise: `{{ 'browsing-history-promise.js' | asset_url }}`
+        },
+        scripts: {
+            Popper: 'https://unpkg.com/@popperjs/core@2'
+        }
+    }
+</script>

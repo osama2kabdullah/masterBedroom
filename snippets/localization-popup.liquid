@@ -1,0 +1,19 @@
+{%- liquid
+    assign NS = 'localization-popup'
+    assign cn = '#' | append: NS    
+-%}
+
+{% render 'load-css', file: NS %}
+
+<div class="{{ cn }}">
+    <template id="{{ id }}">
+        <div class="{{ cn }}-body">
+            <div class="{{ cn }}-inner">
+                localization here
+            </div>
+        </div> 
+    </template>
+    <modal-trigger class="{{ cn }}-trigger" target="#{{ id }}">
+        {{ content }}
+    </modal-trigger>
+</div>

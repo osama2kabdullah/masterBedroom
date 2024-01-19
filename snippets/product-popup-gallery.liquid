@@ -1,0 +1,141 @@
+{%- liquid
+    comment
+        PROPS:
+            - hero (image)
+            - product 
+    endcomment
+
+    assign NS = 'product-popup-gallery'
+    assign cn = '#' | append: NS
+    assign selected_variant = product.selected_or_first_available_variant
+    if selected_variant.image
+        assign image = selected_variant.image
+    else
+        assign image = product.featured_image
+    endif
+    assign use_swiper = true
+    if product.has_only_default_variant 
+        assign use_swiper = false
+    endif
+-%}
+
+{%- capture hero_image_srcsize_desktop -%}(min(100vw, {{ settings.container_width }}px) - min(3rem, 5vw)) * 0.64{%- endcapture -%}
+{%- capture hero_image_srcsize_mobile -%}90vw{%- endcapture -%}
+{%- capture product_image_srcsize_desktop -%}(min(100vw, {{ settings.container_width }}px) - min(3rem, 5vw)) * 0.17{%- endcapture -%}
+{%- capture product_image_srcsize_mobile -%}90vw * 0.64{%- endcapture -%}
+
+
+{%- capture Slides -%}
+    {%- assign variants_images_count = 0 -%}
+    {%- for variant in product.variants -%}
+        {%- if variant.image.attached_to_variant? -%}
+            {%- assign variants_images_count = variants_images_count | plus: 1 -%}
+            <div class="swiper-slide" data-variant-id="{{ variant.id }}">
+                {% render 'media',
+                    image: variant.image,
+                    link: variant.url,
+                    srcsize_desktop: product_image_srcsize_desktop,
+                    srcsize_mobile: product_image_srcsize_mobile
+                %}
+            </div>
+        {%- endif -%}
+    {%- endfor -%}
+    {%- if variants_images_count < 2 -%}
+        {%- assign use_swiper = false -%}
+    {%- endif -%}
+{%- endcapture -%}
+
+{% render 'load-css', file: 'swiper' %}
+
+<{{ NS }} 
+    class="{{ cn }}" 
+    variant-id="{{ product.selected_or_first_available_variant.id }}"
+    {% if use_swiper %}
+        swiper-required
+    {% endif %}
+>
+    <div class="{{ cn }}-inner">
+        <modal-close class="{{ cn }}-close">
+            {% render 'icon', name: 'x' %}
+        </modal-close> 
+        <div class="#grid @type:template" style="--template: 64% 1fr; --template-mobile: none;">
+            <div class="{{ cn }}-hero">
+                {% render 'media',
+                    image: hero,
+                    height: '100%',
+                    type: 'height',
+                    type_mobile: 'ar',
+                    srcsize_desktop: hero_image_srcsize_desktop,
+                    srcsize_mobile: hero_image_srcsize_mobile
+                %}
+            </div>
+            <div class="{{ cn }}-card" style="overflow: auto;">
+                <div class="{{ cn }}-media">
+                    {%- if Slides != blank -%}
+                        <div data-swiper class="swiper">
+                            <div class="swiper-wrapper">
+                                {{ Slides }}
+                            </div>
+                        </div>
+                    {%- else -%}
+                        {% render 'media',
+                            image: product.featured_image,
+                            link: product.url,
+                            placeholder: 'product',
+                            srcsize_desktop: product_image_srcsize_desktop,
+                            srcsize_mobile: product_image_srcsize_mobile
+                        %}
+                    {%- endif -%}
+                </div>
+                <div>
+                    <h4 class="{{ cn }}-title heading-font">{{ product.title }}</h4>
+                    {% if subtitle != blank %}
+                        <p class="{{ cn }}-subtitle">{{ subtitle }}</p>
+                    {% endif %}
+                </div>
+                {%- if product.has_only_default_variant or product == blank -%}
+                    <div class="{{ cn }}-price">
+                        {% render 'price', variant: selected_variant %}
+                    </div>    
+                {%- endif -%}
+                {%- unless product.has_only_default_variant -%}
+                    {%- if product != blank -%}
+                        <div class="{{ cn }}-variant-select">
+                            <select data-variant-select>
+                                {%- for variant in product.variants -%}
+                                    <option 
+                                        {% unless variant.available %}disabled{% endunless %} 
+                                        value="{{ variant.id }}"
+                                    >
+                                        {{ variant.title }} - {{ variant.price | money }} 
+                                        {% unless variant.available %}( {{ 'products.product.sold_out' | t }} ){% endunless %}
+                                    </option>
+                                {%- endfor -%}
+                            </select>
+                            {% render 'icon', name: 'angle-down' %}
+                        </div>
+                    {%- endif -%}
+                {%- endunless -%}
+                {%- if selected_variant.available -%}
+                    <div class="{{ cn }}-add-to-cart" data-add-to-cart>
+                        {%- capture Button -%}
+                            {% render 'button',
+                                t_text: 'products.product.add_to_cart',
+                                atts: 'data-to-cart',
+                                size: 'h4',
+                                loading: true
+                            %}
+                        {%- endcapture -%}
+                        {% render 'product-to-cart', 
+                            trigger: Button, 
+                            variant: selected_variant
+                        %}
+                    </div>
+                {%- endif -%}
+                <a class="{{ cn }}-link" href="{{ selected_variant.url }}">Product details</a>
+            </div>
+        </div>
+    </div>
+</{{ NS }}>
+
+<script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>

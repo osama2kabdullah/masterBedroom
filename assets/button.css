@@ -1,0 +1,173 @@
+.\#button {
+  --text-color: var(--color-g-button-text);
+  --bg-color: var(--color-g-button-bg);
+  --bg-gradient: var(--color-g-button-bg-gradient);
+  --bg-hover-color: var(--color-g-button-bg-hover);
+  --l1-shadow-color: var(--color-g-button-shadow-l1);
+  --l2-shadow-color: var(--color-g-button-shadow-l2);
+  --l3-shadow-color: var(--color-g-button-shadow-l3);
+  padding: 0.95em 1.75em;
+  border-radius: 2em;
+}
+
+.\#button {
+  transition: var(--transition-base);
+  cursor: pointer;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  display: inline-block;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.\#button {
+  font-size: 1.15rem;
+}
+.\#button:not(.heading-font) {
+  font-weight: var(--font-body-weight-bold);
+}
+
+.\@size\:h6.\#button {
+  font-size: 0.8695652174rem;
+}
+.\@size\:body.\#button {
+  font-size: 1rem;
+}
+.\@size\:h5.\#button {
+  font-size: 1.15rem;
+}
+.\@size\:h4.\#button {
+  font-size: 1.3225rem;
+}
+.\@size\:h3.\#button {
+  font-size: 1.520875rem;
+}
+.\@size\:h2.\#button {
+  font-size: 1.74900625rem;
+}
+.\@size\:h1.\#button {
+  font-size: 2.0113571875rem;
+}
+.\@size\:d5.\#button {
+  font-size: 2.3130607656rem;
+}
+
+.\@block.\#button {
+  display: block;
+  width: 100%;
+}
+
+.\@display-style\:normal.\#button {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+.\@display-style\:normal.\#button:hover {
+  background-color: var(--bg-hover-color);
+}
+.\@display-style\:gradient.\#button {
+  background: var(--bg-color);
+  color: var(--text-color);
+  z-index: 1;
+}
+.\@display-style\:gradient.\#button:hover:before {
+  opacity: 0;
+}
+.\@display-style\:gradient.\#button:before {
+  transition: opacity var(--transition-base);
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: inherit;
+  font-size: inherit;
+  box-shadow: inherit;
+  background: radial-gradient(at top, var(--bg-gradient) 0%, var(--bg-color) 90%);
+  z-index: -1;
+}
+.\@display-style\:outline.\#button {
+  background: none;
+  color: var(--bg-color);
+  border: 0.1em solid var(--bg-color);
+}
+.\@display-style\:outline.\#button:hover {
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+.\@display-style\:link.\#button {
+  padding: 0;
+  color: var(--bg-color);
+  background: none;
+  opacity: 0.8;
+  text-decoration: underline;
+  text-decoration-thickness: 0.125em;
+  text-underline-offset: 0.25em;
+  border-radius: 0;
+  overflow: visible;
+}
+.\@display-style\:link.\#button:hover {
+  opacity: 1;
+}
+
+.\@shadow.\@display-style\:normal.\#button, .\@shadow.\@display-style\:gradient.\#button {
+  box-shadow: var(--l1-shadow-color) 0 0.15em 0.3em, var(--l2-shadow-color) 0 0.3em 0.6em -0.15em, var(--l3-shadow-color) 0 -0.15em 0 inset;
+}
+
+.\!loading.\#button {
+  color: transparent;
+  pointer-events: none;
+}
+.\!loading.\#button .\#spinner {
+  opacity: 1;
+}
+.\#button .\#spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: var(--transition-base);
+  --color: var(--text-color);
+  --size: 0.4rem;
+  opacity: 0;
+  user-select: none;
+  pointer-events: none;
+}
+
+body product-dynamic-checkout {
+  display: block;
+  padding-top: 1rem;
+}
+body .shopify-payment-button__button--unbranded {
+  font-weight: var(--font-body-weight-bold);
+  border-radius: 2em;
+  font-size: 1.5rem;
+  padding: 1.1em 1.75em;
+  background-color: var(--color-g-button-buy-it-now-bg);
+  color: var(--color-g-button-buy-it-now-text);
+}
+body .shopify-payment-button__button--unbranded:hover:not([disabled]) {
+  background-color: var(--color-g-button-buy-it-now-bg-hover);
+}
+body .shopify-payment-button__button--branded .shopify-cleanslate [role=button] {
+  font-weight: var(--font-body-weight-bold);
+  border-radius: 2em;
+  font-size: 1.5rem;
+  padding: 1.4em 1.75em !important;
+}
+body .shopify-payment-button__button--hidden {
+  display: none;
+}
+body .dynamic-checkout__content [data-shopify-buttoncontainer=true][role=list] > li {
+  flex-basis: auto !important;
+  width: 100%;
+}
+body .dynamic-checkout__content [data-shopify-buttoncontainer=true][role=list] > li [role=button] {
+  border-radius: 2em !important;
+  font-size: 1.1rem !important;
+  padding: 1.4em 1.75em !important;
+  width: 100% !important;
+}

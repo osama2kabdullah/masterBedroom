@@ -1,0 +1,98 @@
+{%- liquid
+    assign NS = 'section-body'
+    assign cn = '#' | append: NS
+    assign section_layout = section_layout | default: section.settings.section_layout
+    assign container = container | default: 'full'
+    if container == true or container == 'container'
+        assign container = 'default'
+    endif
+
+    if section_layout == 'full' and force_layout != true
+        assign spaced = false
+        assign curved = false
+    endif
+
+    if curved == true
+        if container == 'offset-right'
+            assign curved_dir = 'right'
+        elsif container == 'offset-left'
+            assign curved_dir = 'left'
+        endif
+    endif
+    
+    if section_layout == 'narrow' or section_layout == 'x-narrow'
+        assign header_container_width = section_layout
+    endif
+-%}
+
+{%- capture Section_button -%}
+    {% if button_label != blank %}
+        {%- if settings.button_color_scheme == 'text' -%}
+            {%- assign button_color_scheme = 'text-inverse' -%}
+        {%- endif -%}
+        <div class="{{ cn }}-button @align:{{ settings.section_text_align }}">
+            {% render 'button',
+                text: button_label,
+                link: button_link,
+                tag: 'a',
+                size: settings.section_button_size,
+                display_style: settings.section_button_style,
+                color_scheme: button_color_scheme
+            %}
+        </div>
+    {% endif %}
+{%- endcapture -%}
+
+<div class="
+    {{ cn }} 
+    {% if section_layout != blank %}@layout:{{ section_layout }}{% endif %}
+    {% if spaced == true %}@spaced{% endif %}
+    {% if inner_spaced == true %}@inner-spaced{% endif %}
+    {% if curved == true %}@curved{% endif %} 
+"
+    {% if text_color != blank or bg_color != blank %}
+        style="
+            {% if text_color != blank %}--text-color: {{ text_color }};{% endif %}
+            {% if bg_color != blank %}--bg-color: {{ bg_color }};{% endif %}
+            {% if content_bg_color != blank %}--content-bg-color: {{ content_bg_color }};{% endif %}
+        "
+    {% endif %}
+>
+    {% if heading != blank or subheading != blank %}
+        <div class="{{ cn }}-header">
+            <div class="#container @width:{{ header_container_width | default: 'default' }}">
+                <div class="{{ cn }}-header-inner {% if settings.section_text_align == 'left' and settings.section_button_position == 'before' %}@align-button{% endif %}">
+                {% render 'hero',
+                    heading: heading,
+                    subheading: subheading,
+                    accent: settings.section_heading_accent,
+                    gap: '0.5em',
+                    align: settings.section_text_align,
+                    size: settings.section_text_size,
+                    subheading_position: settings.section_subheading_position
+                %}
+                {% if settings.section_button_position == 'before' %}
+                    {{ Section_button }}
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+    
+    {% if content != blank %}
+        <div class="#container @width:{{ container }}">
+            <div class="{{ cn }}-wrapper {% if curved == true %}@curved{% if curved_dir != blank %}:{{ curved_dir }}{% endif %}{% endif %}">
+                <div class="{{ cn }}-content">
+                    {{ content }}
+                </div>
+            </div>
+        </div>
+        {% if settings.section_button_position == 'after' and button_label != blank %}
+            <div class="#container @width:{{ header_container_width | default: 'default' }}">
+                {{ Section_button }}
+            </div>
+        {% endif %}
+    {% endif %}
+
+</div>

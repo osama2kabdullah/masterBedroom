@@ -1,0 +1,98 @@
+.\#cart-notification-recommendations {
+  display: block;
+  transform: translateY(-100%);
+  opacity: 0;
+  background-color: var(--color-g-bg);
+  transition: 0.5s;
+  position: relative;
+  z-index: 2;
+  border-radius: 0 0 var(--border-radius-base) var(--border-radius-base);
+  margin-top: -1rem;
+}
+.\#cart-notification-recommendations.\!show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.\#cart-notification-recommendations-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 3rem 0 3rem;
+  margin-bottom: 1rem;
+}
+.\#cart-notification-recommendations-heading {
+  margin-bottom: 0;
+}
+.\#cart-notification-recommendations-nav {
+  display: flex;
+  gap: 1rem;
+}
+@media (max-width: 991px) {
+  .\#cart-notification-recommendations-nav {
+    display: none;
+  }
+}
+.\#cart-notification-recommendations-nav-item {
+  cursor: pointer;
+  font-size: inherit;
+  background: none;
+  padding: 0;
+  border: none;
+  outline: none !important;
+  color: inherit;
+}
+.\#cart-notification-recommendations-nav-item .\#icon {
+  --size: 1.15rem;
+}
+.\#cart-notification-recommendations-nav-item.\!disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+.\#cart-notification-recommendations .swiper-slide {
+  padding-bottom: 3rem;
+  height: auto;
+}
+.\#cart-notification-recommendations .\#product-card-min {
+  height: 100%;
+}
+.\#cart-notification-recommendations-add-to-cart-button {
+  font-size: inherit;
+  background: none;
+  padding: 0;
+  border: none;
+  outline: none !important;
+  color: inherit;
+  background: var(--color-g-button-bg);
+  color: var(--color-g-button-text);
+  border-radius: 50%;
+  padding: 0.5rem;
+  cursor: pointer;
+  position: relative;
+}
+.\#cart-notification-recommendations-add-to-cart-button .\#icon {
+  --size: 1rem;
+}
+@media (max-width: 991px) {
+  .\#cart-notification-recommendations-add-to-cart-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.\#cart-notification-recommendations-add-to-cart-button .\#spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  --color: var(--color-g-fg);
+  display: none;
+}
+.\#cart-notification-recommendations-add-to-cart-button.\!loading {
+  pointer-events: none;
+}
+.\#cart-notification-recommendations-add-to-cart-button.\!loading .\#icon {
+  opacity: 0;
+}
+.\#cart-notification-recommendations-add-to-cart-button.\!loading .\#spinner {
+  display: block;
+}

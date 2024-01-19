@@ -1,0 +1,165 @@
+.\#header {
+  position: relative;
+  z-index: 50;
+}
+.\#header.\@sticky {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+@media (max-width: 991px) {
+  .\#header .\#header-main-inner {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  .\#header .\#header-toolbar {
+    gap: 1rem;
+    margin-left: auto;
+  }
+  .\#header .\#header-toolbar-item-title {
+    display: none;
+  }
+  .\#header .\#header-searchbar {
+    order: 99;
+    width: 100%;
+  }
+}
+@media (min-width: 992px) {
+  .\#header-main {
+    display: flex;
+    align-items: center;
+  }
+}
+.\#header-main, .\#header-mobile, .\#header-mobile-search {
+  background: var(--p-bg-color);
+  color: var(--p-text-color);
+}
+.\#header-main {
+  position: relative;
+}
+.\#header-main-inner {
+  gap: 2rem;
+  display: flex;
+  align-items: center;
+}
+.\#header-primary-nav {
+  display: flex;
+  align-self: stretch;
+}
+.\#header-secondary-nav {
+  background: var(--s-bg-color);
+  color: var(--s-text-color);
+  position: relative;
+}
+.\#header-searchbar {
+  flex-shrink: 0;
+  flex-grow: 1;
+  position: relative;
+}
+@media (min-width: 992px) {
+  .\#header-searchbar {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    min-width: 300px;
+  }
+}
+.\#header-searchbar-form {
+  position: relative;
+  z-index: 3;
+}
+.\#header-searchbar-input {
+  font-size: 1.05rem;
+  margin: 0;
+  padding: 0.85rem 1.25rem;
+  border-radius: 1.5rem;
+  border: none;
+  width: 100%;
+  background-color: var(--search-bg-color);
+  color: var(--search-text-color);
+  transition: var(--transition-base);
+  font-weight: var(--font-body-weight-bold);
+}
+.\#header-searchbar-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-color);
+  -webkit-appearance: none;
+}
+.\#header-searchbar-input::placeholder {
+  font-weight: 400;
+}
+@media (max-width: 991px) {
+  .\#header-searchbar-input {
+    font-size: 16px !important;
+  }
+}
+.\#header-searchbar-button {
+  position: absolute;
+  right: 0.3rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background-color: var(--color-g-button-bg);
+  color: var(--color-g-button-text);
+  width: 2.4rem;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.\#header-searchbar-button .\#icon {
+  --size: .85rem;
+}
+.\#header-toolbar {
+  display: flex;
+  gap: 2rem;
+}
+.\#header-toolbar > a {
+  text-decoration: none;
+  color: inherit;
+}
+.\#header-toolbar-item {
+  position: relative;
+  flex-shrink: 0;
+}
+.\#header-toolbar-item-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+}
+.\#header-toolbar-item-icon {
+  position: relative;
+}
+.\#header-toolbar-item-img > img {
+  height: 1.7rem;
+  display: flex;
+}
+.\#header-toolbar-item-title {
+  display: flex;
+  align-items: flex-start;
+  font-size: 0.8rem;
+  opacity: 0.8;
+  gap: 0.2em;
+  line-height: 1;
+}
+.\#header-toolbar-item-title .\#icon {
+  --size: .9em;
+  opacity: 0.8;
+  margin-right: -0.5em;
+}
+.\#header-logo {
+  position: relative;
+}
+@media (min-width: 992px) {
+  .\#header-logo.\@padded {
+    padding-block: 1rem;
+  }
+}
+.\#header-logo-img > img {
+  display: block;
+}

@@ -1,0 +1,115 @@
+{%- liquid
+    comment
+        Props:
+            - text
+            - t_text
+            - link
+            - tag
+            - atts
+            - id
+            - name
+            - type
+            - value
+            - form
+            - color_scheme
+            - display_style -> enum: normal, link, outline, gradient
+            - text_color
+            - bg_color
+            - size
+            - use_shadow -> boolean
+            - spinner_size
+            - new_tab
+    endcomment
+
+    assign NS = 'button'
+    assign cn = '#' | append: NS
+    assign tag = tag | default: 'button'
+    if t_text != blank
+        assign text = t_text | t    
+    endif
+
+    assign display_style = display_style | default: 'normal'
+    assign use_shadow = use_shadow | default: true
+    
+    comment
+    unless display_style == 'normal'
+        assign use_shadow = false
+    endunless
+    endcomment
+    
+
+    case color_scheme
+        when 'warning'
+            assign bg_color = settings.color_warning
+        when 'danger'
+            assign bg_color = settings.color_danger
+        when 'success'
+            assign bg_color = settings.color_success
+        when 'text'
+            assign bg_color = settings.color_foreground
+            assign text_color = settings.color_text
+        when 'text-inverse'
+            assign bg_color = settings.color_text
+            assign text_color = settings.color_foreground
+    endcase
+
+
+
+    if bg_color != blank
+        assign bg_hover_color = bg_color | color_darken: 5
+    
+        if use_shadow
+            assign l1_shadow_color = bg_color | color_darken: 30 | color_modify: 'alpha', 0.3
+            assign l2_shadow_color = bg_color | color_darken: 30 | color_modify: 'alpha', 0.15
+            assign l3_shadow_color = bg_color | color_darken: 18
+        endif
+    endif 
+    
+    if new_tab
+        assign new_tab_attr = 'target="_blank" rel="noopener noreferrer"'
+    endif
+-%}
+
+{%- capture Style -%}
+    {%- if text_color -%}--text-color: {{ text_color }};{%- endif -%}
+    {%- if bg_color -%}--bg-color: {{ bg_color }};--bg-hover-color: {{ bg_hover_color }};{%- endif -%}
+    {%- if l1_shadow_color and l2_shadow_color and l3_shadow_color -%}
+        --l1-shadow-color: {{ l1_shadow_color }};
+        --l2-shadow-color: {{ l2_shadow_color }};
+        --l3-shadow-color: {{ l3_shadow_color }};
+    {%- endif -%}
+{%- endcapture -%}
+
+<{{tag}} 
+    class="{{ cn }} @display-style:{{ display_style }} {% if size != blank %}@size:{{ size }}{% endif %} {% if block %}@block{% endif %} {% if use_shadow %}@shadow{% endif %} {% if settings.use_buttons_heading_font %}heading-font{% endif %}"
+    style="{{ Style }}"
+    {% if link and tag == 'a' %}
+        href="{{ link }}"
+        {% if new_tab %}
+                {{ new_tab_attr }} 
+        {% endif %}
+    {% endif %}
+    
+    {% if id != blank %}
+        id="{{ id }}"
+    {% endif %}
+    {% if name != blank %}
+        name="{{ name }}"
+    {% endif %}
+    {% if type != blank %}
+        type="{{ type }}"
+    {% endif %}
+    {% if value != blank %}
+        value="{{ value }}"
+    {% endif %}
+    {% if form != blank %}
+        form="{{ form }}"
+    {% endif %}
+    {% if atts != blank %}
+       {{ atts }} 
+    {% endif %}>
+    {{ text }}
+    {%- if loading -%}
+        {% render 'spinner', size: spinner_size %}
+    {%- endif -%}
+</{{tag}}> 

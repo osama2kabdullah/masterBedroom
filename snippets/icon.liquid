@@ -1,0 +1,22 @@
+{% comment %}
+  Props:
+    name: {String}
+    load: {boolean} default: false
+    size: {String}
+{% endcomment %}
+
+{% liquid 
+    if load == blank
+        assign load = false
+    endif    
+%}
+
+{%- if name != blank -%}
+    {%- if load -%}
+        <load-icon name="{{ name }}" {% if size != blank %}size="{{ size }}"{% endif %}></load-icon>
+    {%- else -%}
+        <svg class="#icon" {% if size != blank %}style="--size: {{ size }};"{% endif %}>
+            <use href="#svg-icon-{{ name }}"></use>
+        </svg>
+    {%- endif -%}
+{%- endif -%}

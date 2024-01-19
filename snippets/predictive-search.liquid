@@ -1,0 +1,168 @@
+{%- liquid
+    assign NS = 'predictive-search'
+    assign cn = '#' | append: NS
+
+    assign sources = ''
+    if settings.predictive_search_src_query
+        assign sources = sources | append: 'query,' 
+    endif
+    if settings.predictive_search_src_product
+        assign sources = sources | append: 'product,' 
+    endif
+    if settings.predictive_search_src_collection
+        assign sources = sources | append: 'collection,'
+    endif
+    if settings.predictive_search_src_page
+        assign sources = sources | append: 'page,'
+    endif
+    if settings.predictive_search_src_blog
+        assign sources = sources | append: 'article,'
+    endif
+
+    assign show_initial = false
+
+    if settings.predictive_search_initial_suggestions_show and settings.predictive_search_initial_suggestions_list != blank
+        assign show_initial = true
+        assign with_suggestions = true
+        assign suggestions_list = settings.predictive_search_initial_suggestions_list | split: ','
+    endif
+
+    if settings.predictive_search_initial_collection_list_show and settings.predictive_search_initial_collection_list != blank
+        assign show_initial = true
+        assign suggested_collections = settings.predictive_search_initial_collection_list
+    endif
+
+    if settings.predictive_search_initial_featured_collection_show and settings.predictive_search_initial_featured_collection
+        assign show_initial = true
+        assign suggested_products = settings.predictive_search_initial_featured_collection.products | where: 'available'
+    endif
+
+    if settings.predictive_search_initial_recent_show
+        assign show_initial = true
+        assign show_recent_searches = true
+    endif
+-%}
+
+{% render 'load-css', file: NS %}
+
+{%- if with_suggestions -%}
+    {%- capture Suggestions-%}
+        <div class="{{ cn}}-results-type">
+            <h3 class="{{ cn}}-results-type-title">{{ settings.predictive_search_initial_suggestions_heading }}</h3>
+            <div class="{{ cn }}-results-suggestions">
+                {%- for suggestion in suggestions_list -%}
+                    {%- assign suggestionText = suggestion | strip -%}
+                    <button class="{{ cn }}-results-suggestion" data-suggestion="{{ suggestionText }}">
+                        {% render 'icon', name: 'magnifying-glass' %} <span class="{{ cn }}-suggestion-text">{{ suggestionText }}</span>
+                    </button>
+                {%- endfor -%}
+            </div>
+        </div>
+    {%- endcapture -%}
+{%- endif -%}
+
+{%- if show_recent_searches -%}
+    {%- capture Recent_search -%}
+        <predictive-search-recent-searches
+            section-id="{{ section.id }}"
+            limit="{{ settings.predictive_search_initial_recent_max }}" 
+            hidden
+        >
+            <h3>Recent searches</h3>
+            <ul data-recents-list></ul>
+            <template data-list-item-template>
+                <li><slot name="query"></slot></li>
+            </template>
+            <hr>
+        </predictive-search-recent-searches>
+        <script type="module" src="{{ 'predictive-search-recent-searches.js' | asset_url }}"></script>
+    {%- endcapture -%}
+{%- endif -%}
+
+{%- if suggested_collections -%}
+    {%- capture Suggested_collections -%}
+        <div class="{{ cn }}-results-type">
+            {% render 'load-css', file: 'collection-card' %}
+            <h3 class="{{ cn }}-results-type-title">{{ settings.predictive_search_initial_collection_list_heading }}</h3>
+            <div class="#grid @type:template" style="--template: repeat(auto-fill, minmax(8rem, 1fr));  --gap: 1rem;">
+                {%- for collection in suggested_collections -%}
+                    {% render 'collection-card'
+                        collection: collection,
+                        text_position: 'center',
+                        text_size: 'body',
+                        image_res: 150,
+                        shadow: false
+                    %}
+                {%- endfor -%}
+            </div>
+        </div>    
+    {%- endcapture -%}
+{%- endif -%}
+
+
+{%- if suggested_products -%}
+    {%- capture Suggested_products -%}
+        <div class="{{ cn }}-results-type">
+            <h3 class="{{ cn }}-results-type-title">{{ settings.predictive_search_initial_featured_collection_heading }}</h3>
+            <div class="{{ cn }}-results-items">
+                {%- for suggested_product in suggested_products limit: 5 -%}
+                    <div class="{{ cn }}-results-item">
+                        <a class="stretched-link" href="{{ suggested_product.url }}"></a>
+                        <div class="{{ cn }}-results-item-media">
+                            {% render 'media',
+                                image: suggested_product.featured_image,
+                                image_res: 70,
+                                border_radius: 'inner'
+                            %}
+                        </div>
+                        <div class="{{ cn }}-results-item-body">
+                            <h5 class="{{ cn }}-results-item-title">{{ suggested_product.title }}</h5>
+                            <div class="{{ cn }}-results-item-price">
+                                {% render 'price', product: suggested_product, display_units: false %}
+                            </div>
+                        </div>
+                        <div class="{{ cn }}-results-item-arrow">
+                            {% render 'icon',
+                                name: 'arrow-left'
+                            %}
+                        </div>
+                    </div>
+                {%- endfor -%}
+            </div>
+        </div>
+    {%- endcapture -%}
+{%- endif -%}
+
+<{{ NS }}
+    class="{{ cn }}"
+    sources="{{ sources }}"
+    results-limit="{{ settings.predictive_search_results_limit }}"
+    section-id="{{ section.id }}"
+    {% if settings.predictive_search_only_in_stock_products %}only-stock-products{% endif %}
+    {% if with_suggestions %}with-suggestions{% endif %}
+    {% if show_recent_searches %}with-recent{% endif %}
+>
+    <div class="{{ cn }}-input">
+        <div class="{{ cn }}-input-spinner">
+            {% render 'spinner', size: 'xs' %}
+        </div>
+        {{ search_form }}
+    </div>
+        
+    <div class="{{ cn }}-results-wrapper" data-wrapper>
+        <div class="{{ cn }}-results" data-results hidden></div>
+
+        {%- if show_initial -%}
+            <div class="{{ cn }}-results" data-initial hidden>
+                <div class="{{ cn }}-results-types">
+                    {{ Suggestions }}
+                    {{ Recent_search }}
+                    {{ Suggested_collections }}
+                    {{ Suggested_products }}
+                </div>
+            </div>
+        {%- endif -%}
+    </div> 
+</{{ NS }}>
+
+<script type="module" src="{{ NS | append: '.js' | asset_url }}"></script> 

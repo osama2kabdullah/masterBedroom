@@ -1,0 +1,10 @@
+{% liquid
+    assign NS = 'tabs-nav-item'
+    assign cn = '#' | append: NS
+%}
+
+<label for="{{ tab_id }}" class="{{ cn }} fs-d4 heading-font {% if active %}!active{% endif %}" data-tab-nav>
+    {% render 'accent-text',
+        text: heading
+    %}
+</label>

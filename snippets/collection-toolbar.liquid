@@ -1,0 +1,61 @@
+{%- liquid
+    assign NS = 'collection-toolbar'
+    assign cn = '#' | append: NS    
+-%}
+
+{% render 'load-css', file: NS %}
+
+<div class="{{ cn }}">
+    <div class="#container">
+        <div class="{{ cn }}-inner">
+            <div class="{{ cn }}-header"> 
+                <div class="{{ cn }}-status">
+                    <span data-collection-dynamic-block id="Collection-{{ section.id }}-counter">
+                        {{ status }}
+                    </span>
+                </div>
+                {%- if filters_drawer_target != blank and filter_type == 'drawer' -%}
+                    <modal-trigger
+                        target="{{ filters_drawer_target }}"
+                        animation="slideLeft"
+                        position="center-left"
+                        height="100%"
+                        width="min(400px, 100vw - 4rem)"
+                        class="mobile-hidden"
+                        close-button
+                        transition="300"
+                    >
+                        <button class="{{ cn }}-filters-button">
+                            {% render 'icon', name: 'sliders' %} {{ 'products.facets.filter_button' | t}}
+                        </button>
+                    </modal-trigger>
+                {%- endif -%}
+            </div>
+            {%- if filter_type == 'drawer' -%}
+                <div class="{{ cn }}-sort">
+                    {% render 'collection-sort',
+                        src: src
+                        form_id: sort_form_drawer_id,
+                        show_icons: sort_show_icons
+                    %}
+                </div>
+            {%- endif -%}
+            {%- if filter_type == 'sidebar' -%}
+                <div class="{{ cn }}-sort mobile-hidden">
+                    {% render 'collection-sort',
+                        src: src
+                        form_id: sort_form_id,
+                        show_icons: sort_show_icons
+                    %}
+                </div>
+                <div class="{{ cn }}-sort desktop-hidden">
+                    {% render 'collection-sort',
+                        src: src
+                        form_id: sort_form_drawer_id,
+                        show_icons: sort_show_icons
+                    %}
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1163 @@
+{
+  "current": {
+    "color_background": "#ffffff",
+    "color_foreground": "#ebeff1",
+    "color_header_primary_text": "#163340",
+    "color_header_primary_bg": "#ffffff",
+    "color_header_secondary_text": "#163340",
+    "color_header_secondary_bg": "#ffffff",
+    "color_header_search_bg": "#f5f5f5",
+    "color_header_dropdown_bg": "#ffffff",
+    "color_footer_bg": "#163340",
+    "color_footer_text": "#ffffff",
+    "type_header_font": "neuzeit_office_soft_rounded_n7",
+    "type_body_font": "helvetica_n4",
+    "section_text_size": "md",
+    "section_button_position": "before",
+    "page_header_text_size": "md",
+    "page_header_accent_heading": true,
+    "page_header_image_overlay": 40,
+    "page_header_image_padding": "lg",
+    "social_twitter_link": "https:\/\/twitter.com\/shopify",
+    "social_facebook_link": "https:\/\/facebook.com\/shopify",
+    "social_pinterest_link": "https:\/\/pinterest.com\/shopify",
+    "social_instagram_link": "http:\/\/instagram.com\/shopify",
+    "predictive_search_enable": true,
+    "predictive_search_src_page": true,
+    "predictive_search_src_blog": true,
+    "predictive_search_initial_suggestions_show": false,
+    "product_card_show_vendor": false,
+    "product_card_display_alt_image": false,
+    "product_card_rating_position": "bottom",
+    "colors_solid_button_labels": "#FFFFFF",
+    "colors_accent_1": "#121212",
+    "colors_accent_2": "#334FB4",
+    "colors_text": "#121212",
+    "colors_outline_button_labels": "#121212",
+    "colors_background_1": "#FFFFFF",
+    "colors_background_2": "#F3F3F3",
+    "sections": {
+      "g_announcement-bar": {
+        "type": "g_announcement-bar",
+        "settings": {
+          "home_page_only": false,
+          "close_btn": false,
+          "color_text": "#ffffff",
+          "color_bg": "#d0312d"
+        }
+      },
+      "g_header": {
+        "type": "g_header",
+        "blocks": {
+          "21dd4e6a-3c52-4289-ac05-c208dd470399": {
+            "type": "category",
+            "settings": {
+              "position": "primary",
+              "title": "Departments",
+              "icon": "list",
+              "menu": "categories"
+            }
+          },
+          "3ff5bcf9-ca9f-4169-b22c-9b87a3431613": {
+            "type": "collection_list",
+            "settings": {
+              "position": "primary",
+              "title": "Today's Deals",
+              "url": "",
+              "icon": "tags",
+              "image_size": "square"
+            }
+          },
+          "a23e323f-a0cc-4fa2-807e-707bb0d401e8": {
+            "type": "mega",
+            "settings": {
+              "position": "secondary",
+              "title": "All Collections",
+              "url": "",
+              "icon": "",
+              "menu": "categories",
+              "columns": 5,
+              "images_size": "origin",
+              "image_width": 22,
+              "images_align": "vertical",
+              "images_subheading_position": "before",
+              "first_image_enable": true,
+              "first_image": "shopify:\/\/shop_images\/dane-deaner-1WFXk3WJXZU-unsplash_2_2.jpg",
+              "first_image_heading": "Save up to 60%",
+              "first_image_subheading": "Cookware Outlet",
+              "first_image_link": "#",
+              "second_image_enable": false,
+              "second_image_heading": "Cookware Outlet",
+              "second_image_subheading": "",
+              "second_image_link": ""
+            }
+          },
+          "7c5687e2-c78a-4aa6-8b54-1b6d80f0365a": {
+            "type": "category",
+            "disabled": true,
+            "settings": {
+              "position": "primary",
+              "title": "Deals",
+              "icon": "",
+              "menu": ""
+            }
+          },
+          "8fcaeec9-7813-4cca-9750-326d6cbd8867": {
+            "type": "collection_list",
+            "disabled": true,
+            "settings": {
+              "position": "secondary",
+              "title": "New Arrivals",
+              "url": "",
+              "icon": "",
+              "image_size": "square"
+            }
+          },
+          "c41f93bf-a05d-4b26-ac4b-f9ff6bc7ffb3": {
+            "type": "collection",
+            "settings": {
+              "position": "secondary",
+              "title": "On Sale",
+              "icon": "percent",
+              "collection": "up-to-20-off",
+              "products_limit": 7,
+              "show_view_all": true,
+              "show_product_title": true,
+              "show_product_price": true
+            }
+          },
+          "a085f9f9-6a72-4f86-8fba-b2b64e5ea880": {
+            "type": "collection",
+            "settings": {
+              "position": "secondary",
+              "title": "New Arrivals",
+              "icon": "",
+              "collection": "featured-products",
+              "products_limit": 7,
+              "show_view_all": true,
+              "show_product_title": true,
+              "show_product_price": true
+            }
+          },
+          "1ee961af-272f-436f-8063-9997eebaa208": {
+            "type": "collection_list",
+            "disabled": true,
+            "settings": {
+              "position": "secondary",
+              "title": "Featured",
+              "url": "",
+              "icon": "",
+              "image_size": "square"
+            }
+          },
+          "0758122f-cc79-4ab6-98fc-41f0638b1f4d": {
+            "type": "collection",
+            "disabled": true,
+            "settings": {
+              "position": "secondary",
+              "title": "Best Sellers",
+              "icon": "",
+              "collection": "best-sellers",
+              "products_limit": 7,
+              "show_view_all": true,
+              "show_product_title": true,
+              "show_product_price": true
+            }
+          },
+          "238f9c78-69de-4ac9-970d-b123d39cd8b7": {
+            "type": "menu",
+            "settings": {
+              "position": "secondary",
+              "menu": "main-nav"
+            }
+          },
+          "ba7ae06e-435c-4d38-8064-96a4e44543fc": {
+            "type": "social_profiles",
+            "settings": {
+              "position": "secondary"
+            }
+          }
+        },
+        "block_order": [
+          "21dd4e6a-3c52-4289-ac05-c208dd470399",
+          "3ff5bcf9-ca9f-4169-b22c-9b87a3431613",
+          "a23e323f-a0cc-4fa2-807e-707bb0d401e8",
+          "7c5687e2-c78a-4aa6-8b54-1b6d80f0365a",
+          "8fcaeec9-7813-4cca-9750-326d6cbd8867",
+          "c41f93bf-a05d-4b26-ac4b-f9ff6bc7ffb3",
+          "a085f9f9-6a72-4f86-8fba-b2b64e5ea880",
+          "1ee961af-272f-436f-8063-9997eebaa208",
+          "0758122f-cc79-4ab6-98fc-41f0638b1f4d",
+          "238f9c78-69de-4ac9-970d-b123d39cd8b7",
+          "ba7ae06e-435c-4d38-8064-96a4e44543fc"
+        ],
+        "settings": {
+          "enable_sticky_header": true,
+          "header_layout": "wide",
+          "logo": "shopify:\/\/shop_images\/cooktime-logo-34-wy.png",
+          "logo_desktop_width": 130,
+          "logo_mobile_width": 100,
+          "secondary_navigation_align": "space-between",
+          "secondary_navigation_position": "bottom",
+          "show_country_selector": true,
+          "show_language_selector": false,
+          "show_cart_total": true,
+          "show_cart_counter": true
+        }
+      },
+      "g_footer": {
+        "type": "g_footer",
+        "blocks": {
+          "6b5af106-b385-4942-a25b-7280a50915aa": {
+            "type": "text",
+            "settings": {
+              "heading": "",
+              "logo": "shopify:\/\/shop_images\/cooktime-logo-34-wy_a572fddc-4132-4f01-aec7-4d2e84fb1330.png",
+              "logo_width": 45,
+              "text": "<p>CookTime has been delivering only the highest quality goods for your home and kitchen for over 35 years.  We pride ourselves on fast, friendly service, a wide selection, and unbeatable prices.<\/p><p><\/p><p><em>This is a demonstration store.  No orders will be fulfilled.<\/em><\/p>",
+              "show_social_icons": true
+            }
+          },
+          "418ba5eb-a950-4a8b-ad85-100ab8112f31": {
+            "type": "menu",
+            "settings": {
+              "heading": "Shop",
+              "menu": "categories"
+            }
+          },
+          "d6851dff-9662-44f7-9bc0-1865401ec1eb": {
+            "type": "menu",
+            "settings": {
+              "heading": "Information",
+              "menu": "information"
+            }
+          },
+          "02a7e323-ba38-469f-ad5f-cdbea0e20966": {
+            "type": "newsletter",
+            "settings": {
+              "heading": "Newsletter",
+              "text": "<p>Sign up for our newsletter and be the first to know about coupons and special promotions.<\/p>",
+              "show_social_icons": false
+            }
+          }
+        },
+        "block_order": [
+          "6b5af106-b385-4942-a25b-7280a50915aa",
+          "418ba5eb-a950-4a8b-ad85-100ab8112f31",
+          "d6851dff-9662-44f7-9bc0-1865401ec1eb",
+          "02a7e323-ba38-469f-ad5f-cdbea0e20966"
+        ],
+        "settings": {
+          "show_country_selector": true,
+          "show_language_selector": false,
+          "social_new_tab": true
+        }
+      },
+      "s_product": {
+        "type": "s_product",
+        "blocks": {
+          "c2353881-0d3e-4b52-a6c7-a47cd7850403": {
+            "type": "title",
+            "settings": {
+              "size": "md",
+              "prev_attach": false
+            }
+          },
+          "dd396644-4bb4-4354-abeb-c401cb2bdea6": {
+            "type": "price",
+            "settings": {
+              "show_savings": true,
+              "prev_attach": false
+            }
+          },
+          "83c2532f-400a-4a77-a19c-29ac1d747097": {
+            "type": "variant_selector",
+            "settings": {
+              "picker_type": "swatch"
+            }
+          },
+          "ff47d48e-7efa-4fba-8725-3afae9f3537d": {
+            "type": "stock_alert",
+            "settings": {
+              "prev_attach": false
+            }
+          },
+          "acf9de77-95a7-43b0-88ae-af02c9ee2b46": {
+            "type": "buy_buttons",
+            "settings": {
+              "show_dynamic_checkout": true,
+              "prev_attach": false
+            }
+          }
+        },
+        "block_order": [
+          "c2353881-0d3e-4b52-a6c7-a47cd7850403",
+          "dd396644-4bb4-4354-abeb-c401cb2bdea6",
+          "83c2532f-400a-4a77-a19c-29ac1d747097",
+          "ff47d48e-7efa-4fba-8725-3afae9f3537d",
+          "acf9de77-95a7-43b0-88ae-af02c9ee2b46"
+        ],
+        "settings": {
+          "slideshow_zoom": true
+        }
+      },
+      "g_newsletter-popup": {
+        "type": "g_newsletter-popup",
+        "blocks": {
+          "g_newsletter-popup-0": {
+            "type": "heading",
+            "settings": {
+              "heading": "Subscribe to our emails"
+            }
+          },
+          "g_newsletter-popup-1": {
+            "type": "text",
+            "settings": {
+              "text": "Be the first to know about new collections and exclusive offers."
+            }
+          },
+          "g_newsletter-popup-2": {
+            "type": "newsletter_form",
+            "settings": {}
+          }
+        },
+        "block_order": [
+          "g_newsletter-popup-0",
+          "g_newsletter-popup-1",
+          "g_newsletter-popup-2"
+        ],
+        "settings": {
+          "is_enabled": false,
+          "enable_screen_lock": true,
+          "new_customers_only": false,
+          "display_delay": 3,
+          "days_to_re_appear": 1,
+          "popup_position": "center-center",
+          "size": "md"
+        }
+      },
+      "g_password-header": {
+        "type": "g_password-header",
+        "settings": {
+          "logo_desktop_width": 130,
+          "logo_mobile_width": 100
+        }
+      },
+      "g_password-footer": {
+        "type": "g_password-footer",
+        "settings": {
+          "show_social": true
+        }
+      },
+      "g_cart-drawer": {
+        "type": "g_cart-drawer",
+        "blocks": {
+          "g_cart-drawer-0": {
+            "type": "products",
+            "settings": {
+              "show_remove_button": true
+            }
+          },
+          "g_cart-drawer-1": {
+            "type": "subtotal",
+            "settings": {}
+          }
+        },
+        "block_order": [
+          "g_cart-drawer-0",
+          "g_cart-drawer-1"
+        ],
+        "settings": {
+          "enable_cart_drawer": false,
+          "show_final_price_checkout_button": true,
+          "show_stock_alert": false,
+          "checkout_position": "top",
+          "show_cart_counter": false
+        }
+      }
+    },
+    "content_for_index": []
+  },
+  "presets": {
+    "CookTime": {
+      "type_header_font": "neuzeit_office_soft_rounded_n7",
+      "type_body_font": "helvetica_n4",
+      "page_header_text_size": "md",
+      "page_header_image_overlay": 40,
+      "page_header_image_padding": "lg",
+      "social_twitter_link": "https:\/\/twitter.com\/shopify",
+      "social_facebook_link": "https:\/\/facebook.com\/shopify",
+      "social_pinterest_link": "https:\/\/pinterest.com\/shopify",
+      "social_instagram_link": "http:\/\/instagram.com\/shopify",
+      "predictive_search_src_page": true,
+      "predictive_search_src_blog": true,
+      "product_card_show_vendor": false,
+      "product_card_display_alt_image": false,
+      "product_card_rating_position": "bottom",
+      "colors_solid_button_labels": "#FFFFFF",
+      "colors_accent_1": "#121212",
+      "colors_accent_2": "#334FB4",
+      "colors_text": "#121212",
+      "colors_outline_button_labels": "#121212",
+      "colors_background_1": "#FFFFFF",
+      "colors_background_2": "#F3F3F3",
+      "sections": {
+        "g_announcement-bar": {
+          "type": "g_announcement-bar",
+          "settings": {
+            "home_page_only": false,
+            "close_btn": false,
+            "color_text": "#ffffff",
+            "color_bg": "#d0312d"
+          }
+        },
+        "g_header": {
+          "type": "g_header",
+          "blocks": {
+            "21dd4e6a-3c52-4289-ac05-c208dd470399": {
+              "type": "category",
+              "settings": {
+                "position": "primary",
+                "title": "Departments",
+                "icon": "list",
+                "menu": "categories"
+              }
+            },
+            "3ff5bcf9-ca9f-4169-b22c-9b87a3431613": {
+              "type": "collection_list",
+              "settings": {
+                "position": "primary",
+                "title": "Today's Deals",
+                "url": "",
+                "icon": "tags",
+                "image_size": "square"
+              }
+            },
+            "a23e323f-a0cc-4fa2-807e-707bb0d401e8": {
+              "type": "mega",
+              "settings": {
+                "position": "secondary",
+                "title": "All Collections",
+                "url": "",
+                "icon": "",
+                "menu": "categories",
+                "columns": 5,
+                "images_size": "origin",
+                "image_width": 22,
+                "images_align": "vertical",
+                "images_subheading_position": "before",
+                "first_image_enable": true,
+                "first_image": "shopify:\/\/shop_images\/dane-deaner-1WFXk3WJXZU-unsplash_2_2.jpg",
+                "first_image_heading": "Save up to 60%",
+                "first_image_subheading": "Cookware Outlet",
+                "first_image_link": "#",
+                "second_image_enable": false,
+                "second_image_heading": "Cookware Outlet",
+                "second_image_subheading": "",
+                "second_image_link": ""
+              }
+            },
+            "7c5687e2-c78a-4aa6-8b54-1b6d80f0365a": {
+              "type": "category",
+              "disabled": true,
+              "settings": {
+                "position": "primary",
+                "title": "Deals",
+                "icon": "",
+                "menu": ""
+              }
+            },
+            "8fcaeec9-7813-4cca-9750-326d6cbd8867": {
+              "type": "collection_list",
+              "disabled": true,
+              "settings": {
+                "position": "secondary",
+                "title": "New Arrivals",
+                "url": "",
+                "icon": "",
+                "image_size": "square"
+              }
+            },
+            "c41f93bf-a05d-4b26-ac4b-f9ff6bc7ffb3": {
+              "type": "collection",
+              "settings": {
+                "position": "secondary",
+                "title": "On Sale",
+                "icon": "percent",
+                "collection": "up-to-20-off",
+                "products_limit": 7,
+                "show_view_all": true,
+                "show_product_title": true,
+                "show_product_price": true
+              }
+            },
+            "a085f9f9-6a72-4f86-8fba-b2b64e5ea880": {
+              "type": "collection",
+              "settings": {
+                "position": "secondary",
+                "title": "New Arrivals",
+                "icon": "",
+                "collection": "featured-products",
+                "products_limit": 7,
+                "show_view_all": true,
+                "show_product_title": true,
+                "show_product_price": true
+              }
+            },
+            "1ee961af-272f-436f-8063-9997eebaa208": {
+              "type": "collection_list",
+              "disabled": true,
+              "settings": {
+                "position": "secondary",
+                "title": "Featured",
+                "url": "",
+                "icon": "",
+                "image_size": "square"
+              }
+            },
+            "0758122f-cc79-4ab6-98fc-41f0638b1f4d": {
+              "type": "collection",
+              "disabled": true,
+              "settings": {
+                "position": "secondary",
+                "title": "Best Sellers",
+                "icon": "",
+                "collection": "best-sellers",
+                "products_limit": 7,
+                "show_view_all": true,
+                "show_product_title": true,
+                "show_product_price": true
+              }
+            },
+            "238f9c78-69de-4ac9-970d-b123d39cd8b7": {
+              "type": "menu",
+              "settings": {
+                "position": "secondary",
+                "menu": "main-nav"
+              }
+            },
+            "ba7ae06e-435c-4d38-8064-96a4e44543fc": {
+              "type": "social_profiles",
+              "settings": {
+                "position": "secondary"
+              }
+            }
+          },
+          "block_order": [
+            "21dd4e6a-3c52-4289-ac05-c208dd470399",
+            "3ff5bcf9-ca9f-4169-b22c-9b87a3431613",
+            "a23e323f-a0cc-4fa2-807e-707bb0d401e8",
+            "7c5687e2-c78a-4aa6-8b54-1b6d80f0365a",
+            "8fcaeec9-7813-4cca-9750-326d6cbd8867",
+            "c41f93bf-a05d-4b26-ac4b-f9ff6bc7ffb3",
+            "a085f9f9-6a72-4f86-8fba-b2b64e5ea880",
+            "1ee961af-272f-436f-8063-9997eebaa208",
+            "0758122f-cc79-4ab6-98fc-41f0638b1f4d",
+            "238f9c78-69de-4ac9-970d-b123d39cd8b7",
+            "ba7ae06e-435c-4d38-8064-96a4e44543fc"
+          ],
+          "settings": {
+            "enable_sticky_header": true,
+            "header_layout": "wide",
+            "logo": "shopify:\/\/shop_images\/cooktime-logo-34-wy.png",
+            "logo_desktop_width": 130,
+            "logo_mobile_width": 100,
+            "secondary_navigation_align": "space-between",
+            "secondary_navigation_position": "bottom",
+            "show_country_selector": true,
+            "show_language_selector": false,
+            "show_cart_total": true,
+            "show_cart_counter": true
+          }
+        },
+        "g_footer": {
+          "type": "g_footer",
+          "blocks": {
+            "6b5af106-b385-4942-a25b-7280a50915aa": {
+              "type": "text",
+              "settings": {
+                "heading": "",
+                "logo": "shopify:\/\/shop_images\/cooktime-logo-34-wy_a572fddc-4132-4f01-aec7-4d2e84fb1330.png",
+                "logo_width": 45,
+                "text": "<p>CookTime has been delivering only the highest quality goods for your home and kitchen for over 35 years.  We pride ourselves on fast, friendly service, a wide selection, and unbeatable prices.<\/p><p><\/p><p><em>This is a demonstration store.  No orders will be fulfilled.<\/em><\/p>",
+                "show_social_icons": true
+              }
+            },
+            "418ba5eb-a950-4a8b-ad85-100ab8112f31": {
+              "type": "menu",
+              "settings": {
+                "heading": "Shop",
+                "menu": "categories"
+              }
+            },
+            "d6851dff-9662-44f7-9bc0-1865401ec1eb": {
+              "type": "menu",
+              "settings": {
+                "heading": "Information",
+                "menu": "information"
+              }
+            },
+            "02a7e323-ba38-469f-ad5f-cdbea0e20966": {
+              "type": "newsletter",
+              "settings": {
+                "heading": "Newsletter",
+                "text": "<p>Sign up for our newsletter and be the first to know about coupons and special promotions.<\/p>",
+                "show_social_icons": false
+              }
+            }
+          },
+          "block_order": [
+            "6b5af106-b385-4942-a25b-7280a50915aa",
+            "418ba5eb-a950-4a8b-ad85-100ab8112f31",
+            "d6851dff-9662-44f7-9bc0-1865401ec1eb",
+            "02a7e323-ba38-469f-ad5f-cdbea0e20966"
+          ],
+          "settings": {
+            "show_country_selector": true,
+            "show_language_selector": false,
+            "social_new_tab": true
+          }
+        },
+        "s_product": {
+          "type": "s_product",
+          "blocks": {
+            "c2353881-0d3e-4b52-a6c7-a47cd7850403": {
+              "type": "title",
+              "settings": {
+                "size": "md",
+                "prev_attach": false
+              }
+            },
+            "dd396644-4bb4-4354-abeb-c401cb2bdea6": {
+              "type": "price",
+              "settings": {
+                "show_savings": true,
+                "prev_attach": false
+              }
+            },
+            "83c2532f-400a-4a77-a19c-29ac1d747097": {
+              "type": "variant_selector",
+              "settings": {
+                "picker_type": "swatch"
+              }
+            },
+            "ff47d48e-7efa-4fba-8725-3afae9f3537d": {
+              "type": "stock_alert",
+              "settings": {
+                "prev_attach": false
+              }
+            },
+            "acf9de77-95a7-43b0-88ae-af02c9ee2b46": {
+              "type": "buy_buttons",
+              "settings": {
+                "show_dynamic_checkout": true,
+                "prev_attach": false
+              }
+            }
+          },
+          "block_order": [
+            "c2353881-0d3e-4b52-a6c7-a47cd7850403",
+            "dd396644-4bb4-4354-abeb-c401cb2bdea6",
+            "83c2532f-400a-4a77-a19c-29ac1d747097",
+            "ff47d48e-7efa-4fba-8725-3afae9f3537d",
+            "acf9de77-95a7-43b0-88ae-af02c9ee2b46"
+          ],
+          "settings": {
+            "slideshow_zoom": true
+          }
+        },
+        "g_newsletter-popup": {
+          "type": "g_newsletter-popup",
+          "blocks": {
+            "g_newsletter-popup-0": {
+              "type": "heading",
+              "settings": {
+                "heading": "Subscribe to our emails"
+              }
+            },
+            "g_newsletter-popup-1": {
+              "type": "text",
+              "settings": {
+                "text": "Be the first to know about new collections and exclusive offers."
+              }
+            },
+            "g_newsletter-popup-2": {
+              "type": "newsletter_form",
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "g_newsletter-popup-0",
+            "g_newsletter-popup-1",
+            "g_newsletter-popup-2"
+          ],
+          "settings": {
+            "is_enabled": true,
+            "display_delay": 3,
+            "days_to_re_appear": 1,
+            "size": "md",
+            "image": "shopify:\/\/shop_images\/dane-deaner-TXHml4xX9A0-unsplash2.jpg"
+          }
+        }
+      },
+      "content_for_index": []
+    },
+    "FashionTime": {
+      "color_background": "#ffffff",
+      "color_text": "#292929",
+      "color_accent": "#bc4242",
+      "color_heading_accent": "#ff0000",
+      "color_button_bg": "#ff0000",
+      "color_header_primary_text": "#292929",
+      "color_header_primary_bg": "#ededed",
+      "color_header_search_bg": "#ffffff",
+      "color_header_search_text": "#210a0a",
+      "color_header_accent": "#fb0000",
+      "color_header_dropdown_bg": "#ffffff",
+      "color_footer_bg": "#313131",
+      "color_footer_text": "#ffffff",
+      "color_footer_border": "#ff0000",
+      "type_header_font": "muli_n7",
+      "use_buttons_heading_font": false,
+      "type_body_font": "roboto_n4",
+      "font_scale": 120,
+      "container_width": 1600,
+      "section_text_align": "center",
+      "section_text_size": "sm",
+      "section_subheading_position": "before",
+      "section_heading_accent": false,
+      "page_header_text_align": "center",
+      "page_header_text_size": "lg",
+      "page_header_accent_heading": false,
+      "social_twitter_link": "https:\/\/twitter.com\/shopify",
+      "social_facebook_link": "https:\/\/facebook.com\/shopify",
+      "social_pinterest_link": "https:\/\/pinterest.com\/shopify",
+      "social_instagram_link": "http:\/\/instagram.com\/shopify",
+      "social_tiktok_link": "https:\/\/tiktok.com\/@shopify",
+      "predictive_search_src_page": true,
+      "predictive_search_src_blog": true,
+      "product_card_show_vendor": true,
+      "product_card_enable_quick_view": false,
+      "product_card_align": "center",
+      "product_card_price_position": "before",
+      "product_card_display_alt_image": false,
+      "product_card_image_size": "portrait",
+      "product_card_image_crop": false,
+      "product_card_darken_image": true,
+      "animation_card_lift_up": false,
+      "colors_solid_button_labels": "#FFFFFF",
+      "colors_accent_1": "#121212",
+      "colors_accent_2": "#334FB4",
+      "colors_text": "#121212",
+      "colors_outline_button_labels": "#121212",
+      "colors_background_1": "#FFFFFF",
+      "colors_background_2": "#F3F3F3",
+      "sections": {
+        "g_announcement-bar": {
+          "type": "g_announcement-bar",
+          "settings": {
+            "home_page_only": false,
+            "close_btn": true,
+            "color_text": "#ffffff",
+            "color_bg": "#292929"
+          }
+        },
+        "g_header": {
+          "type": "g_header",
+          "blocks": {
+            "21dd4e6a-3c52-4289-ac05-c208dd470399": {
+              "type": "category",
+              "disabled": true,
+              "settings": {
+                "position": "primary",
+                "title": "Departments",
+                "icon": "list",
+                "menu": ""
+              }
+            },
+            "3ff5bcf9-ca9f-4169-b22c-9b87a3431613": {
+              "type": "collection_list",
+              "disabled": true,
+              "settings": {
+                "position": "primary",
+                "title": "Today's Deals",
+                "url": "",
+                "icon": "tags",
+                "image_size": "square"
+              }
+            },
+            "a23e323f-a0cc-4fa2-807e-707bb0d401e8": {
+              "type": "mega",
+              "disabled": true,
+              "settings": {
+                "position": "secondary",
+                "title": "Collections",
+                "url": "",
+                "icon": "",
+                "menu": "",
+                "columns": 5,
+                "images_size": "origin",
+                "image_width": 22,
+                "images_align": "vertical",
+                "images_subheading_position": "after",
+                "first_image_enable": true,
+                "first_image_heading": "Cookware Outlet",
+                "first_image_subheading": "",
+                "first_image_link": "#",
+                "second_image_enable": false,
+                "second_image_heading": "Cookware Outlet",
+                "second_image_subheading": "",
+                "second_image_link": ""
+              }
+            },
+            "7c5687e2-c78a-4aa6-8b54-1b6d80f0365a": {
+              "type": "category",
+              "disabled": true,
+              "settings": {
+                "position": "primary",
+                "title": "Deals",
+                "icon": "",
+                "menu": ""
+              }
+            },
+            "8fcaeec9-7813-4cca-9750-326d6cbd8867": {
+              "type": "collection_list",
+              "disabled": true,
+              "settings": {
+                "position": "secondary",
+                "title": "New Arrivals",
+                "url": "",
+                "icon": "",
+                "image_size": "square"
+              }
+            },
+            "c41f93bf-a05d-4b26-ac4b-f9ff6bc7ffb3": {
+              "type": "collection",
+              "disabled": true,
+              "settings": {
+                "position": "secondary",
+                "title": "On Sale",
+                "icon": "percent",
+                "collection": "cups",
+                "products_limit": 7,
+                "show_view_all": true,
+                "show_product_title": true,
+                "show_product_price": true
+              }
+            },
+            "a085f9f9-6a72-4f86-8fba-b2b64e5ea880": {
+              "type": "collection",
+              "disabled": true,
+              "settings": {
+                "position": "secondary",
+                "title": "New Arrivals",
+                "icon": "",
+                "collection": "new-arrivals",
+                "products_limit": 7,
+                "show_view_all": true,
+                "show_product_title": true,
+                "show_product_price": true
+              }
+            },
+            "1ee961af-272f-436f-8063-9997eebaa208": {
+              "type": "collection_list",
+              "disabled": true,
+              "settings": {
+                "position": "secondary",
+                "title": "Featured",
+                "url": "",
+                "icon": "",
+                "image_size": "square"
+              }
+            },
+            "0758122f-cc79-4ab6-98fc-41f0638b1f4d": {
+              "type": "collection",
+              "disabled": true,
+              "settings": {
+                "position": "secondary",
+                "title": "Best Sellers",
+                "icon": "",
+                "collection": "best-sellers",
+                "products_limit": 7,
+                "show_view_all": true,
+                "show_product_title": true,
+                "show_product_price": true
+              }
+            },
+            "238f9c78-69de-4ac9-970d-b123d39cd8b7": {
+              "type": "menu",
+              "disabled": true,
+              "settings": {
+                "position": "secondary",
+                "menu": ""
+              }
+            },
+            "d043fb71-5dff-4311-a762-d493b77e6d40": {
+              "type": "mega",
+              "settings": {
+                "position": "primary",
+                "title": "Women",
+                "url": "shopify:\/\/collections\/women",
+                "icon": "",
+                "menu": "women",
+                "columns": 3,
+                "images_size": "portrait",
+                "image_width": 50,
+                "images_align": "horizontal",
+                "images_subheading_position": "after",
+                "first_image_enable": true,
+                "first_image": "shopify:\/\/shop_images\/pexels-dima-valkov-5690225.jpg",
+                "first_image_heading": "Save Up to 50%",
+                "first_image_subheading": "Summer Romance",
+                "first_image_link": "",
+                "second_image_enable": true,
+                "second_image": "shopify:\/\/shop_images\/fashion-2021-08-26-16-36-51-utc_8f2148ac-2669-4375-8ae6-4d7323e3402a.jpg",
+                "second_image_heading": "Sale Under $15",
+                "second_image_subheading": "The Perfect Gifts",
+                "second_image_link": ""
+              }
+            },
+            "a238b153-cc49-457c-8ff5-6cdba082f2f4": {
+              "type": "mega",
+              "settings": {
+                "position": "primary",
+                "title": "Men",
+                "url": "shopify:\/\/collections\/men",
+                "icon": "",
+                "menu": "men",
+                "columns": 3,
+                "images_size": "portrait",
+                "image_width": 50,
+                "images_align": "horizontal",
+                "images_subheading_position": "after",
+                "first_image_enable": true,
+                "first_image": "shopify:\/\/shop_images\/street-fashion-black-man-2021-09-02-03-23-20-utc2_65aff39f-7ddc-4fda-a39e-2679dd0fd7f7.jpg",
+                "first_image_heading": "50% Off",
+                "first_image_subheading": "Spring Essentials",
+                "first_image_link": "",
+                "second_image_enable": true,
+                "second_image": "shopify:\/\/shop_images\/mike-montgomery-mXkafXEgOlk-unsplash_423d80e1-e15c-4c69-b664-e62dbaa14aa5.jpg",
+                "second_image_heading": "Fresh Looks",
+                "second_image_subheading": "New Arrivals",
+                "second_image_link": ""
+              }
+            },
+            "b81ffc1d-fec7-4e87-8c7e-861c4a879f31": {
+              "type": "collection",
+              "settings": {
+                "position": "primary",
+                "title": "Sale",
+                "icon": "",
+                "collection": "under-30",
+                "products_limit": 5,
+                "show_view_all": true,
+                "show_product_title": false,
+                "show_product_price": false
+              }
+            },
+            "d50bbe88-553a-4c47-9e66-92d078068511": {
+              "type": "category",
+              "disabled": true,
+              "settings": {
+                "position": "primary",
+                "title": "New",
+                "icon": "",
+                "menu": ""
+              }
+            },
+            "f64b0a66-fc71-4a72-91fe-1167bbef101e": {
+              "type": "category",
+              "disabled": true,
+              "settings": {
+                "position": "primary",
+                "title": "Sale",
+                "icon": "",
+                "menu": ""
+              }
+            },
+            "5f328263-1837-4d11-ab18-061192248f14": {
+              "type": "collection",
+              "settings": {
+                "position": "primary",
+                "title": "New",
+                "icon": "",
+                "collection": "featured-products",
+                "products_limit": 5,
+                "show_view_all": true,
+                "show_product_title": false,
+                "show_product_price": false
+              }
+            }
+          },
+          "block_order": [
+            "21dd4e6a-3c52-4289-ac05-c208dd470399",
+            "3ff5bcf9-ca9f-4169-b22c-9b87a3431613",
+            "a23e323f-a0cc-4fa2-807e-707bb0d401e8",
+            "7c5687e2-c78a-4aa6-8b54-1b6d80f0365a",
+            "8fcaeec9-7813-4cca-9750-326d6cbd8867",
+            "c41f93bf-a05d-4b26-ac4b-f9ff6bc7ffb3",
+            "a085f9f9-6a72-4f86-8fba-b2b64e5ea880",
+            "1ee961af-272f-436f-8063-9997eebaa208",
+            "0758122f-cc79-4ab6-98fc-41f0638b1f4d",
+            "238f9c78-69de-4ac9-970d-b123d39cd8b7",
+            "d043fb71-5dff-4311-a762-d493b77e6d40",
+            "a238b153-cc49-457c-8ff5-6cdba082f2f4",
+            "b81ffc1d-fec7-4e87-8c7e-861c4a879f31",
+            "d50bbe88-553a-4c47-9e66-92d078068511",
+            "f64b0a66-fc71-4a72-91fe-1167bbef101e",
+            "5f328263-1837-4d11-ab18-061192248f14"
+          ],
+          "settings": {
+            "enable_sticky_header": true,
+            "header_layout": "wide",
+            "logo": "shopify:\/\/shop_images\/ft-logo4.png",
+            "logo_desktop_width": 195,
+            "logo_mobile_width": 50,
+            "secondary_navigation_align": "space-between",
+            "secondary_navigation_position": "bottom",
+            "show_country_selector": true,
+            "show_language_selector": false,
+            "show_cart_total": false,
+            "show_cart_counter": true
+          }
+        },
+        "g_footer": {
+          "type": "g_footer",
+          "blocks": {
+            "6b5af106-b385-4942-a25b-7280a50915aa": {
+              "type": "text",
+              "disabled": true,
+              "settings": {
+                "heading": "About Us",
+                "logo_width": 60,
+                "text": "<p>Our story began in 2001 in a small studio in the middle of nowhere. With only one desk and next to no free time, our brand was born.<\/p>",
+                "show_social_icons": false
+              }
+            },
+            "418ba5eb-a950-4a8b-ad85-100ab8112f31": {
+              "type": "menu",
+              "settings": {
+                "heading": "Shop",
+                "menu": "footer-nav"
+              }
+            },
+            "d6851dff-9662-44f7-9bc0-1865401ec1eb": {
+              "type": "menu",
+              "settings": {
+                "heading": "Information",
+                "menu": "footer-info"
+              }
+            },
+            "5fc7c9dc-5ffc-41d4-b14a-392b7338f531": {
+              "type": "social_menu",
+              "settings": {
+                "heading": "Follow us"
+              }
+            },
+            "02a7e323-ba38-469f-ad5f-cdbea0e20966": {
+              "type": "newsletter",
+              "settings": {
+                "heading": "Newsletter",
+                "text": "<p>Sign up for our newsletter and be the first to know about coupons and special promotions.<\/p>",
+                "show_social_icons": false
+              }
+            }
+          },
+          "block_order": [
+            "6b5af106-b385-4942-a25b-7280a50915aa",
+            "418ba5eb-a950-4a8b-ad85-100ab8112f31",
+            "d6851dff-9662-44f7-9bc0-1865401ec1eb",
+            "5fc7c9dc-5ffc-41d4-b14a-392b7338f531",
+            "02a7e323-ba38-469f-ad5f-cdbea0e20966"
+          ],
+          "settings": {
+            "show_country_selector": true,
+            "show_language_selector": false,
+            "social_new_tab": true
+          }
+        },
+        "s_product": {
+          "type": "s_product",
+          "blocks": {
+            "c2353881-0d3e-4b52-a6c7-a47cd7850403": {
+              "type": "title",
+              "settings": {
+                "size": "md",
+                "prev_attach": false
+              }
+            },
+            "dd396644-4bb4-4354-abeb-c401cb2bdea6": {
+              "type": "price",
+              "settings": {
+                "show_savings": true,
+                "prev_attach": false
+              }
+            },
+            "83c2532f-400a-4a77-a19c-29ac1d747097": {
+              "type": "variant_selector",
+              "settings": {
+                "picker_type": "swatch"
+              }
+            },
+            "ff47d48e-7efa-4fba-8725-3afae9f3537d": {
+              "type": "stock_alert",
+              "settings": {
+                "prev_attach": false
+              }
+            },
+            "acf9de77-95a7-43b0-88ae-af02c9ee2b46": {
+              "type": "buy_buttons",
+              "settings": {
+                "show_dynamic_checkout": true,
+                "prev_attach": false
+              }
+            }
+          },
+          "block_order": [
+            "c2353881-0d3e-4b52-a6c7-a47cd7850403",
+            "dd396644-4bb4-4354-abeb-c401cb2bdea6",
+            "83c2532f-400a-4a77-a19c-29ac1d747097",
+            "ff47d48e-7efa-4fba-8725-3afae9f3537d",
+            "acf9de77-95a7-43b0-88ae-af02c9ee2b46"
+          ],
+          "settings": {
+            "slideshow_zoom": true
+          }
+        },
+        "g_newsletter-popup": {
+          "type": "g_newsletter-popup",
+          "blocks": {
+            "g_newsletter-popup-0": {
+              "type": "heading",
+              "settings": {
+                "heading": "Subscribe to our emails"
+              }
+            },
+            "g_newsletter-popup-1": {
+              "type": "text",
+              "settings": {
+                "text": "Be the first to know about new collections and exclusive offers."
+              }
+            },
+            "g_newsletter-popup-2": {
+              "type": "newsletter_form",
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "g_newsletter-popup-0",
+            "g_newsletter-popup-1",
+            "g_newsletter-popup-2"
+          ],
+          "settings": {
+            "is_enabled": true,
+            "display_delay": 3,
+            "days_to_re_appear": 1,
+            "size": "md"
+          }
+        }
+      },
+      "content_for_index": []
+    }
+  }
+}

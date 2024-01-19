@@ -1,0 +1,14 @@
+.\#localization-popup-body {
+  width: min(100vw, 450px);
+  padding: var(--container-spacer);
+}
+.\#localization-popup-inner {
+  padding: 2rem;
+  background: var(--color-g-fg);
+  border-radius: var(--border-radius-base);
+  box-shadow: rgba(50, 50, 93, 0.1) 0 50px 100px -20px, rgba(0, 0, 0, 0.15) 0 30px 60px -30px;
+}
+.\#localization-popup-trigger {
+  display: block;
+  cursor: pointer;
+}

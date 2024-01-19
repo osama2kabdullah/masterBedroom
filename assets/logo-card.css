@@ -1,0 +1,24 @@
+.\#logo-card {
+  --height: 120px;
+  box-shadow: rgba(50, 50, 93, 0.1) 0 50px 100px -20px, rgba(0, 0, 0, 0.15) 0 30px 60px -30px;
+  border-radius: var(--border-radius-base);
+  padding: 2rem;
+  background: var(--color-g-fg);
+  height: var(--height);
+  position: relative;
+}
+.\#logo-card .\#media {
+  height: 100%;
+  --image-fit: contain;
+}
+@media (min-width: 992px) {
+  .\#logo-card.\@grayscale-hover {
+    filter: grayscale(1);
+  }
+  .\#logo-card.\@grayscale-hover:hover {
+    filter: grayscale(0);
+  }
+}
+.\#logo-card .\#media-placeholder {
+  background: none;
+}

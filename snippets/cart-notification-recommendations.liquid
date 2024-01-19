@@ -1,0 +1,28 @@
+{%- liquid
+    assign NS = 'cart-notification-recommendations'
+    assign cn = '#' | append: NS
+-%}
+
+{% render 'load-css', file: NS, lazy: true %}
+{% render 'load-css', file: 'product-card-min', lazy: true %}
+{% render 'load-css', file: 'swiper', lazy: true %}
+
+
+<{{NS}} 
+    class="{{ cn }}" 
+    product-id="{{ product_id }}" 
+    {% if recommendations_per_view %}slides-per-view="{{ recommendations_per_view }}"{% endif %}
+>
+    <div class="{{ cn }}-header" data-spacer>
+        <h3 class="{{ cn }}-heading">{{ 'general.cart.recommendations.heading' | t }}</h3>
+        <div class="{{ cn }}-nav">
+            <button class="{{ cn }}-nav-item" data-nav-prev>
+                {% render 'icon', name: 'arrow-left' %}
+            </button>
+            <button class="{{ cn }}-nav-item" data-nav-next>
+                {% render 'icon', name: 'arrow-right' %}
+            </button>
+        </div>
+    </div>
+    <div class="{{ cn }}-content" data-content></div>
+</{{NS}}>

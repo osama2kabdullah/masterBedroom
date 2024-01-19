@@ -1,0 +1,67 @@
+{%- for value in option.values -%}
+    {%- assign input_id = option.name | handleize | append: value | escape | handleize | append: section.id -%}
+    <label class="{{ cn }}-item" for="{{ input_id }}">
+        <input 
+            id="{{ input_id }}"
+            type="radio"
+            class="{{ cn }}-item-input {% if src == 'buttons' %}visually-hidden{% endif %}"
+            {% unless src == 'buttons' %}hidden{% endunless %}
+            data-option-value
+            data-option-index="{{ option.position | minus: 1 }}"
+            name="{{ option.name }}"
+            value="{{ value | escape }}"
+            {% if option.selected_value == value %}checked{% endif %}
+        >
+        <div class="{{ cn }}-item-body">
+            {%- liquid
+                assign price = blank
+                assign image = blank
+                if single_option
+                    for variant in product.variants
+                        if variant.option1 == value
+                            assign image = variant.image
+                            assign price = variant.price
+
+                            assign stock_alert_message = false
+                            if show_stock_alert and variant.inventory_quantity <= settings.stock_threshold and variant.inventory_management and variant.inventory_policy == 'deny'
+                                assign cart_product_count =  cart | item_count_for_variant: variant.id
+                                if cart_product_count < variant.inventory_quantity
+                                    assign stock_alert_message = 'products.product.stock_alert.low_stock_msg' | t: value: variant.inventory_quantity
+                                endif
+                            endif
+                            break
+                        endif
+                    endfor
+                endif    
+            -%}
+
+            {%- if image != blank -%}
+                <div class="{{ cn }}-item-media">
+                    {% render 'media',
+                        image: image
+                    %}
+                </div>
+            {%- endif -%}
+
+            <div class="{{ cn }}-item-value">
+                <div class="{{ cn }}-item-title">
+                    {{ value }}
+                    {%- if stock_alert_message -%}
+                        <p class="{{ cn }}-item-value-stock-alert">{{ stock_alert_message }}</p>
+                    {%- endif -%}
+                </div>
+                {%- if unavailable_title -%}
+                    <span class="{{ cn }}-item-unavailable">{{ 'products.product.unavailable' | t | downcase }}</span>
+                {%- endif -%}
+                {%- if out_of_stock_title -%}
+                    <span class="{{ cn }}-item-sold-out">{{ 'products.product.stock_alert.out_of_stock_msg' | t | downcase }}</span>
+                {%- endif -%}
+                {%- if price != blank and product.price_varies -%}
+                    <div class="{{ cn }}-item-price">
+                        {{ price | money }}
+                    </div>
+                {%- endif -%}
+            </div>
+        </div> 
+    </label>
+{%- endfor -%}

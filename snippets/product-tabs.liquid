@@ -1,0 +1,21 @@
+{% liquid
+    assign NS = 'tabs'
+    assign NAV_NS = NS | append: '-nav'
+    assign cn = '#product' | append: '-' | append: NS
+%}
+{% render 'load-css', file: 'product-tabs', lazy: true %}
+
+{% capture Tabs_nav %}
+    <{{ NAV_NS }}>
+        <div class="{{ cn }}-nav-items {% if settings.section_text_align == 'center' %}@center{% endif %}">
+            {{ nav_items }}
+        </div>
+    </{{ NAV_NS }}>
+{% endcapture %}
+
+<div class="{{ cn }}">
+    {{ Tabs_nav }}
+    {{ panes }}
+</div>
+
+<script type="module" src="{{ NAV_NS | append: '.js' | asset_url }}"></script>

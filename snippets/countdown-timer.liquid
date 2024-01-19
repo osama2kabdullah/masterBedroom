@@ -1,0 +1,42 @@
+{%- liquid
+    assign NS = 'countdown-timer'
+    assign cn = '#' | append: NS
+
+    if display_titles and timer_titles_size != blank
+        assign show_titles = true
+    endif
+-%}
+{% render 'load-css', file: 'countdown-timer' %}
+
+<{{ NS }}
+    class="{{ cn }} fs-{{ timer_size }}"
+    date="{{ date }}"
+    {% if hide_on_complete %}
+        hide-on-complete
+    {% endif %}
+    hidden
+>
+    <div data-elem="timer" class="{{ cn }}-items">
+        <div class="{{ cn }}-item">
+            <span class="{{ cn }}-item-time" data-element="days">00</span>
+         
+            <span class="{{ cn }}-item-title fs-{{ timer_titles_size }}" {% unless show_titles %}hidden{% endunless %}>{{ 'general.date_types.days' | t }}</span>
+            
+        </div>
+        <div class="{{ cn }}-item">
+            <span class="{{ cn }}-item-time" data-element="hours">00</span>
+            <span class="{{ cn }}-item-title fs-{{ timer_titles_size }}" {% unless show_titles %}hidden{% endunless %}>{{ 'general.date_types.hours' | t }}</span>
+        </div>
+        <div class="{{ cn }}-item">
+            <span class="{{ cn }}-item-time" data-element="minutes">00</span>
+            <span class="{{ cn }}-item-title fs-{{ timer_titles_size }}" {% unless show_titles %}hidden{% endunless %}>{{ 'general.date_types.minutes' | t }}</span>
+        </div>
+        <div class="{{ cn }}-item">
+            <span class="{{ cn }}-item-time" data-element="seconds">00</span>
+            <span class="{{ cn }}-item-title fs-{{ timer_titles_size }}" {% unless show_titles %}hidden{% endunless %}>{{ 'general.date_types.seconds' | t }}</span>
+        </div>
+    </div>
+</{{ NS }}>
+
+
+<script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>

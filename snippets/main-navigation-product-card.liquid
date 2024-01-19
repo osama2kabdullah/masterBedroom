@@ -1,0 +1,27 @@
+{%- liquid
+    assign NS = 'main-navigation-product-card'
+    assign cn = '#' | append: NS    
+
+    assign placeholder_price = 1999 | money
+-%}
+
+<div class="{{ cn }}">
+    <a class="stretched-link" href="{{ product.url }}"></a>
+    <div class="{{ cn }}-media">
+        {% render 'media'
+            image: product.featured_image,
+            srcsize_desktop: srcsize_desktop,
+            srcsize_mobile: srcsize_mobile,
+            border_radius: 'inner',
+            placeholder_index: placeholder_index,
+            placeholder: 'product'
+        %}
+    </div>
+    {%- if show_product_title -%}
+        {% assign onboarding_title = 'onboarding.product_title' | t %}
+        <h5 class="{{ cn }}-title">{{ product.title | default: onboarding_title }}</h5>
+    {%- endif -%}
+    {%- if product and show_product_price -%}
+        <div class="{{ cn }}-price">{{ product.price | money_without_trailing_zeros | default: placeholder_price }}</div>
+    {%- endif -%}
+</div>

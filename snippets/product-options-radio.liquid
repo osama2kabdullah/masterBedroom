@@ -1,0 +1,13 @@
+{%- assign NS = 'product-options-radio' -%}
+{%- assign cn = '#' | append: NS -%}
+
+{% render 'load-css', file: NS %}
+
+<div class="{{ cn }} {% if align_options %}@align-options{% endif %}">
+    {% render 'product-option-values',
+        option: option,
+        cn: cn,
+        single_option: single_option,
+        src: 'buttons'
+    %}
+</div>

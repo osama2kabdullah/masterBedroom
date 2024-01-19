@@ -1,0 +1,192 @@
+{%- liquid
+    assign heading = 'templates.404.subtext' | t
+    assign subheading = 'templates.404.title' | t
+    assign f_button_label = 'general.continue_shopping' | t
+    assign f_button_link = routes.all_products_collection_url
+    if section.settings.image != blank
+        assign hero_auto_colors = true
+    else
+        assign hero_auto_colors = false
+    endif
+-%}
+
+{%- capture Hero_text -%}
+    {% render 'hero', 
+        align: 'center',
+        size: section.settings.text_size,
+        auto_colors: hero_auto_colors,
+        text_color: text_color,
+        bg_color: bg_color,
+        heading: heading,
+        subheading: subheading,
+        f_button_label: f_button_label,
+        f_button_link: f_button_link,
+        gap_size: 'h3',
+        accent: true
+    %}
+{%- endcapture -%}
+
+{% if section.settings.image != blank %}
+    {%- assign spaced = false -%}
+    {%- assign container = false -%}
+    {% capture Caption %}
+        {% render 'floating-content',
+            content: Hero_text,
+            absolute: true,
+            x: 'center',
+            y: 'center',
+            padded: true
+        %}
+    {% endcapture %}
+    {% capture Content %}
+        {% render 'media'
+            image: section.settings.image,
+            image_mobile: section.settings.mobile_image,
+            size: section.settings.image_size,
+            size_mobile: section.settings.mobile_image_size, 
+            placeholder: 'lifestyle',
+            overlay: section.settings.overlay,
+            content: Caption
+        %}
+    {% endcapture %}
+{% else %}
+    {%- assign spaced = true -%}
+    {%- assign container = true -%}
+    {%- assign Content = Hero_text -%}
+{% endif %}
+
+{% render 'section-body',
+    content: Content,
+    spaced: spaced,
+    container: container
+%}
+
+{% schema %}
+{
+    "name": "404 Page",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "t:g.media.image_background"
+        },
+        {
+            "type": "select",
+            "id": "image_size",
+            "label": "t:g.media.image_size.label",
+            "options": [
+                {
+                    "value": "sm",
+                    "label": "t:g.media.image_size.options.sm"
+                },
+                {
+                    "value": "md",
+                    "label": "t:g.media.image_size.options.md"
+                },
+                {
+                    "value": "lg",
+                    "label": "t:g.media.image_size.options.lg"
+                },
+                {
+                    "value": "xl",
+                    "label": "t:g.media.image_size.options.xl"
+                },
+                {
+                    "value": "16x9",
+                    "label": "t:g.media.image_size.options.widescreen"
+                },
+                {
+                    "value": "21x9",
+                    "label": "t:g.media.image_size.options.ultrawide"
+                },
+                {
+                    "value": "full",
+                    "label": "t:g.media.image_size.options.full"
+                },
+                {
+                    "value": "origin",
+                    "label": "t:g.media.image_size.options.origin"
+                }
+            ],
+            "default": "21x9"
+        },
+        {
+            "type": "image_picker",
+            "id": "mobile_image",
+            "label": "t:g.media.mobile_image_background",
+            "info": "t:g.common.optional"
+        },
+        {
+            "type": "select",
+            "id": "mobile_image_size",
+            "label": "t:g.media.image_size.mobile_label",
+            "options": [
+                {
+                    "value": "9x16",
+                    "label": "t:g.media.image_size.options.instagram"
+                },
+                {
+                    "value": "4x5",
+                    "label": "t:g.media.image_size.options.facebook"
+                },
+                {
+                    "value": "full",
+                    "label": "t:g.media.image_size.options.full"
+                },
+                {
+                    "value": "xl",
+                    "label": "t:g.media.image_size.options.xl"
+                },
+                {
+                    "value": "lg",
+                    "label": "t:g.media.image_size.options.lg"
+                },
+                {
+                    "value": "md",
+                    "label": "t:g.media.image_size.options.md"
+                },
+                {
+                    "value": "sm",
+                    "label": "t:g.media.image_size.options.sm"
+                },
+                {
+                    "value": "origin",
+                    "label": "t:g.media.image_size.options.origin"
+                }
+            ],
+            "default": "9x16"
+        },
+        {
+            "type": "range",
+            "id": "overlay",
+            "label": "t:g.media.overlay",
+            "min": 0,
+            "max": 90,
+            "unit": "%",
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "select",
+            "id": "text_size",
+            "label": "Text size",
+            "options": [
+                {
+                    "value": "sm",
+                    "label": "Small"
+                },
+                {
+                    "value": "md",
+                    "label": "Medium"
+                },
+                {
+                    "value": "lg",
+                    "label": "Large"
+                }
+            ],
+            "default": "md"
+        }
+    ]
+}
+{% endschema %}

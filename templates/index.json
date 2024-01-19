@@ -1,0 +1,769 @@
+{
+  "sections": {
+    "1654692649f313fa17": {
+      "type": "d_slideshow",
+      "blocks": {
+        "7504c906-2ef4-4882-8525-9f73f47b1ba9": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Mattress_with_Family_-_01.jpg",
+            "overlay": 0,
+            "icon": "",
+            "heading": "",
+            "use_header_accent": true,
+            "subheading": "",
+            "text": "",
+            "text_position": "center-center",
+            "use_box": false,
+            "width": 40,
+            "f_button_label": "",
+            "f_button_link": "",
+            "f_button_style": "normal",
+            "f_button_custom_colors": false,
+            "f_button_bg_color": "#000000",
+            "f_button_text_color": "#ffffff",
+            "s_button_label": "",
+            "s_button_link": "",
+            "s_button_style": "normal",
+            "s_button_custom_colors": false,
+            "s_button_bg_color": "#000000",
+            "s_button_text_color": "#ffffff"
+          }
+        },
+        "2f986c49-0c1a-4e22-bde6-ba514527906e": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify:\/\/shop_images\/dying-well-main.jpg",
+            "overlay": 0,
+            "icon": "",
+            "heading": "",
+            "use_header_accent": false,
+            "subheading": "",
+            "text": "",
+            "text_position": "center-center",
+            "use_box": false,
+            "width": 40,
+            "f_button_label": "",
+            "f_button_link": "",
+            "f_button_style": "normal",
+            "f_button_custom_colors": false,
+            "f_button_bg_color": "#000000",
+            "f_button_text_color": "#ffffff",
+            "s_button_label": "",
+            "s_button_link": "",
+            "s_button_style": "normal",
+            "s_button_custom_colors": false,
+            "s_button_bg_color": "#000000",
+            "s_button_text_color": "#ffffff"
+          }
+        },
+        "8250e22a-bab6-4778-8703-25690ab6fe9b": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "overlay": 0,
+            "icon": "",
+            "heading": "",
+            "use_header_accent": false,
+            "subheading": "",
+            "text": "",
+            "text_position": "center-center",
+            "use_box": false,
+            "width": 40,
+            "f_button_label": "",
+            "f_button_link": "",
+            "f_button_style": "normal",
+            "f_button_custom_colors": false,
+            "f_button_bg_color": "#000000",
+            "f_button_text_color": "#ffffff",
+            "s_button_label": "",
+            "s_button_link": "",
+            "s_button_style": "normal",
+            "s_button_custom_colors": false,
+            "s_button_bg_color": "#000000",
+            "s_button_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "7504c906-2ef4-4882-8525-9f73f47b1ba9",
+        "2f986c49-0c1a-4e22-bde6-ba514527906e",
+        "8250e22a-bab6-4778-8703-25690ab6fe9b"
+      ],
+      "settings": {
+        "section_layout": "full",
+        "image_size": "21x9",
+        "mobile_image_size": "4x5",
+        "text_size": "md",
+        "subheading_position": "before",
+        "mobile_caption_display": "offset",
+        "navigation": "pagination",
+        "enable_autoplay": false,
+        "autoplay": 5,
+        "mobile_hidden": false
+      }
+    },
+    "16546927101b0880bc": {
+      "type": "d_icon-features",
+      "blocks": {
+        "1654692710a4251b56-0": {
+          "type": "feature",
+          "settings": {
+            "icon": "truck-fast",
+            "heading": "In-Home Delivery",
+            "text": "White glove service available",
+            "link": "shopify:\/\/pages\/in-home-delivery"
+          }
+        },
+        "1654692710a4251b56-1": {
+          "type": "feature",
+          "settings": {
+            "icon": "ranking-star",
+            "heading": "Quality Since 1981",
+            "text": "Hand-selected, customer approved",
+            "link": "shopify:\/\/pages\/our-story"
+          }
+        },
+        "1654692710a4251b56-2": {
+          "type": "feature",
+          "settings": {
+            "icon": "bed",
+            "heading": "30 Night Sleep Trial",
+            "text": "Your satisfaction is guaranteed",
+            "link": "shopify:\/\/pages\/30-night-sleep-trial"
+          }
+        },
+        "d1c306f6-5e83-416e-bc52-a4beba1c69c1": {
+          "type": "feature",
+          "settings": {
+            "icon": "circle-dollar-to-slot",
+            "heading": "0% APR for 12 Months",
+            "text": "Buy now Pay later",
+            "link": "shopify:\/\/pages\/financing"
+          }
+        }
+      },
+      "block_order": [
+        "1654692710a4251b56-0",
+        "1654692710a4251b56-1",
+        "1654692710a4251b56-2",
+        "d1c306f6-5e83-416e-bc52-a4beba1c69c1"
+      ],
+      "settings": {
+        "section_text_align": "center",
+        "text_color": "#163340",
+        "icon_color": "#fbcf00",
+        "bg_color": "#ffffff"
+      }
+    },
+    "1654692842a57bd5e9": {
+      "type": "d_collection-list",
+      "blocks": {
+        "1654692841d5430deb-0": {
+          "type": "collection",
+          "settings": {
+            "collection": "mattress",
+            "image": "shopify:\/\/shop_images\/Mattress_-_11.01_f00ab44e-60a3-4566-a9c2-26f883660471.jpg",
+            "custom_title": ""
+          }
+        },
+        "1654692841d5430deb-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "mattress-in-a-box",
+            "image": "shopify:\/\/shop_images\/Mattress_in_a_Box_-_02-03_f3c62aed-f338-49c0-9ef4-5a0f2678086b.jpg",
+            "custom_title": ""
+          }
+        },
+        "1654692841d5430deb-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "frontpage",
+            "image": "shopify:\/\/shop_images\/Pillow_-_01-01.jpg",
+            "custom_title": ""
+          }
+        },
+        "1654692841d5430deb-3": {
+          "type": "collection",
+          "settings": {
+            "collection": "bedding",
+            "image": "shopify:\/\/shop_images\/Bedding-04-03_ce3dfc04-a18e-41b7-9474-ae856b26fc8e.jpg",
+            "custom_title": ""
+          }
+        },
+        "1654692841d5430deb-4": {
+          "type": "collection",
+          "settings": {
+            "collection": "mattress-protector",
+            "image": "shopify:\/\/shop_images\/Mattress_-_08.jpg",
+            "custom_title": ""
+          }
+        },
+        "af40aa1b-6447-4921-bb87-451c42357dab": {
+          "type": "collection",
+          "settings": {
+            "collection": "platform-bed",
+            "image": "shopify:\/\/shop_images\/Platform_Bed_-_01-02.jpg",
+            "custom_title": ""
+          }
+        },
+        "29d18915-1aa6-49f5-b3b6-8f3161444d93": {
+          "type": "collection",
+          "settings": {
+            "collection": "bedroom-set",
+            "image": "shopify:\/\/shop_images\/Bedroom_Set_-_01-02.jpg",
+            "custom_title": ""
+          }
+        },
+        "f7b0381c-e383-4498-808f-39902d7d3c48": {
+          "type": "collection",
+          "settings": {
+            "collection": "kidzone-bunk-bed",
+            "image": "shopify:\/\/shop_images\/Bunk_Bed_-_01-01_a6cc9ccf-1688-46cc-b3d0-7228d4599fb2.jpg",
+            "custom_title": ""
+          }
+        },
+        "80ff860f-168e-4d44-88ea-36443abd481f": {
+          "type": "collection",
+          "settings": {
+            "collection": "sleep-chest",
+            "image": "shopify:\/\/shop_images\/SleepChest-01-01.jpg",
+            "custom_title": ""
+          }
+        },
+        "eecff8e6-7043-46b6-9863-2543cfe0827e": {
+          "type": "collection",
+          "settings": {
+            "collection": "sofa-bed-futon",
+            "image": "shopify:\/\/shop_images\/Futon_-_01.jpg",
+            "custom_title": ""
+          }
+        }
+      },
+      "block_order": [
+        "1654692841d5430deb-0",
+        "1654692841d5430deb-1",
+        "1654692841d5430deb-2",
+        "1654692841d5430deb-3",
+        "1654692841d5430deb-4",
+        "af40aa1b-6447-4921-bb87-451c42357dab",
+        "29d18915-1aa6-49f5-b3b6-8f3161444d93",
+        "f7b0381c-e383-4498-808f-39902d7d3c48",
+        "80ff860f-168e-4d44-88ea-36443abd481f",
+        "eecff8e6-7043-46b6-9863-2543cfe0827e"
+      ],
+      "settings": {
+        "heading": "Shop by Category",
+        "subheading": "",
+        "columns": 5,
+        "image_size": "circle",
+        "text_position": "center",
+        "show_frame": true,
+        "section_button_label": ""
+      }
+    },
+    "165469275319e90978": {
+      "type": "d_gallery",
+      "blocks": {
+        "165469275384f2da6a-0": {
+          "type": "gallery_item",
+          "settings": {
+            "span": "6",
+            "image_size": "md",
+            "mobile_image_size": "9x16",
+            "link": "",
+            "image_overlay": 0,
+            "heading": "Gallery heading",
+            "subheading": "",
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "size": "md",
+            "text_position": "center-center"
+          }
+        },
+        "165469275384f2da6a-1": {
+          "type": "gallery_item",
+          "settings": {
+            "span": "6",
+            "image_size": "md",
+            "mobile_image_size": "9x16",
+            "link": "",
+            "image_overlay": 0,
+            "heading": "Gallery heading",
+            "subheading": "",
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "size": "md",
+            "text_position": "center-center"
+          }
+        },
+        "fbeb17e9-dbcc-42b9-bd81-82f0b552ac11": {
+          "type": "gallery_item",
+          "settings": {
+            "span": "6",
+            "image_size": "md",
+            "mobile_image_size": "9x16",
+            "link": "",
+            "image_overlay": 0,
+            "heading": "Gallery heading",
+            "subheading": "",
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "size": "md",
+            "text_position": "center-center"
+          }
+        },
+        "6eb76a81-b285-46e6-aae2-d96297973bef": {
+          "type": "gallery_item",
+          "settings": {
+            "span": "6",
+            "image_size": "md",
+            "mobile_image_size": "9x16",
+            "link": "",
+            "image_overlay": 0,
+            "heading": "Gallery heading",
+            "subheading": "",
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "size": "md",
+            "text_position": "center-center"
+          }
+        }
+      },
+      "block_order": [
+        "165469275384f2da6a-0",
+        "165469275384f2da6a-1",
+        "fbeb17e9-dbcc-42b9-bd81-82f0b552ac11",
+        "6eb76a81-b285-46e6-aae2-d96297973bef"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "",
+        "subheading": "",
+        "show_frame": false,
+        "subheading_position": "before",
+        "use_box": false
+      }
+    },
+    "1654692886c53682c2": {
+      "type": "d_image-with-text",
+      "blocks": {
+        "165469288688e08c5c-0": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "For 42 years"
+          }
+        },
+        "165469288688e08c5c-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Our Story"
+          }
+        },
+        "165469288688e08c5c-2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Since 1981 MasterBedroom has been supplying Canadians with a great night’s sleep with wide selection of mattresses, beds, linens, furniture and more<\/p>"
+          }
+        },
+        "165469288688e08c5c-3": {
+          "type": "buttons",
+          "settings": {
+            "f_button_label": "Find More",
+            "f_button_link": "shopify:\/\/pages\/our-story",
+            "f_button_style": "outline",
+            "f_button_custom_colors": false,
+            "f_button_text_color": "#ffffff",
+            "f_button_bg_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "165469288688e08c5c-0",
+        "165469288688e08c5c-1",
+        "165469288688e08c5c-2",
+        "165469288688e08c5c-3"
+      ],
+      "settings": {
+        "section_layout": "container",
+        "image_size": "auto",
+        "image": "shopify:\/\/shop_images\/Our_Story_Image_-_01.jpg",
+        "image_width": 50,
+        "image_position": "left",
+        "text_size": "lg",
+        "text_color": "#ffffff",
+        "bg_color": "#163340"
+      }
+    },
+    "1654692779f62752bf": {
+      "type": "d_featured-collection",
+      "blocks": {
+        "165469277996cce953-0": {
+          "type": "products",
+          "settings": {
+            "products_limit": 20,
+            "show_only_products_in_stock": false
+          }
+        },
+        "165469277996cce953-1": {
+          "type": "banner",
+          "settings": {
+            "image_overlay": 0,
+            "show_image_frame": true,
+            "heading": "{{ section.settings.collection.title }}",
+            "subheading": "Shop All",
+            "subheading_position": "before"
+          }
+        }
+      },
+      "block_order": [
+        "165469277996cce953-0",
+        "165469277996cce953-1"
+      ],
+      "settings": {
+        "heading": "Most Essentials Hot Picks",
+        "subheading": "",
+        "section_layout": "container",
+        "collection": "",
+        "items_per_view": 4,
+        "enable_loop": true,
+        "enable_pagination": true,
+        "section_button_label": ""
+      }
+    },
+    "1654692822fbd24e58": {
+      "type": "d_hero-video-popup",
+      "blocks": {
+        "1654692822b7acdf84-0": {
+          "type": "video_popup",
+          "settings": {
+            "embedded_video": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+            "hosted_video": "shopify:\/\/files\/videos\/Stearns and Foster _ Uncover Exceptional Mattress Manufacturing.mp4",
+            "image_width": 70,
+            "icon_color": "#ffffff"
+          }
+        },
+        "1654692822b7acdf84-1": {
+          "type": "subheading",
+          "settings": {
+            "subheading": ""
+          }
+        },
+        "1654692822b7acdf84-2": {
+          "type": "heading",
+          "settings": {
+            "heading": "",
+            "heading_accent_enable": false,
+            "heading_accent_use_cutom_color": false,
+            "heading_accent_color": "#e22d00"
+          }
+        },
+        "1654692822b7acdf84-3": {
+          "type": "text",
+          "settings": {
+            "text": ""
+          }
+        },
+        "1654692822b7acdf84-4": {
+          "type": "buttons",
+          "settings": {
+            "f_button_label": "Shop Now",
+            "f_button_link": "shopify:\/\/collections\/mattress",
+            "f_button_style": "normal",
+            "f_button_custom_colors": false,
+            "f_button_bg_color": "#000000",
+            "f_button_text_color": "#ffffff",
+            "s_button_label": "",
+            "s_button_link": "",
+            "s_button_style": "normal",
+            "s_button_custom_colors": false,
+            "s_button_bg_color": "#000000",
+            "s_button_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "1654692822b7acdf84-0",
+        "1654692822b7acdf84-1",
+        "1654692822b7acdf84-2",
+        "1654692822b7acdf84-3",
+        "1654692822b7acdf84-4"
+      ],
+      "settings": {
+        "section_layout": "container",
+        "image": "shopify:\/\/shop_images\/Craftsmasship-02_6b75e73a-74a7-4a02-8297-f0a1463e3951.png",
+        "image_size": "21x9",
+        "mobile_image_size": "9x16",
+        "overlay": 0,
+        "use_box": false,
+        "size": "md",
+        "text_position": "center-center",
+        "mobile_caption_display": "offset",
+        "width": 10
+      }
+    },
+    "16546932831bf3fc14": {
+      "type": "d_featured-blog",
+      "disabled": true,
+      "settings": {
+        "heading": "Featured blog",
+        "subheading": "",
+        "blog": "",
+        "show_date": true,
+        "show_author": false,
+        "tags_display": "first",
+        "section_layout": "container",
+        "image_size": "square",
+        "enable_loop": false,
+        "enable_pagination": false,
+        "items_per_view": 4,
+        "articles_limit": 6,
+        "section_button_label": ""
+      }
+    },
+    "165469329347188646": {
+      "type": "d_popup-gallery",
+      "blocks": {
+        "1654693292a215d319-0": {
+          "type": "image",
+          "settings": {
+            "product": "",
+            "product_subtitle": ""
+          }
+        },
+        "1654693292a215d319-1": {
+          "type": "image",
+          "settings": {
+            "product": "",
+            "product_subtitle": ""
+          }
+        },
+        "1654693292a215d319-2": {
+          "type": "image",
+          "settings": {
+            "product": "",
+            "product_subtitle": ""
+          }
+        },
+        "1654693292a215d319-3": {
+          "type": "image",
+          "settings": {
+            "product": "",
+            "product_subtitle": ""
+          }
+        },
+        "1654693292a215d319-4": {
+          "type": "image",
+          "settings": {
+            "product": "",
+            "product_subtitle": ""
+          }
+        },
+        "1654693292a215d319-5": {
+          "type": "image",
+          "settings": {
+            "product": "",
+            "product_subtitle": ""
+          }
+        },
+        "6d278eeb-1c65-40e5-90cc-f98b772bd1a1": {
+          "type": "image",
+          "settings": {
+            "product": "",
+            "product_subtitle": ""
+          }
+        },
+        "0992f6d1-bc3c-4c6a-acfc-d3d58286cf6d": {
+          "type": "image",
+          "settings": {
+            "product": "",
+            "product_subtitle": ""
+          }
+        },
+        "f06c7a6a-1d58-4c92-9294-44b80f4fb2a2": {
+          "type": "image",
+          "settings": {
+            "product": "",
+            "product_subtitle": ""
+          }
+        },
+        "d5d70cc8-bdb1-43ef-9bca-93650c88893a": {
+          "type": "image",
+          "settings": {
+            "product": "",
+            "product_subtitle": ""
+          }
+        },
+        "e46925e0-6e15-4077-b9b2-9755aadfb020": {
+          "type": "image",
+          "settings": {
+            "product": "",
+            "product_subtitle": ""
+          }
+        },
+        "3974aa28-524a-4ca8-9dfc-0e4ed3b6255b": {
+          "type": "image",
+          "settings": {
+            "product": "",
+            "product_subtitle": ""
+          }
+        }
+      },
+      "block_order": [
+        "1654693292a215d319-0",
+        "1654693292a215d319-1",
+        "1654693292a215d319-2",
+        "1654693292a215d319-3",
+        "1654693292a215d319-4",
+        "1654693292a215d319-5",
+        "6d278eeb-1c65-40e5-90cc-f98b772bd1a1",
+        "0992f6d1-bc3c-4c6a-acfc-d3d58286cf6d",
+        "f06c7a6a-1d58-4c92-9294-44b80f4fb2a2",
+        "d5d70cc8-bdb1-43ef-9bca-93650c88893a",
+        "e46925e0-6e15-4077-b9b2-9755aadfb020",
+        "3974aa28-524a-4ca8-9dfc-0e4ed3b6255b"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "Popup gallery",
+        "subheading": "",
+        "stacked_columns": false,
+        "columns": 6,
+        "mobile_columns": 3
+      }
+    },
+    "640e0925-813a-4c70-acc8-bb81d2622a0c": {
+      "type": "d_logo-list",
+      "blocks": {
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-2": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/1182px-Sealy_Corporation_logo_svg.png",
+            "link": "https:\/\/sealy.ca\/en\/"
+          }
+        },
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-1": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Serta-Logo-2000s.png",
+            "link": "https:\/\/serta.ca\/"
+          }
+        },
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-3": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/tempur-pedic.png",
+            "link": "https:\/\/tempurpedic.ca\/en\/"
+          }
+        },
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-4": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/stearns-and-foster.png",
+            "link": "https:\/\/stearnsandfoster.ca\/en\/"
+          }
+        },
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-5": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/springwall_logo.png",
+            "link": "https:\/\/springwall.com\/"
+          }
+        },
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-6": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/True-North.png",
+            "link": "https:\/\/truenorthsleep.com\/"
+          }
+        },
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-7": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Vokes-Furniture-Logo.png",
+            "link": "http:\/\/www.vokesfurniture.com\/"
+          }
+        },
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-8": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Amisco_logo-01.png",
+            "link": "https:\/\/www.amisco.com\/en_ca\/"
+          }
+        },
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-9": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/DUR-logo.-03.png",
+            "link": "https:\/\/www.durhamfurniture.com\/"
+          }
+        },
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-10": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/TITUSLOGO_GOOD_RGB-300x80.png",
+            "link": "https:\/\/www.titusfurniture.ca\/rosemount\/"
+          }
+        }
+      },
+      "block_order": [
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-2",
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-1",
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-3",
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-4",
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-5",
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-6",
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-7",
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-8",
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-9",
+        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-10"
+      ],
+      "settings": {
+        "heading": "Our Brands",
+        "subheading": "",
+        "columns": 5,
+        "logo_height": 120,
+        "enable_grayscale_hover": false,
+        "section_button_label": "",
+        "section_button_url": ""
+      }
+    },
+    "05b58f71-64e4-4194-a0e3-232ce843f612": {
+      "type": "d_map",
+      "disabled": true,
+      "settings": {
+        "heading": "Find a Store",
+        "address_text": "<p>Monday - Friday: 10AM - 9PM<\/p><p>Saturday: 11AM - 9PM<\/p><p>Sunday: Closed<\/p>",
+        "show_directions": true,
+        "width": 30,
+        "map_address": "",
+        "google_api_key": "",
+        "height": 40,
+        "enable_interactions": false,
+        "zoom_level": 12,
+        "map_style": "default",
+        "map_marker_color": "#ff0000"
+      }
+    },
+    "dce3b511-cc60-4d16-bc96-b63ad6ef5b79": {
+      "type": "d_newsletter",
+      "settings": {
+        "heading": "Every Sleep Has A Story",
+        "subheading": "Sign up for specials, new product launches and exciting events!",
+        "text_color": "#163340",
+        "bg_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "1654692649f313fa17",
+    "16546927101b0880bc",
+    "1654692842a57bd5e9",
+    "165469275319e90978",
+    "1654692886c53682c2",
+    "1654692779f62752bf",
+    "1654692822fbd24e58",
+    "16546932831bf3fc14",
+    "165469329347188646",
+    "640e0925-813a-4c70-acc8-bb81d2622a0c",
+    "05b58f71-64e4-4194-a0e3-232ce843f612",
+    "dce3b511-cc60-4d16-bc96-b63ad6ef5b79"
+  ]
+}

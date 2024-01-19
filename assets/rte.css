@@ -1,0 +1,67 @@
+.\#rte-block {
+  line-height: 1.4;
+}
+.\#rte-block img, .\#rte-block video, .\#rte-block iframe {
+  max-width: 100%;
+}
+.\#rte-block > p {
+  margin-bottom: 0.5em;
+}
+.\#rte-block > p:last-child {
+  margin-bottom: 0;
+}
+.\#rte-block.\@upcase {
+  text-transform: uppercase;
+}
+.\#rte-block a {
+  color: inherit;
+}
+
+.\#rte {
+  --font-size: 1rem;
+  font-size: var(--font-size);
+}
+.\#rte h6, .\#rte h5, .\#rte h4, .\#rte h3, .\#rte h2, .\#rte h1 {
+  margin-bottom: 0.5em;
+}
+.\#rte p {
+  margin-bottom: 1em;
+}
+.\#rte a {
+  color: inherit;
+}
+.\#rte img, .\#rte video, .\#rte iframe {
+  max-width: 100%;
+  border-radius: var(--border-radius-inner);
+}
+.\#rte blockquote {
+  font-style: italic;
+  font-size: 1.15em;
+}
+.\#rte.\@text-align\:left {
+  text-align: left;
+}
+.\#rte.\@text-align\:center {
+  text-align: center;
+}
+.\#rte.\@text-align\:right {
+  text-align: right;
+}
+.\#rte h1 {
+  font-size: 2.0113571875em;
+}
+.\#rte h2 {
+  font-size: 1.74900625em;
+}
+.\#rte h3 {
+  font-size: 1.520875em;
+}
+.\#rte h4 {
+  font-size: 1.3225em;
+}
+.\#rte h5 {
+  font-size: 1.15em;
+}
+.\#rte h6 {
+  font-size: 0.8695652174em;
+}

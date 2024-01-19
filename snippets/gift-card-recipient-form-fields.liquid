@@ -1,0 +1,74 @@
+{%- liquid
+    assign NS = 'recipient-form-fields'
+    assign cn = '#product-form'
+    assign gift_card_recipient_control_flag = 'properties[__shopify_send_gift_card_to_recipient]'
+
+    assign max_chars = 200
+    assign max_chars_warn = 'gift_cards.recipient_form.max_chars_warn' | t: chars: max_chars
+-%}
+
+<{{ NS }} class="{{ cn }}-recipient" section_id="{{ section.id }}">
+    <input type="hidden" form="{{ form_id }}" name="customPropertyReference" value="__shopify_send_gift_card_to_recipient" data-field-ref disabled/>
+    <input
+        class="{{ cn }}-recipient-trigger"
+        type="checkbox"
+        name="{{ gift_card_recipient_control_flag }}"
+        id="Recipient-checkbox-{{ section.id }}"
+        data-fields-trigger
+        hidden
+    />
+    <label class="{{ cn }}-recipient-control" for="Recipient-checkbox-{{ section.id }}">
+        <div class="{{ cn }}-recipient-control-figure">
+            {% render 'icon', name: 'check' %}
+        </div>
+        <div class="{{ cn }}-recipient-control-label">
+            {{ 'gift_cards.recipient_form.checkbox_label' | t }}
+        </div>
+    </label>
+    
+    <div class="{{ cn }}-recipient-fields">
+        <div class="{{ cn }}-recipient-field-group">
+            <input type="hidden" form="{{ form_id }}" name="customPropertyReference" value="Recipient email" data-field-ref disabled/>
+            <label class="{{ cn }}-recipient-field-label" for="Recipient-email-{{ section.id }}">{{ 'gift_cards.recipient_form.email_label' | t }}</label>
+            <input
+                class="{{ cn }}-recipient-field-input"
+                type="email"
+                name="properties[Recipient email]"
+                id="Recipient-email-{{ section.id }}"
+                form="{{ form_id }}"
+                value="{{ form.email }}"
+                required  
+            />
+        </div>  
+        
+        <div class="{{ cn }}-recipient-field-group">
+            <input type="hidden" form="{{ form_id }}" name="customPropertyReference" value="Recipient name" data-field-ref disabled/>
+            <label class="{{ cn }}-recipient-field-label" for="Recipient-name-{{ section.id }}">{{ 'gift_cards.recipient_form.name_label' | t }}</label>
+            <input
+                class="{{ cn }}-recipient-field-input"
+                type="text"
+                name="properties[Recipient name]"
+                id="Recipient-name-{{ section.id }}"
+                form="{{ form_id }}"
+                value="{{ form.name }}"
+
+            />
+        </div>
+
+        <div class="{{ cn }}-recipient-field-group">
+            <input type="hidden" form="{{ form_id }}" name="customPropertyReference" value="Message" data-field-ref disabled/>
+            <label class="{{ cn }}-recipient-field-label" for="Recipient-message-{{ section.id }}">{{ 'gift_cards.recipient_form.message_label' | t }}</label>
+            <textarea
+                class="{{ cn }}-recipient-field-input"
+                name="properties[Message]"
+                id="Recipient-message-{{ section.id }}"
+                form="{{ form_id }}"
+                rows="5"
+                maxlength="{{ max_chars }}"
+            >{{ form.message }}</textarea>
+            <span class="{{ cn }}-recipient-field-info">{{ max_chars_warn }}</span>
+        </div>
+    </div>
+</{{ NS }}>
+
+<script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>

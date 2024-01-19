@@ -1,0 +1,36 @@
+{%- liquid 
+    assign NS = 'free-shipping-progress-bar'
+    assign cn = '#' | append: NS
+    assign cart_total_price = cart.total_price | plus: 0
+    assign min_amount = settings.free_shipping_min_amount | times: 100
+    if cart_total_price >= min_amount
+        assign free_shipping = true
+        assign heading = 'sections.cart.free_shipping_aligible' | t
+    else
+        assign free_shipping_shortage = cart_total_price | minus: min_amount | times: -1 | money
+        assign progress = cart_total_price | times: 100 | divided_by: min_amount
+        assign heading = 'sections.cart.free_shipping_shortage' | t: amount: free_shipping_shortage
+    endif
+-%}
+
+{% render 'load-css', file: NS %}
+
+<div class="{{ cn }}">
+    <div class="{{ cn }}-header">
+        {%- if free_shipping -%}
+            <div class="{{ cn }}-icon @success">
+                {% render 'icon', name: 'check' %}
+            </div> 
+        {%- else -%}
+            <div class="{{ cn }}-icon">
+                {% render 'icon', name: 'truck', load: true %}
+            </div> 
+        {%- endif -%}
+        <h5 class="{{ cn }}-heading">{{ heading }}</h5>
+    </div>
+    {%- unless free_shipping -%}
+        <div class="{{ cn }}-progress">
+            <div class="{{ cn }}-progress-inner" style="width: {{ progress }}%"></div>
+        </div>
+    {%- endunless -%}
+</div>

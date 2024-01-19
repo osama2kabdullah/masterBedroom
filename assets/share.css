@@ -1,0 +1,43 @@
+.\#share {
+  --gap: 1.5em;
+  --inner-gap: 0.3em;
+  --icon-size: 1.2em;
+  --text-size: 1rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--gap);
+  font-size: var(--text-size);
+}
+.\#share.\@colors {
+  --gap: 1em;
+  --inner-gap: 0.5em;
+}
+.\#share.\@colors .\#share-item {
+  background: var(--brand-color);
+  color: var(--color-g-fg);
+  padding: 0.4em 1em;
+  border-radius: var(--border-radius-base);
+}
+.\#share-item {
+  font-weight: var(--font-body-weight-bold);
+  display: flex;
+  align-items: center;
+  gap: var(--inner-gap);
+}
+.\#share-item.\@brand\:facebook {
+  --brand-color: #3b5998;
+}
+.\#share-item.\@brand\:pinterest {
+  --brand-color: #E60023;
+}
+.\#share-item.\@brand\:twitter {
+  --brand-color: #1DA1F2;
+}
+.\#share-item.\@brand\:email {
+  --brand-color: var(--color-g-text);
+}
+.\#share-item .\#icon {
+  display: flex;
+  --size: var(--icon-size);
+}

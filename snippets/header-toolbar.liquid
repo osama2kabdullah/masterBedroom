@@ -1,0 +1,85 @@
+{%- liquid
+    assign NS = 'header-toolbar'
+    assign cn = '#' | append: NS   
+-%}
+
+<nav class="{{ cn }}">
+    {%- if section.settings.show_language_selector and localization.available_languages.size > 1 -%}
+        <div class="{{ cn }}-item">
+            {%- capture Language_toolbar -%}
+                <div class="{{ cn }}-item-inner">
+                    <div class="{{ cn }}-item-icon">
+                        {% render 'icon', name: 'globe' %}
+                    </div>
+                    <div class="{{ cn }}-item-title">
+                        {{ localization.language.iso_code | upcase }}
+                        {% render 'icon', name: 'caret-down' %}
+                    </div>
+                </div> 
+            {%- endcapture -%}
+            {% render 'localization-dropdown',
+                toggle: Language_toolbar,
+                placement: 'bottom',
+                src: 'language',
+                prefix: localization_prefix,
+                lights_out: true
+            %}
+        </div>
+    {%- endif -%}
+    {%- if section.settings.show_country_selector and localization.available_countries.size > 1 -%}
+        <div class="{{ cn }}-item">
+            {%- capture Country_toolbar -%}
+                <div class="{{ cn }}-item-inner">
+                    <div class="{{ cn }}-item-img">
+                        <img src="https://hatscripts.github.io/circle-flags/flags/{{ localization.country.iso_code | downcase }}.svg" alt="{{ 'localization.country_label' | t }}"/>
+                    </div>
+                    <div class="{{ cn }}-item-title">
+                        {{ localization.country.currency.iso_code }}
+                        {% render 'icon', name: 'caret-down' %}
+                    </div>
+                </div> 
+            {%- endcapture -%}
+            {% render 'localization-dropdown',
+                toggle: Country_toolbar,
+                placement: 'bottom',
+                src: 'country',
+                prefix: localization_prefix,
+                lights_out: true
+            %}
+        </div>
+    {%- endif -%}
+    {%- if shop.customer_accounts_enabled -%}
+        <div class="{{ cn }}-item">
+            <a class="stretched-link" href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}">{{ 'customer.account.title' | t }}</a>
+            <div class="{{ cn }}-item-inner">
+                <div class="{{ cn }}-item-icon">
+                    {% render 'icon', name: 'user' %}
+                </div>
+                <div class="{{ cn }}-item-title">
+                    {%- if customer -%}My account{%- else -%}Sign in{%- endif -%}
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+    <div class="{{ cn }}-item">
+        {%- capture Cart_link -%}
+            <a class="stretched-link" href="{{ routes.cart_url }}">{{ 'templates.cart.cart' | t }}</a>
+            <div class="{{ cn }}-item-inner">
+                <div class="{{ cn }}-item-icon">
+                    {%- if section.settings.show_cart_counter -%}
+                        {% render 'cart-counter', color: settings.color_cart_counter %}
+                    {%- endif -%}
+                    {% render 'icon', name: 'bag-shopping' %}
+                </div>
+                <div class="{{ cn }}-item-title">
+                    {%- if section.settings.show_cart_total -%}
+                        {% render 'cart-total' %}
+                    {%- else -%}
+                        {{ 'templates.cart.cart' | t }}                   
+                    {%- endif -%}
+                </div>
+            </div>
+        {%- endcapture -%}
+        <cart-drawer-trigger section-id="{{ section.id }}">{{ Cart_link }}</cart-drawer-trigger>            
+    </div>
+</nav>

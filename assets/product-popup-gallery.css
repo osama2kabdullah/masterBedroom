@@ -1,0 +1,116 @@
+.\#product-popup-gallery {
+  display: block;
+}
+.\#product-popup-gallery-inner {
+  background: var(--color-g-fg);
+  border-radius: var(--border-radius-base);
+  overflow: hidden;
+  overflow-y: auto;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  position: relative;
+}
+@media (min-width: 992px) {
+  .\#product-popup-gallery-inner {
+    height: calc(100vh - 8rem);
+  }
+}
+@media (max-width: 991px) {
+  .\#product-popup-gallery-inner {
+    height: 90vh;
+  }
+  .\#product-popup-gallery-inner .\#product-popup-gallery-close {
+    color: var(--color-g-fg);
+  }
+}
+.\#product-popup-gallery-close {
+  cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+}
+.\#product-popup-gallery .\#grid {
+  height: 100%;
+}
+.\#product-popup-gallery-card {
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+}
+@media (max-width: 991px) {
+  .\#product-popup-gallery-card {
+    height: fit-content;
+  }
+}
+.\#product-popup-gallery-media {
+  width: 64%;
+}
+.\#product-popup-gallery-title {
+  margin-bottom: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.\#product-popup-gallery-subtitle {
+  margin-top: 0.3rem;
+  font-size: 1.15rem;
+  opacity: 0.8;
+  margin-bottom: 0;
+}
+.\#product-popup-gallery-price {
+  font-size: 1.520875rem;
+}
+.\#product-popup-gallery-price .\#price {
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+}
+.\#product-popup-gallery-price .\#price-item.\@regular {
+  font-weight: var(--font-body-weight-bold);
+}
+.\#product-popup-gallery-variant-select {
+  position: relative;
+  display: block;
+  font-size: 1.15rem;
+}
+.\#product-popup-gallery-variant-select select {
+  appearance: none;
+}
+.\#product-popup-gallery-variant-select .\#icon {
+  right: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  user-select: none;
+}
+.\#product-popup-gallery-variant-select select {
+  font-weight: var(--font-body-weight-bold);
+  font-size: inherit;
+  text-align: center;
+  border: 2px solid #b0b0b0;
+  padding: 1em 2.7em 1em 1em;
+  border-radius: var(--border-radius-inner);
+}
+.\#product-popup-gallery-variant-select .\#icon {
+  --size: 1em;
+  right: 1em;
+}
+.\#product-popup-gallery-add-to-cart .\#button {
+  padding-left: 3em;
+  padding-right: 3em;
+}
+.\#product-popup-gallery-link {
+  color: inherit;
+  font-size: 1.3225rem;
+  transition: var(--transition-base);
+  opacity: 0.8;
+  text-underline-offset: 2px;
+}
+.\#product-popup-gallery-link:hover {
+  opacity: 1;
+}

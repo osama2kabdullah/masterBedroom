@@ -1,0 +1,83 @@
+{%- liquid
+    assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
+    assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
+    assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+  %}
+
+{% style %}
+    {{ settings.type_body_font | font_face: font_display: 'swap' }}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+    {{ body_font_italic | font_face: font_display: 'swap' }}
+    {{ body_font_bold_italic | font_face: font_display: 'swap' }}
+    {{ settings.type_header_font | font_face: font_display: 'swap' }}
+
+    :root {
+    --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-body-style: {{ settings.type_body_font.style }};
+    --font-body-weight: {{ settings.type_body_font.weight }};
+    --font-body-weight-bold: {{ body_font_bold.weight }};
+
+    --font-heading-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+    --font-heading-style: {{ settings.type_header_font.style }};
+    --font-heading-weight: {{ settings.type_header_font.weight }};
+
+    --font-scale: {{ settings.font_scale | divided_by: 100.0 }};
+
+    
+    --color-g-text: {{ settings.color_text }};
+    {%- assign shadow_color = settings.color_text | color_darken: 5 -%}
+    --color-g-text-alpha-80: {{ shadow_color | color_modify: 'alpha', 0.80  }};
+    --color-g-text-alpha-70: {{ shadow_color | color_modify: 'alpha', 0.70  }};
+    --color-g-text-alpha-50: {{ shadow_color | color_modify: 'alpha', 0.50  }};
+    --color-g-text-alpha-60: {{ shadow_color | color_modify: 'alpha', 0.60  }};
+    --color-g-text-alpha-40: {{ shadow_color | color_modify: 'alpha', 0.40  }};
+    --color-g-text-alpha-30: {{ shadow_color | color_modify: 'alpha', 0.30  }};
+    --color-g-text-alpha-20: {{ shadow_color | color_modify: 'alpha', 0.20  }};
+    --color-g-text-alpha-10: {{ shadow_color | color_modify: 'alpha', 0.10  }};
+
+    --color-g-bg: {{ settings.color_background }};
+    --color-g-bg-d5: {{ settings.color_background | color_darken: 5 }};
+    --color-g-bg-d15: {{ settings.color_background | color_darken: 10 }};
+    --color-g-bg-alpha-0: {{ settings.color_background | color_modify: 'alpha', 0  }};
+    --color-g-bg-alpha-70: {{ settings.color_background | color_modify: 'alpha', 0.70  }};
+    --color-g-bg-border: {{ settings.color_background | color_darken: 20 }};
+    --color-g-fg: {{ settings.color_foreground }};
+    --color-g-fg-alpha-70: {{ settings.color_foreground | color_modify: 'alpha', 0.70 }};
+    --color-g-fg-alpha-50: {{ settings.color_foreground | color_modify: 'alpha', 0.50 }};
+    --color-g-fg-d10: {{ settings.color_foreground | color_darken: 10 }};
+    --color-g-fg-d20: {{ settings.color_foreground | color_darken: 20 }};
+    --color-g-accent: {{ settings.color_accent }};
+    --color-g-sale: {{ settings.color_sale_price }};
+    --color-g-warning: {{ settings.color_warning }};
+    --color-g-success: {{ settings.color_success }};
+    --color-g-danger: {{ settings.color_danger }};
+    --color-g-star-rating: {{ settings.color_star_rating }};
+
+    --color-g-button-text: {{ settings.color_button_text }};
+    --color-g-button-bg: {{ settings.color_button_bg }};
+    --color-g-button-bg-hover: {{ settings.color_button_bg | color_darken: 5 }};
+    --color-g-button-shadow-l1: {{ settings.color_button_bg  | color_darken: 30 | color_modify: 'alpha', 0.3 }};
+    --color-g-button-shadow-l2: {{ settings.color_button_bg  | color_darken: 30 | color_modify: 'alpha', 0.15 }};
+    --color-g-button-shadow-l3: {{ settings.color_button_bg  | color_darken: 18 }};
+    --color-g-button-bg-gradient: {{ settings.color_button_bg | color_saturate: 30 | color_lighten: 15 }};
+
+    --color-g-button-buy-it-now-text: {{ settings.color_button_buy_in_now_text }};
+    --color-g-button-buy-it-now-bg: {{ settings.color_button_buy_in_now_bg }};
+    --color-g-button-buy-it-now-bg-hover: {{ settings.color_button_buy_in_now_bg | color_darken: 5 }};
+
+    --color-g-product-badge-sale: {{ settings.color_product_badge_sale }};
+    --color-g-product-badge-sold-out: {{ settings.color_product_badge_sold_out }};
+
+    --border-radius-base: 1.125rem;
+    --border-radius-inner: 0.7rem;
+    --border-radius-sm: 0.25rem;
+    --transition-base: 0.3s;
+
+    --box-shadow-large: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px;
+
+    --container-width: {{ settings.container_width }}px;
+    --container-spacer: min(3rem, 5vw);
+    /* --glob-gutter: clamp(3vw, 1.4rem, 30px); */
+    --glob-gutter: min(3vw, 1.4rem);
+    }
+{% endstyle %}

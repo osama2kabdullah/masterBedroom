@@ -1,0 +1,12 @@
+{% liquid 
+    assign NS = 'products-counter'
+    assign cn = '#' | append: NS
+%}
+
+{% render 'load-css', file: NS %}
+
+<div class="{{ cn }}-wrapper">
+    <{{ NS }} class="{{ cn }}" section-id="{{ section.id }}" hidden></{{ NS }}>
+    {{ content }}
+</div>
+<script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>

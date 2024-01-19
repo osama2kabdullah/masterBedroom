@@ -1,0 +1,28 @@
+{%- liquid
+    assign cn = '#feature-card'
+
+    assign use_icon_color = true
+    if icon_color == blank or icon_color == 'rgba(0,0,0,0)'
+        assign use_icon_color = false
+    endif
+ -%}
+
+<div class="{{ cn }} {% if text_align == 'center' %}@center{% endif %}">
+    {%- if link != blank -%}
+        <a class="stretched-link" href="{{ link }}"></a>
+    {%- endif -%}
+    <div class="{{ cn }}-icon" {% if use_icon_color %}style="--icon-color: {{ icon_color }}"{% endif %}>
+        {% render 'icon',
+            name: icon,
+            load: true
+        %}
+    </div>
+    <div class="{{ cn }}-body">
+        {% if heading != blank %}
+            <h3 class="{{ cn }}-heading heading-font">{{ heading }}</h3>
+        {% endif %}
+        {% if text != blank %}
+            <p class="{{ cn }}-text">{{ text }}</p>
+        {% endif %}
+    </div>
+</div>

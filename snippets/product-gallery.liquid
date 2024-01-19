@@ -1,0 +1,187 @@
+{%- liquid
+    assign NS = 'product-gallery'
+    assign cn = '#' | append: NS
+    assign zoom_scale = 150
+    assign slideshow_id = NS | append: 'slideshow' | append: section.id
+    assign slideshow_ref = '#' | append: slideshow_id
+    if product.selected_or_first_available_variant.featured_media.position != blank
+        assign initial_image_position = product.selected_or_first_available_variant.featured_media.position
+    endif
+    if use_zoom
+        assign NS_zoom = NS | append: '-zoom'
+        assign cn_zoom = cn | append: '-zoom'
+    endif
+
+    assign first_3d_model = product.media | where: "media_type", "model" | first
+
+    if thumbnails_layout == blank
+        assign thumbnails_layout = 'slideshow'
+    endif
+-%}
+
+{% render 'load-css', file: NS %}
+{% render 'load-css', file: 'swiper' %}
+{%- if use_zoom -%}
+    {% render 'load-css', file: NS_zoom, lazy: true %}
+{%- endif -%}
+{%- if first_3d_model -%}
+    {% render 'load-css', file: 'model-viewer-ui', lazy: true %}
+    <script>
+        window.addEventListener('load',() => {
+            document.querySelectorAll('model-viewer[data-ar-button]').forEach(mv => {
+                if(!mv.canActivateAR) {
+                    mv.remove();
+                }
+            })
+        })
+    </script>
+{%- endif -%}
+
+{%- capture Thumbnails -%}
+    {% render 'slideshow-thumbnails',
+        src: product,
+        ref: slideshow_ref,
+        layout_type: thumbnails_layout
+    %}
+{%- endcapture -%}
+
+
+<{{ NS }} 
+    class="{{ cn }}" 
+    section-id="{{ section.id }}" 
+    id="{{ slideshow_id }}" 
+    {% if initial_image_position %}
+        initial-image-position="{{ initial_image_position }}"
+    {% endif %}
+>
+{%- assign grid_template = "--template: 70px minmax(0, 1fr)" -%}
+{%- if thumbnails_layout == "grid" -%}
+    {%- assign grid_template = "--template: minmax(0, 1fr)" -%}
+{%- endif -%}
+    <div class="#grid @type:template {{ cn }}-grid" style="{{ grid_template }}; --template-mobile: 0 minmax(0, 1fr); --gap: 1.5rem; --gap-mobile: 0;">
+        {%- if thumbnails_layout == "slideshow" -%}
+            {{ Thumbnails }}
+        {%- endif -%}
+        <div class="{{ cn }}-stage">
+            <div class="{{ cn }}-stage-inner shadow-2">
+                <div data-swiper class="swiper">
+                    <div class="swiper-wrapper">
+                        {%- if product != blank -%}
+                            {% for media in product.media %}
+                                <div class="swiper-slide">
+                                    {%- case media.media_type -%}
+                                        {%- when 'image' -%}
+                                            {%- capture Image -%}
+                                                {% render 'media',
+                                                    image: media,
+                                                    srcsize_desktop: image_srcsize_desktop,
+                                                    srcsize_mobile: image_srcsize_mobile
+                                                %}
+                                            {%- endcapture -%}
+                                            {%- if use_zoom -%}
+                                                <{{ NS_zoom }} scale="{{ zoom_scale | times: 0.01 }}" class="{{ cn_zoom }}" data-zoom="{{ media | image_url }}">
+                                                    {{ Image }}
+                                                    <div class="{{ cn_zoom }}-loading" hidden data-loading>
+                                                        {% render 'spinner', size: 'xs' %}
+                                                        <span class="{{ cn_zoom }}-loading-title">{{ 'products.product.media.zoom_loading' | t }}</span>
+                                                    </div> 
+                                                </{{ NS_zoom }}>
+                                            {%- else -%}
+                                                {{ Image }}
+                                            {%- endif -%}
+                                        {%- when 'model' -%}
+                                            {%- assign popup_id = 'ModelPopup-' | append: section.id | append: media.id -%} 
+                                            {%- capture Image -%}
+                                                {% render 'media',
+                                                    image: media.preview_image,
+                                                    icon: 'cube',
+                                                    icon_size: '2rem'
+                                                %}
+                                            {%- endcapture -%}
+                                            <template id="{{ popup_id }}">
+                                                {% render 'load-css', file: NS %}
+                                                <div class="{{ cn }}-model-wrapper">
+                                                    {{ popup_content }}
+                                                    <modal-close class="{{ cn }}-model-close">{% render 'icon', name: 'x' %}</modal-close>
+                                                    {{ media | model_viewer_tag: ar-modes: "webxr scene-viewer quick-look", ar: 'true' }}
+                                                </div>
+                                            </template>
+                                            <modal-trigger class="{{ cn }}-model-trigger" target="#{{ popup_id }}">
+                                                {{ Image }}
+                                            </modal-trigger>
+                                            <model-viewer data-ar-button class="{{ cn }}-model-ar-button-wrapper desktop-hidden" data-shopify-feature="1.12" ar reveal="manual" {% for src in media.sources %}
+                                                {% if src.format == 'glb' %}
+                                                    src="{{ src.url }}"
+                                                {% endif %}
+                                                {% if src.format == 'usdz' %}
+                                                    ios-src="{{ src.url }}"
+                                                {% endif %}
+                                            {% endfor %}>
+                                                <button class="{{ cn }}-model-ar-button" slot="ar-button">
+                                                    {% render 'icon', name: 'cube' %}
+                                                    {{ 'products.product.xr_button' | t }}
+                                                </button>
+                                            </model-viewer>
+                                        {%- when 'video' -%}
+                                            {% assign popup_id = 'VideoPopup-' | append: section.id  | append: media.id %}
+                                            {%- capture Image -%}
+                                                {% render 'media',
+                                                    image: media.preview_image,
+                                                    srcsize_desktop: image_srcsize_desktop,
+                                                    srcsize_mobile: image_srcsize_mobile,
+                                                    icon: 'circle-play',
+                                                    icon_size: '6rem'
+                                                %}
+                                            {%- endcapture -%}
+                                            {% render 'video-popup',
+                                                video: media,
+                                                id: popup_id,
+                                                content: Image,
+                                                popup_content: popup_content
+                                            %}
+                                        {%- when 'external_video' -%}
+                                            {% assign popup_id = 'VideoPopup-' | append: section.id | append: media.id %}
+                                            {%- capture Image -%}
+                                                {% render 'media',
+                                                    image: media.preview_image,
+                                                    srcsize_desktop: image_srcsize_desktop,
+                                                    srcsize_mobile: image_srcsize_mobile,
+                                                    icon: 'circle-play',
+                                                    icon_size: '6rem'
+                                                %}
+                                            {%- endcapture -%}
+                                            {% render 'video-popup',
+                                                video: media,
+                                                id: popup_id,
+                                                content: Image,
+                                                popup_content: popup_content
+                                            %}
+                                    {%- endcase -%}
+                                </div>        
+                            {% endfor %}
+                        {%- else -%} 
+                            <div class="swiper-slide">
+                                {% render 'media',
+                                    image: media,
+                                    placeholder: "product",
+                                    srcsize_desktop: image_srcsize_desktop,
+                                    srcsize_mobile: image_srcsize_mobile
+                                %}  
+                            </div>        
+                        {%- endif -%} 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="{{ cn }}-pagination swiper-pagination desktop-hidden" data-pagination></div>
+    {%- if thumbnails_layout == "grid" -%}
+        {{ Thumbnails }}
+    {%- endif -%}
+</{{ NS }}>
+
+
+{%- if use_zoom -%}
+    <script type="module" src="{{  NS_zoom | append: '.js' | asset_url }}"></script>
+{%- endif -%}
+<script type="module" src="{{  NS | append: '.js' | asset_url }}"></script>

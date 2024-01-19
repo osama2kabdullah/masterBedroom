@@ -1,0 +1,16 @@
+{%- liquid
+    assign NS = 'product-description-expand'
+    assign cn = '#' | append: NS    
+-%}
+
+{% render 'load-css', file: NS %}
+
+<{{NS}} class="{{ cn }} !expanded">
+    <div class="{{ cn }}-content" data-content>
+        {{ description }}
+    </div>
+    <button data-expand-link class="{{ cn }}-link" hidden>
+        {{ 'products.product.description_read_mode' | t }} {% render 'icon', name: 'angle-down' %}
+    </button>
+</{{NS}}>
+<script type="module" src="{{ NS | append: '.js' | asset_url }}"></script>

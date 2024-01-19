@@ -1,0 +1,116 @@
+{% render 'load-css', file: 'feature-card' %}
+
+
+{%- capture Content -%}
+    <div class="#grid @type:columns @outer-gap-mobile:y" style="--columns: {{ section.blocks.size }}; --gap: 4rem; --gap-mobile: 3rem;">
+        {% for block in section.blocks %}
+            {% render 'feature-card',
+                heading: block.settings.heading,
+                text: block.settings.text,
+                icon: block.settings.icon,
+                link: block.settings.link,
+                icon_color: section.settings.icon_color,
+                text_align: section.settings.section_text_align
+            %}
+        {% endfor %}
+    </div>
+{%- endcapture -%}
+
+
+{% render 'section-body',
+    content: Content,
+    bg_color: section.settings.bg_color,
+    text_color: section.settings.text_color,
+    container: true
+%}
+
+{% schema %}
+{
+    "name": "Trust icons",
+    "settings": [
+        {
+            "type": "select",
+            "id": "section_text_align",
+            "label": "Text alignment",
+            "options": [
+                {
+                    "value": "left",
+                    "label": "t:g.common.text_align.left"
+                },
+                {
+                    "value": "center",
+                    "label": "t:g.common.text_align.center"
+                }
+            ],
+            "default": "left"
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text color",
+            "default": "#ffffff"
+        },
+        {
+            "type": "color",
+            "id": "icon_color",
+            "label": "Icon color",
+            "default": "#FBCF00"
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "#000000"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "feature",
+            "name": "Feature",
+            "limit": 4,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "icon",
+                    "label": "t:g.common.label.icon",
+                    "info": "t:g.dynamic_icon.info",
+                    "default": "star"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "t:g.common.label.heading",
+                    "default": "Feature"
+                },
+                {
+                    "type": "textarea",
+                    "id": "text",
+                    "label": "t:g.common.label.text",
+                    "default": "Feature text"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "t:g.common.label.link"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Trust icons",
+            "blocks": [
+                {
+                    "type": "feature"
+                },
+                {
+                    "type": "feature"
+                },
+                {
+                    "type": "feature"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

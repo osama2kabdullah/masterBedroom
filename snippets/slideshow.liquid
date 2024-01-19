@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="{{ 'swiper.css' | asset_url }}" media="print" onload="this.media='all'">
+
+{%- assign colors = 'red,yellow,blue,purple' | split: ',' -%}
+
+<slide-show>
+    <div data-swiper class="swiper">
+        <div class="swiper-wrapper">
+            {% for color in colors %}
+                <div class="swiper-slide">
+                    <div style="height: 100vh; background: {{ color }};"></div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</slide-show>
+
+<script type="module" src="{{ 'slideshow.js' | asset_url }}"></script>

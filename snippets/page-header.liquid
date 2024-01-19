@@ -1,0 +1,48 @@
+{% comment %}
+    Props:
+        - heading
+        - t_heading
+        - subheading
+        - text
+        - container (width)
+        - heading_tag: default: h2
+{% endcomment %}
+
+{%- liquid
+    assign NS = 'page-header'
+    assign cn = '#' | append: NS
+    if t_heading != blank
+        assign heading = t_heading | t
+    endif
+    assign container = container | default: 'default'
+-%}
+
+{% render 'load-css', file: NS %}
+
+<div class="{{ cn }} @type:{% if bg_image == blank %}no-image{% else %}image @image-padding:{{ settings.page_header_image_padding }}{% endif %} {% if settings.page_header_text_align == 'center' %}@center{% endif %}">
+    {% if bg_image != blank %}
+        <div class="{{ cn }}-media">
+            {% render 'media',
+                image: bg_image,
+                height: '100%',
+                type: 'height',
+                overlay: settings.page_header_image_overlay
+            %}
+        </div>    
+    {% endif %}
+    <div class="{{ cn }}-body">
+        <div class="#container @width:{{ container }}">
+            {%- if settings.show_breadcrumb_nav -%}
+                {% render 'breadcrumbs' %}
+            {%- endif -%}
+            {% render 'hero',
+                heading: heading,
+                heading_tag: 'h1',
+                text: text,
+                align: settings.page_header_text_align,
+                size: settings.page_header_text_size,
+                accent: settings.page_header_accent_heading
+            %}
+        </div>
+    </div>
+</div>

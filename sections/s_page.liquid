@@ -1,0 +1,51 @@
+{%- capture Content -%}
+    {%- assign size_unit = section.settings.font_scale | times: 1.0 -%}
+    {%- assign size_unit = size_unit | divided_by: 100 -%}
+    <div class="#rte" style="--font-size: {{ size_unit }}rem;">
+        {{ page.content }}
+    </div>
+{%- endcapture -%}
+
+{% render 'section-body',
+    content: Content,
+    spaced: true,
+    container: section.settings.container_width
+%}
+
+{% schema %}
+{
+    "name": "Page",
+    "settings": [
+        {
+            "type": "select",
+            "id": "container_width",
+            "label": "t:g.section.layout.label",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "t:g.section.layout.options.wide"
+                },
+                {
+                    "value": "narrow",
+                    "label": "t:g.section.layout.options.medium"
+                },
+                {
+                    "value": "x-narrow",
+                    "label": "t:g.section.layout.options.narrow"
+                }
+            ],
+            "default": "default" 
+        },
+        {
+            "type": "range",
+            "id": "font_scale",
+            "min": 100,
+            "max": 150,
+            "default": 100,
+            "step": 5,
+            "unit": "%",
+            "label": "Font scale"
+        }
+    ]
+}
+{% endschema %}

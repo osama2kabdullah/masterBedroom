@@ -1,0 +1,21 @@
+.\#product-question-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  opacity: 0.8;
+}
+.\#product-question-input {
+  display: block;
+  width: 100%;
+  font-family: inherit;
+  margin-bottom: 1.25rem;
+  resize: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 2px solid #b3b3b3;
+  background-color: var(--color-g-fg);
+  border-radius: 0.4rem;
+}
+.\#product-question-input:focus {
+  border-color: var(--color-g-accent);
+  outline: none;
+}

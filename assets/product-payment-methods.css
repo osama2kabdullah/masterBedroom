@@ -1,0 +1,12 @@
+.\#product-payment-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.\#product-payment-methods.\@center {
+  justify-content: center;
+}
+.\#product-payment-methods-item > svg {
+  height: 2.2rem;
+  width: auto;
+}

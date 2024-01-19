@@ -1,0 +1,113 @@
+{%- liquid
+    if section.settings.section_layout == 'full'
+        assign use_offset = true
+    endif
+    assign products_gap = 20
+-%}
+
+{% render 'load-css', file: 'product-card' %}
+{% render 'load-css', file: 'swiper' %}
+{% render 'load-css', file: 'slideshow-inline' %}
+
+{% capture Content %}
+    <browsing-history section-id="{{ section.id }}">
+        <template data-template>
+            <div data-cards-wrapper>
+                {% render 'slideshow-inline',
+                    slides_per_view: section.settings.items_per_view
+                    gap: products_gap,
+                    offset: use_offset,
+                    loop: section.settings.enable_loop,
+                    pagination: section.settings.enable_pagination
+                %}
+            </div>
+        </template>
+        {%- if request.design_mode -%}
+            <div data-notification>
+                {% render 'editor-notification',
+                    t_heading: 'general.editor.browsing_history_message'
+                %}
+            </div>
+        {%- endif -%}
+    </browsing-history>
+{% endcapture %}
+
+{% render 'section-body',
+    content: Content,
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    spaced: true,
+    force_layout: true
+%}
+
+{%- if request.design_mode -%}
+    <script type="module" src="{{ 'browsing-history-editor.js' | asset_url }}"></script>
+{%- else -%}
+    <script type="module" src="{{ 'browsing-history.js' | asset_url }}"></script>
+{%- endif -%}
+
+
+{% schema %}
+    {
+    "name": "Browsing history",
+    "settings": [
+        {
+            "type": "paragraph",
+            "content": "This section shows recently viewed products if browsing history is enabled in theme settings"
+      },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "t:g.common.label.heading",
+            "default": "Browsing history"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading"
+        },
+        {
+            "type": "select",
+            "id": "section_layout",
+            "label": "t:g.section.layout.label",
+            "options": [
+                {
+                    "value": "container",
+                    "label": "Container"
+                },
+                {
+                    "value": "full",
+                    "label": "Full width"
+                }
+            ],
+            "default": "full"
+        },
+        {
+            "type": "range",
+            "id": "items_per_view",
+            "label": "Products per view",
+            "min": 3,
+            "max": 6,
+            "step": 1,
+            "default": 4
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_loop",
+            "label": "Loop carousel",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_pagination",
+            "label": "Show carousel pagination"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Browsing history",
+            "category": "Product"
+        }
+    ]
+}
+{% endschema %}

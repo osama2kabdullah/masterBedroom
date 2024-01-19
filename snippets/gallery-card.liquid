@@ -1,0 +1,117 @@
+{%- comment -%}
+    Props:
+        hero_outer_gap
+        caption_gap
+        image
+        overlay
+        image_height
+        inner_caption
+        subheading
+        subheading_position
+        heading
+        text
+        caption_x
+        caption_y
+        caption_size
+        caption_box
+        auto_color
+{%- endcomment -%}
+
+{%- liquid
+    assign NS = 'gallery-card'
+    assign cn = '#' | append: NS
+
+    if full_height
+        assign inner_caption = true
+        assign media_height = '100%'
+        assign media_type = 'height'
+    endif
+
+    if shadow != false
+        if frame != true and inner_caption != true
+            if settings.animation_card_lift_up
+                assign cn_shadow = 'shadow-hover-parent'
+                assign cn_media_shadow = 'shadow-hover-child-2-3'
+            else
+                assign cn_media_shadow = 'shadow-2'
+            endif
+        else
+            if settings.animation_card_lift_up
+                assign cn_shadow = 'shadow-hover-2-3'
+            else
+                assign cn_shadow = 'shadow-2'
+            endif
+        endif
+    endif
+
+    if inner_caption
+        assign auto_color = true
+        assign caption_position = 'inner'
+        assign hero_outer_gap = false
+    else
+        assign auto_colors = false
+        assign caption_position = 'outer'
+        if frame == true
+            assign hero_outer_gap = true
+        endif
+    endif
+-%}
+
+
+{% capture Caption %}
+    <div class="{{ cn }}-caption">
+        {% render 'hero',
+            subheading: subheading,
+            subheading_position: subheading_position,
+            heading: heading,
+            heading_tag: 'h4',
+            text: text,
+            align: caption_x,
+            size: caption_size,
+            box: caption_box,
+            auto_colors: auto_color,
+            outer_gap: hero_outer_gap,
+            gap_size: caption_gap,
+            f_button_label: button_label,
+            f_button_style: button_style,
+            f_button_link: link
+        %}
+    </div>
+{% endcapture %}
+
+{%- if inner_caption -%}
+    {% capture InnerCaption %}
+        {% render 'floating-content',
+            x: caption_x,
+            y: caption_y,
+            absolute: true,
+            content: Caption
+        %}
+    {% endcapture %}    
+{%- endif -%}
+
+
+
+<div class="{{ cn }} {{ cn_shadow }} {% if full_height %}@full-height{% endif %} @caption:{{ caption_position }} {% if frame == true %}@frame{% endif %} rel">
+    {% if link != blank %}
+        <a class="stretched-link" href="{{ link }}"></a>
+    {% endif %}
+    <div class="{{ cn }}-media {{ cn_media_shadow }}">
+        {% render 'media',
+            image: image,
+            srcsize_desktop: image_srcsize_desktop,
+            srcsize_mobile: image_srcsize_mobile,
+            image_mobile: mobile_image,
+            overlay: overlay,
+            type: media_type,
+            size: image_size,
+            size_mobile: mobile_image_size,
+            height: media_height
+        %}
+    </div>
+    {%- if inner_caption -%}
+        {{ InnerCaption }}
+    {%- else -%}
+        {{ Caption }}
+    {%- endif -%}
+</div>

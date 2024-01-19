@@ -1,0 +1,40 @@
+.\#newsletter-popup-modal {
+  position: relative;
+  display: flex;
+  border-radius: var(--border-radius-base);
+  background: var(--color-g-fg);
+  overflow: hidden;
+  margin: 1rem;
+}
+.\#newsletter-popup-modal.\@with-image {
+  width: min(90vw, 800px);
+}
+.\#newsletter-popup-modal:not(.\@with-image) {
+  width: min(90vw, 500px);
+}
+.\#newsletter-popup-modal-close {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  cursor: pointer;
+  display: block;
+  opacity: 0.6;
+  transition: var(--transition-base);
+}
+.\#newsletter-popup-modal-close:hover {
+  opacity: 1;
+}
+.\#newsletter-popup-text {
+  padding: min(4rem, 5vw);
+}
+.\#newsletter-popup-text .\#hero {
+  height: 100%;
+  justify-content: center;
+}
+.\#newsletter-popup-image {
+  flex-shrink: 0;
+  width: 40%;
+}
+.\#newsletter-popup-image .\#media {
+  height: 100%;
+}

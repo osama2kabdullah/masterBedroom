@@ -1,0 +1,18 @@
+{% render 'page-header',
+    heading: page.title,
+    bg_image: section.settings.bg_image,
+    text: section.settings.text
+%}
+
+{% schema %}
+{
+    "name": "Page header",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "bg_image",
+            "label": "Background image"
+        }
+    ]
+}
+{% endschema %}

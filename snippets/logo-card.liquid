@@ -1,0 +1,23 @@
+{%- liquid
+    assign NS = 'logo-card'
+    assign cn = '#' | append: NS
+    
+    if settings.animation_card_lift_up
+        assign cn_shadow = 'shadow-hover-2-3'
+    else
+        assign cn_shadow = 'shadow-2'
+    endif
+-%}
+
+<div class="{{ cn }} {% if grayscale_hover %}@grayscale-hover{% endif %} {{ cn_shadow }}" style="--height: {{ height }}px;">
+    {%- if link != blank -%}
+        <a class="stretched-link" href="{{ link }}"></a>
+    {%- endif -%}
+    {% render 'media',
+        image: image,
+        srcsize_desktop: image_srcsize_desktop,
+        srcsize_mobile: image_srcsize_mobile,
+        placeholder: 'logo',
+        image_fit: 'contain'
+    %}
+</div>

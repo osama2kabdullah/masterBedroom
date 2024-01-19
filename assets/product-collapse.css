@@ -1,0 +1,58 @@
+.\#product-collapse {
+  border-bottom: 1px solid #d9d9d9;
+  border-top: 1px solid #d9d9d9;
+}
+.\#product-collapse > summary {
+  cursor: pointer;
+  list-style: none;
+}
+.\#product-collapse > summary::marker, .\#product-collapse > summary::-webkit-details-marker {
+  display: none;
+}
+.\#product-collapse-header {
+  display: flex;
+  align-items: center;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  justify-content: space-between;
+}
+.\#product-collapse-heading {
+  font-size: 1.25rem;
+  font-weight: var(--font-body-weight-bold);
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.\#product-collapse-heading-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem;
+  background: white;
+  border-radius: 50%;
+}
+.\#product-collapse-heading-icon .\#icon {
+  --size: 1.1rem;
+  opacity: 0.8;
+}
+.\#product-collapse-indicator {
+  transition: var(--transition-base);
+}
+.\#product-collapse-indicator .\#icon {
+  --size: 1.1rem;
+  opacity: 0.6;
+}
+.\#product-collapse[open] .\#product-collapse-body {
+  opacity: 1;
+  transform: translateY(0);
+}
+.\#product-collapse[open] .\#product-collapse-indicator {
+  transform: rotate(180deg);
+}
+.\#product-collapse-body {
+  padding-bottom: 1.25rem;
+  transition: var(--transition-base);
+  opacity: 0;
+  transform: translateY(-10px);
+}

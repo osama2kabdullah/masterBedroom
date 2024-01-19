@@ -1,0 +1,32 @@
+{% comment %}
+  Props:
+    video
+    height: {String} default: 100%
+    manual_init: {boolean}
+    display_desktop_only: {boolean}
+{% endcomment %}
+
+
+{%- liquid
+    assign NS = 'background-video'
+    assign cn = '#' | append: NS
+
+    unless height
+        assign height = '100%'
+    endunless
+-%}
+
+<link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
+{% render 'load-css', file: NS %}
+
+<div class="{{ cn }}-wrapper" style="--height: {{ height }};">
+    <{{ NS }} class="{{ cn }} {% if display_desktop_only and request.design_mode %} mobile-hidden {% endif %}" {% if manual_init %} manual-init {% endif %} {% if display_desktop_only and request.design_mode == false %} desktop-only {% endif %}>
+        {%- if video.media_type == 'video' -%}
+            {{ video | video_tag: autoplay: true, loop: true, muted: true }}
+        {%- else -%}
+            <div data-player data-plyr-provider="{{ video.type }}" data-plyr-embed-id="{{ video.id }}"></div>
+        {%- endif -%}
+    </{{ NS }}>
+</div>
+
+<script type="module" src="{{  NS | append: '.js' | asset_url }}"></script>

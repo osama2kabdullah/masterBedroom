@@ -1,0 +1,14 @@
+.\#product-variant-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.\#product-variant-selector-item-heading {
+  font-size: 1.1rem;
+  font-weight: normal;
+  margin-bottom: 0.7rem;
+  opacity: 0.7;
+}
+.\#product-variant-selector-item-heading-value {
+  font-weight: var(--font-body-weight-bold);
+}

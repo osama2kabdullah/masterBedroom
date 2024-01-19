@@ -1,0 +1,81 @@
+.\#product-options-radio {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  overflow-x: hidden;
+}
+.\#product-options-radio.\@align-options .\#product-options-radio-item {
+  flex: 1;
+  min-width: max-content;
+}
+.\#product-options-radio-item {
+  display: block;
+}
+.\#product-options-radio-item:focus-within {
+  outline: 5px auto -webkit-focus-ring-color;
+}
+.\#product-options-radio-item-input:checked + .\#product-options-radio-item-body {
+  border-color: var(--color-g-accent);
+  box-shadow: var(--color-g-text-alpha-10) 0 1rem 2rem -1.5rem, var(--color-g-text-alpha-30) 0 0.5rem 2rem -1rem;
+  font-weight: var(--font-body-weight-bold);
+}
+.\#product-options-radio-item-input.\!unavailable + .\#product-options-radio-item-body {
+  opacity: 0.64;
+  position: relative;
+  overflow: hidden;
+  background: #e6e6e6;
+}
+.\#product-options-radio-item-input.\!unavailable + .\#product-options-radio-item-body:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: #b3b3b3;
+  transform: rotate(-45deg);
+  top: calc(50% - 1px);
+  left: 0;
+  z-index: 1;
+}
+.\#product-options-radio-item-input.\!sold-out:not(:checked) + .\#product-options-radio-item-body {
+  opacity: 0.64;
+  background: #e6e6e6;
+  position: relative;
+  overflow: hidden;
+}
+.\#product-options-radio-item-body {
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.5em 0.8em;
+  border: 2px solid #b3b3b3;
+  background: var(--color-g-fg);
+  border-radius: var(--border-radius-inner);
+  transition: var(--transition-base);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.\#product-options-radio-item-value {
+  flex-shrink: 0;
+}
+.\#product-options-radio-item-media {
+  flex-shrink: 0;
+}
+.\#product-options-radio-item-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: min(18vw, var(--container-width) * 0.2);
+}
+@media (max-width: 991px) {
+  .\#product-options-radio-item-title {
+    max-width: 60vw;
+  }
+}
+.\#product-options-radio-item-price {
+  font-size: 1rem;
+  font-weight: normal;
+  margin-top: 0.2rem;
+}
+.\#product-options-radio-item-media {
+  width: 50px;
+}

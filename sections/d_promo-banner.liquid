@@ -1,0 +1,309 @@
+{% render 'load-css', file: 'promo-banner' %}
+
+{% assign cn = '#promo-banner' %}
+
+{%- capture Body -%}
+    <div class="{{ cn }}-body" style="--desktop-text-align: {{ section.settings.desktop_text_align }};">
+        {%- if section.settings.link != blank -%}
+            <a class="stretched-link" href="{{ section.settings.link }}"></a>
+        {%- endif -%}
+        {% for block in section.blocks %}
+            {% case block.type %}
+                {% when 'heading' %}
+                    {% if block.settings.heading != blank %}
+                        <h3 class="{{ cn }}-heading heading-font" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h3>
+                    {% endif %}
+                {% when 'text' %}
+                    {% if block.settings.text != blank %}
+                        <div class="{{ cn }}-text" {{ block.shopify_attributes }}>
+                            <div class="#rte-block">
+                                {{ block.settings.text }}
+                            </div>
+                        </div> 
+                    {% endif %}
+                {% when 'timer' %}
+                    {% render 'countdown-timer',
+                        date: block.settings.date,
+                        hide_on_complete: block.settings.hide_on_complete,
+                        complete_msg: block.settings.complete_msg,
+                        display_titles: block.settings.display_titles,
+                        timer_size: 'd3',
+                        timer_titles_size: 'h6'
+                    %}
+                {% when 'button' %}
+                    {% if block.settings.label != blank %}
+                        {%- if block.settings.custom_colors -%}
+                            {%- assign text_color = block.settings.text_color -%}
+                            {%- assign bg_color = block.settings.bg_color -%}
+                        {%- endif -%}
+                        <div class="{{ cn }}-button {% if block.settings.mobile_hidden %}mobile-hidden{% endif %}" {{ block.shopify_attributes }}>
+                            {% render 'button',
+                                text: block.settings.label,
+                                link: section.settings.link,
+                                display_style: block.settings.style,
+                                text_color: text_color,
+                                bg_color: bg_color,
+                                tag: 'a'
+                            %}
+                        </div>
+                    {% endif %}
+            {% endcase %}
+        {% endfor %}
+    </div>
+{%- endcapture -%}
+
+{% capture Content %}
+    <div class="{{ cn }} {% if section.settings.section_layout == 'full' %}@full{% endif %} @bg-type:{{ section.settings.bg_type }}" style="{% if section.settings.bg_type == 'pattern' %}--bg-pattern: url({{ section.settings.image | img_url }});{% endif %}{% if section.settings.bg_type == 'color' %}--bg-color: {{ section.settings.bg_color }};{% endif %}">
+        {%- if section.settings.bg_type == 'pattern' and section.settings.image == blank -%}
+            {%- assign empty_pattern = true -%}
+        {%- endif -%}
+        {%- if section.settings.bg_type == 'image' or empty_pattern -%}
+            <div class="{{ cn }}-media">
+                {% render 'media',
+                    image: section.settings.image,
+                    image_mobile: section.settings.mobile_image,
+                    height: '100%',
+                    type: 'height',
+                    placeholder: 'lifestyle'
+                %}
+            </div>    
+        {%- endif -%}
+        {% if section.settings.section_layout == 'full' %}
+            <div class="#container">
+                {{ Body }}
+            </div>
+        {% else %}
+            {{ Body }}
+        {% endif %}
+    </div>
+{% endcapture %}
+
+{% if section.settings.section_layout == 'full' %}
+    {% assign spaced = false %}
+{% else %}
+    {% assign spaced = true %}
+{% endif %}
+
+{% render 'section-body',
+    content: Content,
+    container: section.settings.section_layout,
+    text_color: section.settings.text_color,
+    spaced: spaced
+%}
+
+{% schema %}
+{
+    "name": "Promotional banner",
+    "settings": [
+        {
+            "type": "select",
+            "id": "bg_type",
+            "label": "Background type",
+            "options": [
+                {
+                    "value": "image",
+                    "label": "Image"
+                },
+                {
+                    "value": "pattern",
+                    "label": "Pattern"
+                },
+                {
+                    "value": "color",
+                    "label": "Color"
+                }
+            ],
+            "default": "image"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Background image"
+        },
+        {
+            "type": "image_picker",
+            "id": "mobile_image",
+            "label": "Mobile background image",
+            "info": "t:g.common.label.optional"
+        },
+        {
+            "type": "url",
+            "id": "link",
+            "label": "t:g.common.label.link"
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text color",
+            "default": "#ffffff"
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "#163340",
+            "info": "Only for 'Color' background type"
+        },
+        {
+            "type": "select",
+            "id": "section_layout",
+            "label": "t:g.section.layout.label",
+            "options": [
+                {
+                    "value": "container",
+                    "label": "Container"
+                },
+                {
+                    "value": "full",
+                    "label": "Full width"
+                }
+            ],
+            "default": "container"
+        },
+        {
+            "type": "select",
+            "id": "desktop_text_align",
+            "label": "Desktop text align",
+            "options": [
+                {
+                    "value": "space-between",
+                    "label": "Stretch"
+                },
+                {
+                    "value": "space-evenly",
+                    "label": "Even"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                }
+            ]
+        }
+    ],
+    "blocks": [
+        {
+            "type": "heading",
+            "name": "Heading",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "t:g.common.label.heading",
+                    "default": "Heading"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "name": "Text",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "t:g.hero.text.label",
+                    "default": "<p>Text</p>"
+                }
+            ]
+        },
+        {
+            "type": "timer",
+            "name": "Countdown",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "date",
+                    "label": "End date",
+                    "info": "Format: mm-dd-yyyy",
+                    "default": "04-03-2024"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "hide_on_complete",
+                    "label": "Hide timer on complete"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "display_titles",
+                    "label": "Display titles",
+                    "default": true
+                }
+            ]
+        },
+        {
+            "type": "button",
+            "name": "Button",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "checkbox",
+                    "id": "mobile_hidden",
+                    "label": "Hide on mobile",
+                    "default": false
+                },
+                {
+                    "type": "text",
+                    "id": "label",
+                    "label": "Label",
+                    "default": "Shop Now"
+                },
+                {
+                    "type": "select",
+                    "id": "style",
+                    "label": "t:g.hero.buttons.single.style",
+                    "options": [
+                        {
+                            "value": "normal",
+                            "label": "t:g.common.button_styles.normal"
+                        },
+                        {
+                            "value": "outline",
+                            "label": "t:g.common.button_styles.outline"
+                        },
+                        {
+                            "value": "link",
+                            "label": "t:g.common.button_styles.link"
+                        }
+                    ],
+                    "default": "normal"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "custom_colors",
+                    "label": "t:g.hero.buttons.single.custom_colors"
+                },
+                {
+                    "type": "color",
+                    "id": "bg_color",
+                    "label": "t:g.common.custom_colors.bg",
+                    "default": "#000000"
+                },
+                {
+                    "type": "color",
+                    "id": "text_color",
+                    "label": "t:g.common.custom_colors.text",
+                    "default": "#ffffff"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Promotional banner",
+            "blocks": [
+                {
+                    "type": "heading"
+                },
+                {
+                    "type": "text"
+                },
+                {
+                    "type": "button"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

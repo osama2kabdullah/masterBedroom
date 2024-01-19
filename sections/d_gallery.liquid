@@ -1,0 +1,328 @@
+{%- liquid
+    assign gap = '2rem'    
+-%}
+
+
+{% render 'load-css', file: 'gallery-card' %}
+
+
+{%- capture Content -%} 
+    <div class="#grid @type:span">
+        {% for block in section.blocks %}
+            {%- capture image_srcsize_desktop -%}min(100vw, {{ settings.container_width }}px) * {{ block.settings.span | divided_by: 12.0 }} + {{ gap }}{%- endcapture -%}
+            {%- capture image_srcsize_mobile -%}90vw{%- endcapture -%}
+            <div style="--span: {{ block.settings.span }}; --span-mobile: 12;" {{ block.shopify_attributes }}>
+                {%- liquid
+                    assign position = block.settings.text_position | split: '-'
+                    assign caption_y = position[0]
+                    assign caption_x = position[1]
+                -%}
+                {% render 'gallery-card',
+                    image: block.settings.image,
+                    image_srcsize_desktop: image_srcsize_desktop,
+                    image_srcsize_mobile: image_srcsize_mobile,
+                    mobile_image: block.settings.mobile_image,
+                    image_size: block.settings.image_size,
+                    mobile_image_size: block.settings.mobile_image_size,
+                    overlay: block.settings.image_overlay,
+                    heading: block.settings.heading,
+                    subheading: block.settings.subheading,
+                    text: block.settings.text,
+                    caption_x: caption_x,
+                    caption_y: caption_y,
+                    caption_size: block.settings.size,
+                    caption_box: section.settings.use_box,
+                    frame: section.settings.show_frame,
+                    subheading_position: section.settings.subheading_position,
+                    link: block.settings.link,
+                    inner_caption: true
+                %}
+            </div>
+        {% endfor %}
+    </div>
+{%- endcapture -%}
+
+{% render 'section-body',
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    content: Content,
+    container: true,
+    spaced: true
+%}
+
+{% schema %}
+{
+    "name": "Gallery",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "t:g.hero.heading.label",
+            "default": "Gallery"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "t:g.hero.subheading.label"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_frame",
+            "label": "t:g.media.show_frame"
+        },
+        {
+            "type": "select",
+            "id": "subheading_position",
+            "label": "t:g.hero.subheading_position.label",
+            "options": [
+                {
+                    "value": "before",
+                    "label": "t:g.hero.subheading_position.options.before"
+                },
+                {
+                    "value": "after",
+                    "label": "t:g.hero.subheading_position.options.after"
+                }
+            ],
+            "default": "before"
+        },
+        {
+            "type": "checkbox",
+            "id": "use_box",
+            "label": "t:g.hero.use_box"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Gallery item",
+            "type": "gallery_item",
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "span",
+                    "label": "t:g.common.label.desktop_width",
+                    "options": [
+                    {
+                        "value": "3",
+                        "label": "25%"
+                    },
+                    {
+                        "value": "4",
+                        "label": "33.3%"
+                    },
+                    {
+                        "value": "5",
+                        "label": "40%"
+                    },
+                    {
+                        "value": "6",
+                        "label": "50%"
+                    },
+                    {
+                        "value": "7",
+                        "label": "60%"
+                    },
+                    {
+                        "value": "8",
+                        "label": "66.6%"
+                    },
+                    {
+                        "value": "9",
+                        "label": "75%"
+                    },
+                    {
+                        "value": "12",
+                        "label": "100%"
+                    }
+                    ],
+                    "default": "6"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "t:g.media.image"
+                },
+                {
+                    "type": "select",
+                    "id": "image_size",
+                    "label": "t:g.media.image_height.label",
+                    "options": [
+                        {
+                            "value": "xl",
+                            "label": "t:g.media.image_height.options.xl"
+                        },
+                        {
+                            "value": "lg",
+                            "label": "t:g.media.image_height.options.lg"
+                        },
+                        {
+                            "value": "md",
+                            "label": "t:g.media.image_height.options.md"
+                        },
+                        {
+                            "value": "sm",
+                            "label": "t:g.media.image_height.options.sm"
+                        },
+                        {
+                            "value": "origin",
+                            "label": "t:g.media.image_size.options.origin"
+                        }
+                    ],
+                    "default": "md"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "mobile_image",
+                    "label": "t:g.media.mobile_image",
+                    "info": "t:g.common.label.optional"
+                },
+                {
+                    "type": "select",
+                    "id": "mobile_image_size",
+                    "label": "t:g.media.image_size.mobile_label",
+                    "options": [
+                        {
+                            "value": "9x16",
+                            "label": "t:g.media.image_size.options.instagram"
+                        },
+                        {
+                            "value": "4x5",
+                            "label": "t:g.media.image_size.options.facebook"
+                        },
+                        {
+                            "value": "xl",
+                            "label": "t:g.media.image_size.options.xl"
+                        },
+                        {
+                            "value": "lg",
+                            "label": "t:g.media.image_size.options.lg"
+                        },
+                        {
+                            "value": "md",
+                            "label": "t:g.media.image_size.options.md"
+                        },
+                        {
+                            "value": "origin",
+                            "label": "t:g.media.image_size.options.origin"
+                        }
+                    ],
+                    "default": "9x16"
+                },
+                {
+                   "type": "url",
+                   "id": "link",
+                   "label": "t:g.common.label.link"
+                },
+                {
+                    "type": "range",
+                    "id": "image_overlay",
+                    "label": "t:g.media.overlay",
+                    "min": 0,
+                    "max": 80,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 0
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "t:g.common.label.heading",
+                    "default": "Gallery heading"
+                },
+                {
+                    "type": "text",
+                    "id": "subheading",
+                    "label": "Subheading"
+                },
+                {
+                    "type": "textarea",
+                    "id": "text",
+                    "label": "Text",
+                    "default": "Give customers details about the banner image(s) or content on the template."
+                },
+                {
+                    "type": "select",
+                    "id": "size",
+                    "label": "t:g.hero.caption.text_size",
+                    "options": [
+                        {
+                            "value": "sm",
+                            "label": "t:g.common.sizes.sm"
+                        },
+                        {
+                            "value": "md",
+                            "label": "t:g.common.sizes.md"
+                        },
+                        {
+                            "value": "lg",
+                            "label": "t:g.common.sizes.lg"
+                        },
+                        {
+                            "value": "xl",
+                            "label": "t:g.common.sizes.xl"
+                        }
+                    ],
+                    "default": "md"
+                },
+                {
+                    "type": "select",
+                    "id": "text_position",
+                    "label": "t:g.hero.caption.position.label",
+                    "options": [
+                        {
+                            "value": "top-left",
+                            "label": "t:g.hero.caption.position.options.x0y0"
+                        },
+                        {
+                            "value": "top-center",
+                            "label": "t:g.hero.caption.position.options.x0y1"
+                        },
+                        {
+                            "value": "top-right",
+                            "label": "t:g.hero.caption.position.options.x0y2"
+                        },
+                        {
+                            "value": "center-left",
+                            "label": "t:g.hero.caption.position.options.x1y0"
+                        },
+                        {
+                            "value": "center-center",
+                            "label": "t:g.hero.caption.position.options.x1y1"
+                        },
+                        {
+                            "value": "center-right",
+                            "label": "t:g.hero.caption.position.options.x1y2"
+                        },
+                        {
+                            "value": "bottom-left",
+                            "label": "t:g.hero.caption.position.options.x2y0"
+                        },
+                        {
+                            "value": "bottom-center",
+                            "label": "t:g.hero.caption.position.options.x2y1"
+                        },
+                        {
+                            "value": "bottom-right",
+                            "label": "t:g.hero.caption.position.options.x2y2"
+                        }
+                    ],
+                    "default": "center-center"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Gallery",
+            "blocks": [
+                {
+                    "type": "gallery_item"
+                },
+                {
+                    "type": "gallery_item"
+                }
+            ]
+        }
+    ] 
+}
+{% endschema %}

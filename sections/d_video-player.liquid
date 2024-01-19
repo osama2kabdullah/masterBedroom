@@ -1,0 +1,62 @@
+{%- liquid
+    assign video = section.settings.hosted_video | default: section.settings.embedded_video
+-%}
+
+{%- capture Content -%}
+    {% render 'video-player', video: video %}
+{%- endcapture -%}
+
+{% render 'section-body',
+    heading: section.settings.heading,
+    content: Content,
+    container: true,
+    spaced: true,
+    button_label: section.settings.section_button_label,
+    button_link: section.settings.section_button_url
+%}
+
+{% schema %}
+{
+    "name": "Video player",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "t:g.common.label.heading",
+            "default": "Video player"
+        },
+        {
+            "type": "video_url",
+            "accept": ["vimeo", "youtube"],
+            "id": "embedded_video",
+            "label": "Video URL",
+            "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+        },
+        {
+            "type": "video",
+            "id": "hosted_video",
+            "label": "A Store-hosted video",
+            "info": "Store-hosted video will be a priority to video URL"
+        },
+        {
+            "type": "header",
+            "content": "t:g.section.button.header"
+        },
+        {
+            "type": "text",
+            "id": "section_button_label",
+            "label": "t:g.section.button.label"
+        },
+        {
+            "type": "url",
+            "id": "section_button_url",
+            "label": "t:g.section.button.link"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Video player"
+        }
+    ]
+}
+{% endschema %}

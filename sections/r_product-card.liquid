@@ -1,0 +1,9 @@
+{%- if product -%}      
+    <template data-card-slide>
+        <div class="swiper-slide">
+            {% render 'product-card',
+                product: product
+            %}
+        </div>
+    </template>
+{%- endif -%}

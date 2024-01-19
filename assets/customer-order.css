@@ -1,0 +1,21 @@
+.\#customer-order-addresses {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.\#customer-order-back-link {
+  margin-top: 1rem;
+  margin-left: 2rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  font-weight: var(--font-body-weight-bold);
+  gap: 0.5rem;
+  font-size: 1.15rem;
+}
+.\#customer-order-back-link .\#icon {
+  display: flex;
+  --size: 1.25rem;
+}

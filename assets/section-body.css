@@ -1,0 +1,70 @@
+.\#section-body {
+  --bg-color: transparent;
+  --content-bg-color: transparent;
+  --text-color: inherit;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+.\#section-body.\@spaced {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+.\#section-body.\@inner-spaced {
+  padding-block: 4rem;
+}
+.\#section-body-header {
+  margin-bottom: 1.5rem;
+}
+.\#section-body-content {
+  background-color: var(--content-bg-color);
+}
+.\#section-body-wrapper.\@curved {
+  overflow: hidden;
+  border-radius: var(--border-radius-base);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+.\#section-body-wrapper.\@curved\:left {
+  overflow: hidden;
+}
+@media (min-width: 992px) {
+  .\#section-body-wrapper.\@curved\:left {
+    border-radius: var(--border-radius-base) 0 0 var(--border-radius-base);
+  }
+}
+@media (max-width: 991px) {
+  .\#section-body-wrapper.\@curved\:left {
+    border-radius: var(--border-radius-base);
+  }
+}
+.\#section-body-wrapper.\@curved\:right {
+  overflow: hidden;
+}
+@media (min-width: 992px) {
+  .\#section-body-wrapper.\@curved\:right {
+    border-radius: 0 var(--border-radius-base) var(--border-radius-base) 0;
+  }
+}
+@media (max-width: 991px) {
+  .\#section-body-wrapper.\@curved\:right {
+    border-radius: var(--border-radius-base);
+  }
+}
+.\#section-body-button {
+  z-index: 10;
+  position: relative;
+  margin: 1.5rem 0;
+}
+.\#section-body-button.\@align\:center {
+  display: flex;
+  justify-content: center;
+}
+@media (min-width: 992px) {
+  .\#section-body-header-inner.\@align-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .\#section-body-header-inner.\@align-button .\#section-body-button {
+    margin: 0;
+  }
+}

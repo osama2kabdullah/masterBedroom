@@ -1,0 +1,28 @@
+{%- if section.settings.show_collection_description -%}
+    {%- assign page_header_text = collection.description -%}
+{%- endif -%}
+
+{% render 'page-header',
+    heading: collection.title,
+    bg_image: section.settings.bg_image,
+    text: page_header_text
+%}
+
+{% schema %}
+{
+    "name": "Collection header",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "bg_image",
+            "label": "Background image"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_collection_description",
+            "label": "Show collection description",
+            "default": true
+        }
+    ]
+}
+{% endschema %}
