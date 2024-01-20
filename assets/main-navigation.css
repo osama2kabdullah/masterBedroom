@@ -111,7 +111,8 @@
   opacity: 1;
 }
 .\#main-navigation-sub-item:hover .\#main-navigation-sub-link:hover {
-  opacity: 1;
+  transition: var(--transition-base);
+  color: var(--accent-color);
 }
 .\#main-navigation-sub-link {
   padding: 0.5rem 1rem;

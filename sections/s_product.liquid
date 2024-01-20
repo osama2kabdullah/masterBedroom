@@ -1,39 +1,45 @@
-{%- liquid
-    assign variant = product.selected_or_first_available_variant
-    assign no_params_product_url = product.url | split: '?' | first
-    assign product_form_id = 'productForm' | append: section.id | append: product.id 
-    assign cn = '#product'
-    
-    assign cart_limit_reached = false
-    if variant.inventory_management != nil and variant.inventory_policy != 'continue'
-        assign variant_cart_qty = 0
-        for line_item in cart.items
-            if line_item.variant_id == variant.id
-                assign variant_cart_qty = variant_cart_qty | plus: line_item.quantity
-                if variant_cart_qty == variant.inventory_quantity
-                    assign cart_limit_reached = true
-                    break
-                endif
-            endif
-        endfor
-    endif
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/css/lightgallery.min.css"
+>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/lightgallery.min.js"></script>
 
-    if template.suffix == 'quick-view'
-        assign quick_view_modal_id = 'ProductQuickView-' | append: product.id
-        assign quick_view = true
-        assign gap = '3rem'
-    else
-        assign quick_view = false
-        assign gap = '5rem'
-    endif
-    assign gallery_width = section.settings.gallery_width
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign no_params_product_url = product.url | split: '?' | first
+  assign product_form_id = 'productForm' | append: section.id | append: product.id
+  assign cn = '#product'
+
+  assign cart_limit_reached = false
+  if variant.inventory_management != null and variant.inventory_policy != 'continue'
+    assign variant_cart_qty = 0
+    for line_item in cart.items
+      if line_item.variant_id == variant.id
+        assign variant_cart_qty = variant_cart_qty | plus: line_item.quantity
+        if variant_cart_qty == variant.inventory_quantity
+          assign cart_limit_reached = true
+          break
+        endif
+      endif
+    endfor
+  endif
+
+  if template.suffix == 'quick-view'
+    assign quick_view_modal_id = 'ProductQuickView-' | append: product.id
+    assign quick_view = true
+    assign gap = '3rem'
+  else
+    assign quick_view = false
+    assign gap = '5rem'
+  endif
+  assign gallery_width = section.settings.gallery_width
 -%}
 
 {%- capture gallery_image_srcsize_desktop -%}min(100vw, {{ settings.container_width }}px) * {{ gallery_width | divided_by: 100.0 }} - 70px - 1.5rem{%- endcapture -%}
 {%- capture gallery_image_srcsize_mobile -%}90vw{%- endcapture -%}
 
 {%- if quick_view -%}
-    {%- capture Popup_content -%}
+  {%- capture Popup_content -%}
         <modal-trigger class="#modal-popup-back" url="{{ product.url | split: '?' | first }}?view=quick-view" target="#{{ quick_view_modal_id }}" container close-button>
             {% render 'icon', name: 'arrow-left' %}
             {{ 'products.product.back_to_product' | t }}
@@ -344,7 +350,6 @@
     </div>
 {%- endcapture -%}
 
-
 {%- capture Content -%}
     <div class="{{ cn }}">
         {%- unless quick_view -%}
@@ -369,26 +374,19 @@
     <script type="module" src="{{ 'product-form.js' | asset_url }}"></script>
 {%- endcapture -%}
 
-
 {%- if quick_view -%}
-    <template id="{{ quick_view_modal_id }}">
-        <div class="{{ cn }}-quick-view shadow-4">
-            {{ Content }}
-        </div>
-    </template>
+  <template id="{{ quick_view_modal_id }}">
+    <div class="{{ cn }}-quick-view shadow-4">
+      {{ Content }}
+    </div>
+  </template>
 {%- endif -%}
 
 {%- if quick_view == false or request.design_mode -%}
-    {%- if quick_view and request.design_mode -%}
-        {% render 'editor-notification',
-            t_heading: 'general.editor.quick_view_message'
-        %}
-    {%- endif -%}
-    {% render 'section-body',
-        content: Content,
-        container: 'container',
-        spaced: true
-    %}
+  {%- if quick_view and request.design_mode -%}
+    {% render 'editor-notification', t_heading: 'general.editor.quick_view_message' %}
+  {%- endif -%}
+  {% render 'section-body', content: Content, container: 'container', spaced: true %}
 {%- endif -%}
 
 {% render 'browsing-history-track' %}
@@ -396,890 +394,904 @@
 <script type="module" src="{{ 'custom-select.js' | asset_url }}"></script>
 
 {%- liquid
-    if product.selected_or_first_available_variant.featured_media
-        assign seo_media = product.selected_or_first_available_variant.featured_media
-    else
-        assign seo_media = product.featured_media
-    endif
+  if product.selected_or_first_available_variant.featured_media
+    assign seo_media = product.selected_or_first_available_variant.featured_media
+  else
+    assign seo_media = product.featured_media
+  endif
 -%}
-  
-<script type="application/ld+json">
-    {
-    "@context": "http://schema.org/",
-    "@type": "Product",
-    "name": {{ product.title | json }},
-    "url": {{ shop.url | append: product.url | json }},
-    {% if seo_media -%}
-        {%- assign media_size = seo_media.preview_image.width | append: 'x' -%}
-        "image": [
-        {{ seo_media | img_url: media_size | prepend: "https:" | json }}
-        ],
-    {%- endif %}
-    "description": {{ product.description | strip_html | json }},
-    {% if product.selected_or_first_available_variant.sku != blank -%}
-        "sku": {{ product.selected_or_first_available_variant.sku | json }},
-    {%- endif %}
-    "brand": {
-        "@type": "Thing",
-        "name": {{ product.vendor | json }}
+
+<script type="text/javascript">
+  let gallery = document.querySelector('.custom-swiper-slider-lightbox');
+  lightGallery(gallery, {
+    controls: true,
+    showCloseIcon: true,
+    download: false,
+    mobileSettings: {
+      controls: false,
+      showCloseIcon: false,
+      download: false,
+      rotate: false,
     },
-    "offers": [
-        {%- for variant in product.variants -%}
-        {
-            "@type" : "Offer",
-            {%- if variant.sku != blank -%}
-            "sku": {{ variant.sku | json }},
-            {%- endif -%}
-            "availability" : "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
-            "price" : {{ variant.price | divided_by: 100.00 | json }},
-            "priceCurrency" : {{ cart.currency.iso_code | json }},
-            "url" : {{ shop.url | append: variant.url | json }}
-        }{% unless forloop.last %},{% endunless %}
-        {%- endfor -%}
-    ]
-    }
+  });
+</script>
+
+<script type="application/ld+json">
+  {
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "url": {{ shop.url | append: product.url | json }},
+  {% if seo_media -%}
+      {%- assign media_size = seo_media.preview_image.width | append: 'x' -%}
+      "image": [
+      {{ seo_media | img_url: media_size | prepend: "https:" | json }}
+      ],
+  {%- endif %}
+  "description": {{ product.description | strip_html | json }},
+  {% if product.selected_or_first_available_variant.sku != blank -%}
+      "sku": {{ product.selected_or_first_available_variant.sku | json }},
+  {%- endif %}
+  "brand": {
+      "@type": "Thing",
+      "name": {{ product.vendor | json }}
+  },
+  "offers": [
+      {%- for variant in product.variants -%}
+      {
+          "@type" : "Offer",
+          {%- if variant.sku != blank -%}
+          "sku": {{ variant.sku | json }},
+          {%- endif -%}
+          "availability" : "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "price" : {{ variant.price | divided_by: 100.00 | json }},
+          "priceCurrency" : {{ cart.currency.iso_code | json }},
+          "url" : {{ shop.url | append: variant.url | json }}
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+  ]
+  }
 </script>
 
 {% schema %}
 {
-    "name": "Product information",
-    "tag": "section",
-    "settings": [
+  "name": "Product information",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image gallery",
+      "info": "t:sections.main-product.settings.header.info"
+    },
+    {
+      "type": "range",
+      "id": "gallery_width",
+      "label": "Gallery desktop width",
+      "min": 40,
+      "step": 1,
+      "max": 70,
+      "default": 64,
+      "unit": "%"
+    },
+    {
+      "type": "checkbox",
+      "id": "slideshow_zoom",
+      "label": "Enable image zoom",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "thumbnails_layout",
+      "label": "Thumbnails position",
+      "options": [
         {
-            "type": "header",
-            "content": "Image gallery",
-            "info": "t:sections.main-product.settings.header.info"
+          "value": "slideshow",
+          "label": "Left"
         },
         {
-            "type": "range",
-            "id": "gallery_width",
-            "label": "Gallery desktop width",
-            "min": 40,
-            "step": 1,
-            "max": 70,
-            "default": 64,
-            "unit": "%"
-        },
-        {
-            "type": "checkbox",
-            "id": "slideshow_zoom",
-            "label": "Enable image zoom",
-            "default": true
-        },
-        {
-            "type": "select",
-            "id": "thumbnails_layout",
-            "label": "Thumbnails position",
-            "options": [
-                {
-                    "value": "slideshow",
-                    "label": "Left"
-                },
-                {
-                    "value": "grid",
-                    "label": "Bottom"
-                }
-            ],
-            "default": "slideshow"
+          "value": "grid",
+          "label": "Bottom"
         }
-    ],
-    "blocks": [
+      ],
+      "default": "slideshow"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "title",
+      "name": "Product title",
+      "limit": 1,
+      "settings": [
         {
-            "type": "@app"
+          "type": "select",
+          "id": "size",
+          "label": "Size",
+          "options": [
+            {
+              "value": "h3",
+              "label": "t:g.common.sizes.sm"
+            },
+            {
+              "value": "h1",
+              "label": "t:g.common.sizes.md"
+            },
+            {
+              "value": "d4",
+              "label": "t:g.common.sizes.lg"
+            }
+          ],
+          "default": "h1"
         },
         {
-            "type": "title",
-            "name": "Product title",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "select",
-                    "id": "size",
-                    "label": "Size",
-                    "options": [
-                        {
-                            "value" : "h3",
-                            "label": "t:g.common.sizes.sm"
-                        },
-                        {
-                            "value": "h1",
-                            "label": "t:g.common.sizes.md"
-                        },
-                        {
-                            "value": "d4",
-                            "label": "t:g.common.sizes.lg"
-                        }
-                    ],
-                    "default": "h1"
-                },
-                {
-                    "type": "range",
-                    "id": "max_lines",
-                    "label": "Maximum lines",
-                    "min": 0,
-                    "step": 1,
-                    "max": 5,
-                    "default": 3,
-                    "info": "Set to 0 to disable truncation"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
+          "type": "range",
+          "id": "max_lines",
+          "label": "Maximum lines",
+          "min": 0,
+          "step": 1,
+          "max": 5,
+          "default": 3,
+          "info": "Set to 0 to disable truncation"
         },
         {
-            "type": "text",
-            "name": "Text block",
-            "settings": [
-                {
-                    "type": "richtext",
-                    "id": "text",
-                    "label": "Text"
-                },
-                {
-                    "type": "select",
-                    "id": "size",
-                    "label": "Size",
-                    "options": [
-                        {
-                            "value" : "h6",
-                            "label": "t:g.common.sizes.sm"
-                        },
-                        {
-                            "value": "body",
-                            "label": "t:g.common.sizes.md"
-                        },
-                        {
-                            "value": "h5",
-                            "label": "t:g.common.sizes.lg"
-                        },
-                        {
-                            "value": "h3",
-                            "label": "t:g.common.sizes.xl"
-                        }
-                    ],
-                    "default": "body"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "text_uppercase",
-                    "label": "Uppercase text"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "price",
-            "name": "Price",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "checkbox",
-                    "id": "show_savings",
-                    "label": "Show savings",
-                    "default": true
-                },
-                {
-                    "type": "checkbox",
-                    "id": "show_taxes",
-                    "label": "Show taxes and shipping note",
-                    "default": true
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "quantity_selector",
-            "name": "Quantity selector",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "select",
-                    "id": "input_type",
-                    "label": "Selector type",
-                    "options": [
-                        {
-                            "value": "dropdown",
-                            "label": "Dropdown"
-                        },
-                        {
-                            "value": "input",
-                            "label": "Input"
-                        }
-                    ],
-                    "default": "dropdown"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "sku",
-            "name": "SKU",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "pickup_availability",
-            "name": "Pickup availability",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "payment_methods",
-            "name": "Payment methods",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "meta_heading",
-                    "label": "t:g.common.label.heading",
-                    "default": "We Accept"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "center",
-                    "label": "Center align"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "variant_selector",
-            "name": "Variant selector",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "select",
-                    "id": "picker_type",
-                    "options": [
-                        {
-                            "value": "dropdown",
-                            "label": "Dropdowns"
-                        },
-                        {
-                            "value": "swatch",
-                            "label": "Buttons"
-                        }
-                    ],
-                    "default": "swatch",
-                    "label": "Style"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "color_swatches",
-                    "label": "Enable color swatches",
-                    "info": "[Learn more](https://support.milehighthemes.com/article/43-setting-up-color-swatches-as-product-variations)"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "align_option_values",
-                    "label": "Stretch buttons to full width",
-                    "default": true,
-                    "info": "Only for 'buttons' style"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "show_stock_alert",
-                    "label": "Show stock alert",
-                    "default": false,
-                    "info": "Only for 'dropdowns' style. You can set up low stock threshold in theme settings"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "stock_alert",
-            "name": "Stock status",
-            "limit": 1,
-            "settings": [
-                {
-                "type": "checkbox",
-                "id": "show_stock_alert",
-                "label": "Show stock alert",
-                "default": false
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "buy_buttons",
-            "name": "Buy buttons",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "checkbox",
-                    "id": "show_dynamic_checkout",
-                    "default": true,
-                    "label": "t:sections.main-product.blocks.buy_buttons.settings.show_dynamic_checkout.label",
-                    "info": "t:sections.main-product.blocks.buy_buttons.settings.show_dynamic_checkout.info"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "enable_stock_notifier",
-                    "default": true,
-                    "label": "Enable stock notification form"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "show_gift_card_recipient",
-                    "default": false,
-                    "label": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.label",
-                    "info": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.info"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "product_options_list",
-            "name": "Product options list",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "paragraph",
-                    "content": "Will be shown only when a product has multiple variants"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "show_sku",
-                    "label": "Show SKU",
-                    "default": false
-                },
-                {
-                    "type": "checkbox",
-                    "id": "enable_sorting",
-                    "label": "Enable sorting",
-                    "default": true
-                },
-                {
-                    "type": "checkbox",
-                    "id": "enable_stock_sort",
-                    "label": "Enable sort by stock",
-                    "default": true
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "description",
-            "name": "Product description",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "meta_heading",
-                    "label": "t:g.common.label.heading",
-                    "default": "Product Information"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "use_expand",
-                    "default": true,
-                    "label": "Add 'Read more' link for long descriptions"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "share",
-            "name": "t:sections.main-product.blocks.share.name",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "paragraph",
-                    "content": "t:sections.main-product.blocks.share.settings.featured_image_info.content"
-                },
-                {
-                    "type": "paragraph",
-                    "content": "t:sections.main-product.blocks.share.settings.title_info.content"
-                },
-                {
-                    "type": "text",
-                    "id": "meta_heading",
-                    "label": "t:g.common.label.heading",
-                    "default": "Share"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "use_colors",
-                    "label": "Use brand colors",
-                    "default": true
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "rating",
-            "name": "Product rating",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "paragraph",
-                    "content": "Add reviews by installing the [Shopify Product Reviews app](https://apps.shopify.com/product-reviews)"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "show_count",
-                    "label": "Show reviews count",
-                    "default": true
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "collapsible_tab_text",
-            "name": "Accordion (text)",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "heading",
-                    "default": "Collapsible tab",
-                    "label": "t:g.common.label.heading"
-                },
-                {
-                    "type": "text",
-                    "id": "icon",
-                    "info": "t:g.dynamic_icon.info",
-                    "label": "Heading icon"
-                },
-                {
-                    "type": "richtext",
-                    "id": "content",
-                    "label": "Content"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "collapsible_tab_page",
-            "name": "Accordion (page)",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "heading",
-                    "default": "Collapsible tab",
-                    "label": "t:g.common.label.heading"
-                },
-                {
-                    "type": "text",
-                    "id": "icon",
-                    "info": "t:g.dynamic_icon.info",
-                    "label": "Heading icon"
-                },
-                {
-                    "type": "page",
-                    "id": "page",
-                    "label": "Page"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "collapsible_tab_specs",
-            "name": "Accordion (specs)",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "heading",
-                    "default": "Specifications",
-                    "label": "t:g.common.label.heading"
-                },
-                {
-                    "type": "text",
-                    "id": "icon",
-                    "info": "t:g.dynamic_icon.info",
-                    "label": "Heading icon"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "collapsible_tab_desc",
-            "name": "Accordion (description)",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "heading",
-                    "default": "Description",
-                    "label": "t:g.common.label.heading"
-                },
-                {
-                    "type": "text",
-                    "id": "icon",
-                    "info": "t:g.dynamic_icon.info",
-                    "label": "Heading icon"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",   
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "collapsible_tab_question",
-            "name": "Accordion (contact form)",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "heading",
-                    "default": "Have a question?",
-                    "label": "t:g.common.label.heading"
-                },
-                {
-                    "type": "text",
-                    "id": "icon",
-                    "info": "t:g.dynamic_icon.info",
-                    "label": "Heading icon"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "popup",
-            "name": "Pop-up",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "text",
-                    "default": "Pop-up link text",
-                    "label": "Link title"
-                },
-                {
-                    "type": "text",
-                    "id": "icon",
-                    "label": "t:g.common.icon.label",
-                    "info": "t:g.dynamic_icon.info"
-                },
-                {
-                    "id": "page",
-                    "type": "page",
-                    "label": "Page source",
-                    "info": "Page content will be displayed in popup"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "show_page_title",
-                    "label": "Show page title",
-                    "default": true
-                },
-                {
-                    "type": "select",
-                    "id": "popup_width",
-                    "label": "Desktop popup width",
-                    "options": [
-                        {
-                            "value": "default",
-                            "label": "Normal" 
-                        },
-                        {
-                            "value": "narrow",
-                            "label": "Narrow"
-                        },
-                        {
-                            "value": "x-narrow",
-                            "label": "Tight"
-                        }
-                    ],
-                    "default": "default"
-                },
-                {
-                    "type": "range",
-                    "id": "font_size_scale",
-                    "label": "Font size scale",
-                    "min": 100,
-                    "step": 5,
-                    "max": 200,
-                    "unit": "%",
-                    "default": 115 
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "buy_with",
-            "name": "Buy with",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "paragraph",
-                    "content": "Products in stock specified via [Complementary products](https://help.shopify.com/en/manual/online-store/search-and-discovery/product-recommendations#create-product-recommendations). It is recommended to use no more than three products"
-                },
-                {
-                    "type": "text",
-                    "id": "meta_heading",
-                    "label": "t:g.common.label.heading",
-                    "default": "Frequently Bought Together"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "use_counter",
-                    "label": "Show selected products count",
-                    "default": true
-                },
-                {
-                    "type": "checkbox",
-                    "id": "show_total",
-                    "label": "Show total price",
-                    "default": true
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-
-            ]
-        },  
-        {
-            "type": "separator",
-            "name": "Line separator"
-        },
-        {
-            "type": "custom_html",
-            "name": "Custom HTML",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "heading",
-                    "label": "Heading"
-                },
-                {
-                    "type": "html",
-                    "id": "html",
-                    "label": "HTML",
-                    "default": "<p>Custom HTML content.</p>"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "feature",
-            "name": "Trust icon",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "icon",
-                    "info": "t:g.dynamic_icon.info",
-                    "label": "t:g.common.icon.label",
-                    "default": "star"
-                },
-                {
-                    "type": "text",
-                    "id": "heading",
-                    "label": "t:g.common.label.heading",
-                    "default": "Feature heading"
-                },
-                {
-                    "type": "text",
-                    "id": "subheading",
-                    "label": "Subheading",
-                    "default": "Feature subheading"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "custom_image",
-            "name": "Custom image",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "heading",
-                    "label": "Heading"
-                },
-                {
-                    "type": "image_picker",
-                    "id": "image",
-                    "label": "t:g.media.image"
-                },
-                {
-                    "type": "url",
-                    "id": "link",
-                    "label": "Image link"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "specs",
-            "name": "Specifications",
-            "limit": 1,
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "meta_heading",
-                    "label": "t:g.common.label.heading",
-                    "default": "Specifications"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
-        },
-        {
-            "type": "custom_property",
-            "name": "Custom property",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "name",
-                    "label": "Label",
-                    "default": "Property label"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "prev_attach",
-                    "label": "Attach to previous block",
-                    "info": "Reduces excess padding",
-                    "default": false
-                }
-            ]
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
         }
-    ]
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text block",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "select",
+          "id": "size",
+          "label": "Size",
+          "options": [
+            {
+              "value": "h6",
+              "label": "t:g.common.sizes.sm"
+            },
+            {
+              "value": "body",
+              "label": "t:g.common.sizes.md"
+            },
+            {
+              "value": "h5",
+              "label": "t:g.common.sizes.lg"
+            },
+            {
+              "value": "h3",
+              "label": "t:g.common.sizes.xl"
+            }
+          ],
+          "default": "body"
+        },
+        {
+          "type": "checkbox",
+          "id": "text_uppercase",
+          "label": "Uppercase text"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_savings",
+          "label": "Show savings",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_taxes",
+          "label": "Show taxes and shipping note",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "quantity_selector",
+      "name": "Quantity selector",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "input_type",
+          "label": "Selector type",
+          "options": [
+            {
+              "value": "dropdown",
+              "label": "Dropdown"
+            },
+            {
+              "value": "input",
+              "label": "Input"
+            }
+          ],
+          "default": "dropdown"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "sku",
+      "name": "SKU",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "pickup_availability",
+      "name": "Pickup availability",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "payment_methods",
+      "name": "Payment methods",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "meta_heading",
+          "label": "t:g.common.label.heading",
+          "default": "We Accept"
+        },
+        {
+          "type": "checkbox",
+          "id": "center",
+          "label": "Center align"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "variant_selector",
+      "name": "Variant selector",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "picker_type",
+          "options": [
+            {
+              "value": "dropdown",
+              "label": "Dropdowns"
+            },
+            {
+              "value": "swatch",
+              "label": "Buttons"
+            }
+          ],
+          "default": "swatch",
+          "label": "Style"
+        },
+        {
+          "type": "checkbox",
+          "id": "color_swatches",
+          "label": "Enable color swatches",
+          "info": "[Learn more](https://support.milehighthemes.com/article/43-setting-up-color-swatches-as-product-variations)"
+        },
+        {
+          "type": "checkbox",
+          "id": "align_option_values",
+          "label": "Stretch buttons to full width",
+          "default": true,
+          "info": "Only for 'buttons' style"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_stock_alert",
+          "label": "Show stock alert",
+          "default": false,
+          "info": "Only for 'dropdowns' style. You can set up low stock threshold in theme settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "stock_alert",
+      "name": "Stock status",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_stock_alert",
+          "label": "Show stock alert",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "default": true,
+          "label": "t:sections.main-product.blocks.buy_buttons.settings.show_dynamic_checkout.label",
+          "info": "t:sections.main-product.blocks.buy_buttons.settings.show_dynamic_checkout.info"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_stock_notifier",
+          "default": true,
+          "label": "Enable stock notification form"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_gift_card_recipient",
+          "default": false,
+          "label": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.label",
+          "info": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.info"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "product_options_list",
+      "name": "Product options list",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Will be shown only when a product has multiple variants"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sku",
+          "label": "Show SKU",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_sorting",
+          "label": "Enable sorting",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_stock_sort",
+          "label": "Enable sort by stock",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Product description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "meta_heading",
+          "label": "t:g.common.label.heading",
+          "default": "Product Information"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_expand",
+          "default": true,
+          "label": "Add 'Read more' link for long descriptions"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "share",
+      "name": "t:sections.main-product.blocks.share.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "t:sections.main-product.blocks.share.settings.featured_image_info.content"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:sections.main-product.blocks.share.settings.title_info.content"
+        },
+        {
+          "type": "text",
+          "id": "meta_heading",
+          "label": "t:g.common.label.heading",
+          "default": "Share"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_colors",
+          "label": "Use brand colors",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "rating",
+      "name": "Product rating",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Add reviews by installing the [Shopify Product Reviews app](https://apps.shopify.com/product-reviews)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_count",
+          "label": "Show reviews count",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "collapsible_tab_text",
+      "name": "Accordion (text)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Collapsible tab",
+          "label": "t:g.common.label.heading"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "info": "t:g.dynamic_icon.info",
+          "label": "Heading icon"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "collapsible_tab_page",
+      "name": "Accordion (page)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Collapsible tab",
+          "label": "t:g.common.label.heading"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "info": "t:g.dynamic_icon.info",
+          "label": "Heading icon"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Page"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "collapsible_tab_specs",
+      "name": "Accordion (specs)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Specifications",
+          "label": "t:g.common.label.heading"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "info": "t:g.dynamic_icon.info",
+          "label": "Heading icon"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "collapsible_tab_desc",
+      "name": "Accordion (description)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Description",
+          "label": "t:g.common.label.heading"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "info": "t:g.dynamic_icon.info",
+          "label": "Heading icon"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "collapsible_tab_question",
+      "name": "Accordion (contact form)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Have a question?",
+          "label": "t:g.common.label.heading"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "info": "t:g.dynamic_icon.info",
+          "label": "Heading icon"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "popup",
+      "name": "Pop-up",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Pop-up link text",
+          "label": "Link title"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "t:g.common.icon.label",
+          "info": "t:g.dynamic_icon.info"
+        },
+        {
+          "id": "page",
+          "type": "page",
+          "label": "Page source",
+          "info": "Page content will be displayed in popup"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_page_title",
+          "label": "Show page title",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "popup_width",
+          "label": "Desktop popup width",
+          "options": [
+            {
+              "value": "default",
+              "label": "Normal"
+            },
+            {
+              "value": "narrow",
+              "label": "Narrow"
+            },
+            {
+              "value": "x-narrow",
+              "label": "Tight"
+            }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "range",
+          "id": "font_size_scale",
+          "label": "Font size scale",
+          "min": 100,
+          "step": 5,
+          "max": 200,
+          "unit": "%",
+          "default": 115
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "buy_with",
+      "name": "Buy with",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Products in stock specified via [Complementary products](https://help.shopify.com/en/manual/online-store/search-and-discovery/product-recommendations#create-product-recommendations). It is recommended to use no more than three products"
+        },
+        {
+          "type": "text",
+          "id": "meta_heading",
+          "label": "t:g.common.label.heading",
+          "default": "Frequently Bought Together"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_counter",
+          "label": "Show selected products count",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_total",
+          "label": "Show total price",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "separator",
+      "name": "Line separator"
+    },
+    {
+      "type": "custom_html",
+      "name": "Custom HTML",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "html",
+          "id": "html",
+          "label": "HTML",
+          "default": "<p>Custom HTML content.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "Trust icon",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "info": "t:g.dynamic_icon.info",
+          "label": "t:g.common.icon.label",
+          "default": "star"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:g.common.label.heading",
+          "default": "Feature heading"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Feature subheading"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "custom_image",
+      "name": "Custom image",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:g.media.image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Image link"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "specs",
+      "name": "Specifications",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "meta_heading",
+          "label": "t:g.common.label.heading",
+          "default": "Specifications"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "custom_property",
+      "name": "Custom property",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Label",
+          "default": "Property label"
+        },
+        {
+          "type": "checkbox",
+          "id": "prev_attach",
+          "label": "Attach to previous block",
+          "info": "Reduces excess padding",
+          "default": false
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}
