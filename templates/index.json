@@ -5,6 +5,7 @@
       "blocks": {
         "7504c906-2ef4-4882-8525-9f73f47b1ba9": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify:\/\/shop_images\/Mattress_with_Family_-_01.jpg",
             "overlay": 0,
@@ -30,11 +31,10 @@
             "s_button_text_color": "#ffffff"
           }
         },
-        "2f986c49-0c1a-4e22-bde6-ba514527906e": {
+        "8250e22a-bab6-4778-8703-25690ab6fe9b": {
           "type": "slide",
-          "disabled": true,
           "settings": {
-            "image": "shopify:\/\/shop_images\/dying-well-main.jpg",
+            "image": "shopify:\/\/shop_images\/S_F_-_02.jpg",
             "overlay": 0,
             "icon": "",
             "heading": "",
@@ -58,10 +58,10 @@
             "s_button_text_color": "#ffffff"
           }
         },
-        "8250e22a-bab6-4778-8703-25690ab6fe9b": {
+        "slide_ygTPDj": {
           "type": "slide",
-          "disabled": true,
           "settings": {
+            "image": "shopify:\/\/shop_images\/Sealy_-_01.jpg",
             "overlay": 0,
             "icon": "",
             "heading": "",
@@ -84,12 +84,124 @@
             "s_button_bg_color": "#000000",
             "s_button_text_color": "#ffffff"
           }
+        },
+        "slide_6yyntF": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/tempur-pedic_-_02.jpg",
+            "overlay": 0,
+            "icon": "",
+            "heading": "",
+            "use_header_accent": false,
+            "subheading": "",
+            "text": "",
+            "text_position": "center-center",
+            "use_box": false,
+            "width": 40,
+            "f_button_label": "",
+            "f_button_link": "",
+            "f_button_style": "normal",
+            "f_button_custom_colors": false,
+            "f_button_bg_color": "#000000",
+            "f_button_text_color": "#ffffff",
+            "s_button_label": "",
+            "s_button_link": "",
+            "s_button_style": "normal",
+            "s_button_custom_colors": false,
+            "s_button_bg_color": "#000000",
+            "s_button_text_color": "#ffffff"
+          }
+        },
+        "slide_Kk4Cba": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Durham_-_01.jpg",
+            "overlay": 0,
+            "icon": "",
+            "heading": "",
+            "use_header_accent": false,
+            "subheading": "",
+            "text": "",
+            "text_position": "center-center",
+            "use_box": false,
+            "width": 40,
+            "f_button_label": "",
+            "f_button_link": "",
+            "f_button_style": "normal",
+            "f_button_custom_colors": false,
+            "f_button_bg_color": "#000000",
+            "f_button_text_color": "#ffffff",
+            "s_button_label": "",
+            "s_button_link": "",
+            "s_button_style": "normal",
+            "s_button_custom_colors": false,
+            "s_button_bg_color": "#000000",
+            "s_button_text_color": "#ffffff"
+          }
+        },
+        "slide_nL3PKc": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/S_F_-_01.jpg",
+            "overlay": 0,
+            "icon": "",
+            "heading": "",
+            "use_header_accent": true,
+            "subheading": "",
+            "text": "",
+            "text_position": "center-center",
+            "use_box": false,
+            "width": 40,
+            "f_button_label": "",
+            "f_button_link": "",
+            "f_button_style": "normal",
+            "f_button_custom_colors": false,
+            "f_button_bg_color": "#000000",
+            "f_button_text_color": "#ffffff",
+            "s_button_label": "",
+            "s_button_link": "",
+            "s_button_style": "normal",
+            "s_button_custom_colors": false,
+            "s_button_bg_color": "#000000",
+            "s_button_text_color": "#ffffff"
+          }
+        },
+        "slide_TkQjTV": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Sealy_-_06.jpg",
+            "overlay": 0,
+            "icon": "",
+            "heading": "",
+            "use_header_accent": true,
+            "subheading": "",
+            "text": "",
+            "text_position": "center-center",
+            "use_box": false,
+            "width": 40,
+            "f_button_label": "",
+            "f_button_link": "",
+            "f_button_style": "normal",
+            "f_button_custom_colors": false,
+            "f_button_bg_color": "#000000",
+            "f_button_text_color": "#ffffff",
+            "s_button_label": "",
+            "s_button_link": "",
+            "s_button_style": "normal",
+            "s_button_custom_colors": false,
+            "s_button_bg_color": "#000000",
+            "s_button_text_color": "#ffffff"
+          }
         }
       },
       "block_order": [
         "7504c906-2ef4-4882-8525-9f73f47b1ba9",
-        "2f986c49-0c1a-4e22-bde6-ba514527906e",
-        "8250e22a-bab6-4778-8703-25690ab6fe9b"
+        "8250e22a-bab6-4778-8703-25690ab6fe9b",
+        "slide_ygTPDj",
+        "slide_6yyntF",
+        "slide_Kk4Cba",
+        "slide_nL3PKc",
+        "slide_TkQjTV"
       ],
       "settings": {
         "section_layout": "full",
@@ -99,7 +211,7 @@
         "subheading_position": "before",
         "mobile_caption_display": "offset",
         "navigation": "pagination",
-        "enable_autoplay": false,
+        "enable_autoplay": true,
         "autoplay": 5,
         "mobile_hidden": false
       }
@@ -660,13 +772,6 @@
             "link": "https:\/\/stearnsandfoster.ca\/en\/"
           }
         },
-        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-5": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/springwall_logo.png",
-            "link": "https:\/\/springwall.com\/"
-          }
-        },
         "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-6": {
           "type": "logo",
           "settings": {
@@ -695,6 +800,13 @@
             "link": "https:\/\/www.durhamfurniture.com\/"
           }
         },
+        "logo_nFRa8W": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Crate_Design_-_01_25e13da7-2660-4eea-88bc-c083635a5974.png",
+            "link": "https:\/\/cratedesignsfurniture.com\/"
+          }
+        },
         "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-10": {
           "type": "logo",
           "settings": {
@@ -708,11 +820,11 @@
         "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-1",
         "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-3",
         "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-4",
-        "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-5",
         "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-6",
         "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-7",
         "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-8",
         "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-9",
+        "logo_nFRa8W",
         "template--15032104190057__640e0925-813a-4c70-acc8-bb81d2622a0c-logo-10"
       ],
       "settings": {

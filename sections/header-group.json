@@ -50,7 +50,7 @@
           "settings": {
             "position": "secondary",
             "link_name": "Find a Store",
-            "url": "",
+            "url": "shopify:\/\/pages\/store-finder",
             "icon": ""
           }
         }
@@ -67,7 +67,7 @@
         "lights_out": true,
         "header_layout": "wide",
         "show_dropdown_carets": true,
-        "logo": "shopify:\/\/shop_images\/MB_Logo_-_06_28636e2f-3621-4d8c-8472-697aa476f705.png",
+        "logo": "shopify:\/\/shop_images\/MB_Logo_-_07.png",
         "logo_desktop_width": 500,
         "logo_mobile_width": 200,
         "logo_desktop_padding": true,

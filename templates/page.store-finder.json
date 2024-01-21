@@ -1,0 +1,38 @@
+{
+  "sections": {
+    "header": {
+      "type": "s_page-header",
+      "disabled": true,
+      "settings": {}
+    },
+    "main": {
+      "type": "s_page",
+      "disabled": true,
+      "settings": {
+        "container_width": "default",
+        "font_scale": 100
+      }
+    },
+    "170576853917925486": {
+      "type": "apps",
+      "blocks": {
+        "s_store_locator_storeify_storelocator_mNGb4r": {
+          "type": "shopify:\/\/apps\/s-store-locator\/blocks\/storeify-storelocator\/e7003487-cc51-4321-9488-2c47c07a5b17",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "s_store_locator_storeify_storelocator_mNGb4r"
+      ],
+      "settings": {
+        "heading": "",
+        "subheading": ""
+      }
+    }
+  },
+  "order": [
+    "header",
+    "main",
+    "170576853917925486"
+  ]
+}
