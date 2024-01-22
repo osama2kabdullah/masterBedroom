@@ -176,6 +176,10 @@
 .\#main-navigation-mega-list > li > a {
   font-size: 0.9em;
 }
+.\#main-navigation-mega-list > li > a:hover {
+  transition: var(--transition-base);
+  color: var(--accent-color);
+}
 .\#main-navigation-mega-images {
   display: flex;
   gap: 2rem;
