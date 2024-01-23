@@ -170,6 +170,10 @@
   margin-bottom: 1rem;
   font-size: 1rem;
 }
+.\#main-navigation-mega-title a:hover {
+  color: var(--accent-color);
+  transition: var(--transition-base);
+}
 .\#main-navigation-mega-list > li:not(:last-child) {
   margin-bottom: 0.5rem;
 }
